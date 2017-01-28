@@ -1,0 +1,63 @@
+<div class="login-form">
+    <form name="register_form">
+
+        <div class="top">
+            <img src="img/christ_univ_logo.png" alt="icon" class="icon">
+            <h1>Register</h1>
+            <h4>Welcome to Christ University community !</h4>
+        </div>
+
+
+        <!-- Start an Alert -->
+        <div ng-show="status.request_success" class="kode-alert kode-alert-icon alert3">
+            <i class="fa fa-check"></i>
+            <a href="#" class="closed">&times;</a>
+            {{message}}
+        </div>
+        <!-- End an Alert -->
+
+        <!-- Start an Alert -->
+        <div ng-show="status.request_failure" class="kode-alert kode-alert-icon alert6">
+            <i class="fa fa-lock"></i>
+            <a href="#" class="closed">&times;</a>
+            <!--Sorry! You might have some details mis-configured-->
+            {{message}}
+        </div>
+        <!-- End an Alert -->
+
+        <div class="form-area">
+            <div class="group">
+                <input type="text" class="form-control" placeholder="Username" ng-model="register.username" required>
+                <i class="fa fa-user"></i>
+            </div>
+            <div class="group">
+                <input type="text" class="form-control" placeholder="E-mail" ng-model="register.email" required>
+                <i class="fa fa-envelope-o"></i>
+            </div>
+            <div class="group">
+                <input type="password" class="form-control" placeholder="Password" ng-model="register.password" required>
+                <i class="fa fa-key"></i>
+            </div>
+            <div class="group">
+                <input type="password" class="form-control" placeholder="Password again"
+                       ng-model="register.confirm_password" required>
+                <i class="fa fa-key"></i>
+            </div>
+            <div class="group">
+                <input type="text" class="form-control" placeholder="Designation" ng-model="register.designation">
+                <i class="fa fa-user"></i>
+            </div>
+            <div class="group">
+                <input type="text" class="form-control" placeholder="Department" ng-model="register.department">
+                <i class="fa fa-user"></i>
+            </div>
+            <button type="submit" ng-click="register_form.$valid && registerUser()" class="btn btn-default btn-block">
+                REGISTER NOW
+            </button>
+        </div>
+    </form>
+    <div class="footer-links row">
+        <div class="col-xs-6"><a href="#/admin/login"><i class="fa fa-sign-in"></i> Login</a></div>
+        <div class="col-xs-6 text-right"><!--<a href="#">--><i class="fa fa-lock"></i> Forgot password<!--</a>--></div>
+    </div>
+</div>

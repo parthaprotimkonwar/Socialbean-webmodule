@@ -1,0 +1,330 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>SocialVid</title> 
+        <link href="css/webrtc.css" rel="stylesheet">
+    </head>
+    <body>
+
+        <div id="conferenceModal" class="modal">
+            <div id="conferenceModalDiv" style="background-color: #FFF;">
+                <a id="conferenceModalClose" title="Close" class="close">X</a>
+                <h2 id="conferenceModalHeader" class="text-center"> </h2>
+                <hr>
+                <form id="conferenceModalForm">
+                <div id="conferenceModalBody" class="form-signin" style="width: 280px; ">
+                    <input type="text" name="conferenceName" id="conferenceModalName" placeholder="Conference Name" class="form-control" required autofocus>
+                    <div class="checkbox">
+                    <label> Participants: </label>
+                    <select name="conferenceParticipants" id="conferenceModalParticipants" style="width: 175px; ">
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                    </select>
+                    </div>
+                    <div class="checkbox"> 
+                    <label> Bandwidth: </label>
+                    <select name="conferenceBandwidth" id="conferenceModalBandwidth" style="width: 175px; margin-left: 10px; "> 
+                        <option value="256">256kbps</option>
+                        <option value="512">512kbps</option>
+                        <option value="768">768kbps</option>
+                        <option value="1024">1024kbps</option>
+                        <option value="auto">Auto</option>
+                    </select>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" id="conferenceModalRecord"> Auto Record
+                        </label>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" id="conferenceModalMode"> Presenter Mode
+                        </label>
+                    </div>
+                </div>
+                <hr>
+                <div id="conferenceModalFooter" class="text-center">
+                    <button type="submit" id="conferenceModalOK" class="primary">OK</button>
+                    <button id="conferenceModalDelete" class="primary">DELETE</button>
+                </div>
+                </form>
+            </div>
+        </div>
+
+        <div id="genericModal" class="modal">
+            <div>
+                <a id="genericModalClose" title="Close" class="close">X</a>
+                <h2 id="genericModalText"> </h2>
+                <div id="genericModalFooter" class="text-right">
+                    <hr>
+                    <button id="genericModalCancel" class="primary">CANCEL</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="callModal" class="modal">
+            <div> 
+                 <a id="callModalClose" title="Close" class="close">X</a>
+                 <h2 id="callModalText"></h2>
+                <div id="cameraSelectDiv" style="display: block; ">
+                    <label class="device-label"> Camera: </label>
+                    <select id="inputCamera" name="camera"></select>
+                </div>
+                <div id="micSelectDiv" style="display: block; ">
+                    <label class="device-label"> Microphone: </label>
+                    <select id="inputMic" name="microphone"></select>
+                </div>
+                <div id="speakerSelectDiv" style="display: block; ">
+                    <label class="device-label"> Speaker: </label>
+                    <select id="outputSpeaker" name="speaker"></select>
+                </div>
+                 <hr>
+                 <div class="text-right">
+                     <button id="callModalCancel" class="no" title="Cancel"></button>
+                     <button id="callModalVoiceCall" title="Voice Call" class="voice-call"></button>
+                     <button id="callModalVideoCall" title="Video Call" class="video-call"></button>
+                  </div>
+            </div>
+        </div>
+
+        <div id="incomingCallModal" class="modal"> 
+            <div>
+                <a id="incomingCallModalClose" title="Close" class="close">X</a>
+                <h2 id="incomingCallModalText"></h2>
+                <hr>
+                <div class="text-right">
+                    <button id="incomingCallModalIgnore" class="primary">IGNORE</button>
+                    <button id="incomingCallModalRejectCall" class="primary">REJECT</button>
+                    <button id="incomingCallModalAnswerCall" class="primary">ANSWER</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="fileTransferModal" class="modal">
+            <div> 
+               <a id="fileTransferModalClose" title="Close" class="close">X</a>
+               <h2 id="fileTransferModalHeader">Transfer File(s)</h2>
+               <hr>
+               <div id="fileTransferModalBody">
+                   <input type="file" id="fileTransferModalFileInput" multiple/>
+                   <span id="fileTransferModalFileDrop">or drop files here</span>
+                   <div id="fileTransferModalProgress">
+                       <progress max="100" value="0"></progress>
+                   </div>
+                   <div id="fileTranferModalIncomingFiles"> </div>
+               </div>
+               <hr>
+               <div class="text-right">
+                   <button id="fileTransferModalCancel" class="primary">CANCEL</button>
+                   <button id="fileTransferModalUpload" class="primary">UPLOAD</button>
+               </div>
+            </div>
+        </div>
+
+        <div class="form-signin box-shadow" id="signInDiv">
+            <h2 class="text-center">Please sign in</h2> 
+            <div class="text-center">
+                <svg fill="#000000" fill-opacity="0.6" height="140" viewBox="0 0 24 24" width="140" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
+                    <path d="M0 0h24v24H0z" fill="none"/>
+                </svg>
+            </div>
+            <form id="signInForm"> 
+                <input type="email" id="inputEmail" name="email" class="form-control" placeholder="Email address" required autofocus>
+                <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" id="inputRememberMe"> Remember me
+                    </label>
+                </div>
+                <button type="submit" id="inputSubmit" disabled >SIGN IN</button>
+                <h4 style="text-align: right; padding-top: 15px; padding-right: 1px; margin-bottom: 1px;"> &copy; 2016 SocialVid.in. All rights reserved. </h4>
+            </form>
+        </div> 
+
+        <div class="full-height" id="mainDiv">
+            <div id="mainFormcontactsAndConferences" class="full-height">
+                <div class="box half-height"> 
+                    <h4 class="text-center">CONTACTS</h4>
+                    <ul id="mainFormContactsList" class=""></ul> 
+                </div>
+                <div class="box half-height">
+                    <h4 class="text-center">CONFERENCES</h4>
+                    <ul id="mainFormConferencesList" class=""></ul> 
+                </div>
+            </div>
+            <div id="mainFormParticipants" class="full-height" style="display: none;">
+                <div class="box full-height"> 
+                    <h4 class="text-center">PARTICIPANTS</h4>
+                    <ul id="mainFormParticipantsList" class=""></ul> 
+                </div>
+            </div>
+
+            <div id="mainFormChat">
+                <a id="mainFormChatCloseBtn" title="Close">X</a>
+                <h4 class="text-center"> CHAT </h4>
+                <ul id="mainFormChatsList"> </ul>
+                <div class="bottom-box">
+                    <form id="mainFormChatForm" class="form">
+                        <textarea id="mainFormChatText" class="form-control" rows="3" placeholder="Enter text" autofocus></textarea>
+                        <button id="mainFormChatSubmit" type="submit" class="primary">SEND</button> 
+                    </form>
+                </div>
+            </div>
+
+
+            <div id="mainFormConferencesAndRecordings" class="right-box full-height">
+                <div id="mainFormConferences" class="max-half-height">
+                    <table>
+                        <caption class="text-center">  
+                            <h4>YOUR CONFERENCES <a id="mainFormConferencesAdd"> (Add more...) </a> </h4> 
+                        </caption>
+                        <thead>
+                            <tr>
+                                <td><h4>CONFERENCE NAME</h4></td>
+                                <td><h4>LINK</h4></td>
+                                <td><h4>STATUS</h4></td>
+                                <td><h4>MAX</h4></td>
+                                <td><h4>BANDWIDTH</h4></td>
+                                <td><h4>RECORD</h4></td>
+                                <td><h4>MODE</h4></td>
+                                <td><h4>JOIN</h4></td>
+                                <td><h4>EDIT</h4></td>
+                            </tr>
+                        </thead>
+                        <tbody id="mainFormConferencesBody"> </tbody>
+                    </table>
+                </div>
+
+                <div id="mainFormRecordings" class="max-half-height">
+                    <table>
+                        <caption class="text-center">  <h4>YOUR RECORDINGS</h4> </caption>
+                        <thead>
+                            <tr>
+                                <td><h4>CONFERENCE NAME</h4></td>
+                                <td><h4>RECORDING TIME</h4></td>
+                                <td><h4>LINK</h4></td>
+                                <td><h4>VIEW</h4></td>
+                                <td><h4>DELETE</h4></td>
+                            </tr>
+                        </thead>
+                        <tbody id="mainFormRecordingsBody"> </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="mainFormVideos" class="box-shadow">
+                <div id="mainFormTitleBar">
+                    <span id="mainFormTitle"></span>
+                    <span id="mainFormTime"></span>
+                    <span id="mainFormRecordInd">REC</span>
+                    <span id="mainFormConferenceMode"></span>
+                </div>
+                <div id="mainFormVideosContainer">
+                    <audio id="mainFormAudio1" autoplay></audio>
+                    <div id="mainFormShareVideo" class="video-div">
+                        <video id="mainFormShareVideo1" height="100%" autoplay></video>
+                        <canvas id="mainFormCanvas"></canvas>
+                        <canvas id="mainFormCanvas2"></canvas>
+                        <input id="mainFormCanvasTextInput" type="text"/>
+                        <div id="mainFormShareName" class="video-label">Share</div>
+                    </div>
+                    <div id="mainFormVideo1" class="video-div video-animate">
+                        <video id="mainFormRemoteVideo1" poster="images/avatar.svg" autoplay></video>
+                        <div id="mainFormRemoteVideoMuteImg" class="mute-video-img"></div> 
+                        <div id="mainFormRemotePart1" class="video-label"></div>
+                        <div id="mainFormRemoteCaption" class="video-caption">Test Caption</div>
+                    </div>
+                    <div id="mainFormVideo2" class="video-div video-animate">
+                        <video id="mainFormRemoteVideo2" autoplay></video>
+                        <div id="mainFormRemotePart2" class="video-label"></div>
+                    </div>
+                    <div id="mainFormVideo3" class="video-div video-animate">
+                        <video id="mainFormRemoteVideo3" autoplay></video>
+                        <div id="mainFormRemotePart3" class="video-label"></div>
+                    </div>
+                    <div id="mainFormVideo4" class="video-div video-animate">
+                        <video id="mainFormRemoteVideo4" autoplay></video>
+                        <div id="mainFormRemotePart4" class="video-label"></div>
+                    </div>
+                    <div id="mainFormVideo5" class="video-div video-animate">
+                        <video id="mainFormRemoteVideo5" autoplay></video>
+                        <div id="mainFormRemotePart5" class="video-label"></div>
+                    </div>
+                    <div id="mainFormVideo6" class="video-div video-animate">
+                        <video id="mainFormRemoteVideo6" autoplay></video>
+                        <div id="mainFormRemotePart6" class="video-label"></div>
+                    </div>
+                    <div id="mainFormVideo7" class="video-div video-animate">
+                        <video id="mainFormRemoteVideo7" autoplay></video>
+                        <div id="mainFormRemotePart7" class="video-label"></div>
+                    </div>
+                    <div id="mainFormSelfView" class="video-div video-animate">
+                        <video id="mainFormSelfVideo" poster="images/avatar.svg" autoplay muted></video>
+                        <div id="mainFormSelfVideoMuteImg" class="mute-video-img"></div> 
+                        <div class="video-label"> <div> You </div> </div>
+                    </div>
+                </div>
+                <div class="call-button-group-holder">
+                    <div class="call-button-group">
+                        <button id="mainFormRaiseHandBtn" title="Raise Hand" class="raise-hand"></button>
+                        <button id="mainFormTransferBtn" title="Call Transfer" class="call-transfer"></button>
+                        <select id="mainFormDisplaysBtn" name="mainFormDisplaysName"> </select>
+                        <button id="mainFormRecordBtn" title="Record" class="record"></button>
+                        <button id="mainFormWhiteboardBtn" title="Whiteboard" class="whiteboard"></button>
+                        <!-- <button id="mainFormCaptionBtn" title="Caption" class="caption"></button> -->
+                        <button id="mainFormLayoutBtn" title="Layout" class="layout"></button>
+                        <button id="mainFormFullScreenBtn" title="FullScreen" class="fullscreen"></button>
+                        <button id="mainFormVideoBtn" title="Video Mute" class="video-unmute"></button>
+                        <button id="mainFormMicrophoneBtn" title="Microphone Mute" class="mic-unmute"></button>
+                        <button id="mainFormSpeakerBtn" title="Speaker Mute" class="speaker-unmute"></button>
+                        <button id="mainFormShareBtn" title="Share"></button>
+                        <button id="mainFormChatBtn" title="Chat"></button>
+                        <button id="mainFormFileTransferBtn" title="Upload Files"></button>
+                        <button id="mainFormSelfViewBtn" title="Toggle self view"></button>
+                        <button id="mainFormPopoutBtn" title="Pop out"></button>
+                        <button id="mainFormHangupBtn" class="hang-up" title="Hang up"></button>
+                    </div>
+                    <div id="mainFormDrawButtonGroup">
+                        <input id="mainFormColorBtn" type="color" value="#FF0000" /> 
+                        <select id="mainFormWidth" name="mainFormWidthName">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                        </select>
+                        <button id="mainFormpencilBtn" title="Pencil" class="pencil"></button>
+                        <button id="mainFormlineBtn" title="Line" class="line"></button>
+                        <button id="mainFormrectangleBtn" title="Rectangle" class="rectangle"></button>
+                        <button id="mainFormcircleBtn" title="Circle" class="circle"></button>
+                        <button id="mainFormtextBtn" title="Text (Click on the canvas and type)" class="text"></button>
+                        <label class="button-like photo" for="mainFormImageFile" id="mainFormImageLabel"></label><input id="mainFormImageFile" type="file" accept=".png,.jpg,.jpeg,.gif" style="display: none;"/> 
+                        <button id="mainFormeraserBtn" title="Eraser" class="eraser"></button>
+                        <a class="button-like snapshot" id="mainFormcaptureBtn"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--
+        <script src="js/adapter.js"></script>
+        <script src="js/peerconn.js"></script>
+        -->
+        <script src="js/client.js"></script>
+        <script src="js/app.js"></script>
+    </body>
+</html>
