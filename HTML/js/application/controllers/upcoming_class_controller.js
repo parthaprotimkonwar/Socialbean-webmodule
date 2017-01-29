@@ -18,6 +18,9 @@ myApp.controller('upcomingClassController', ['$scope', '$http', '$interval', '$l
 
         //handling the promise
         $scope.upcomingClassPromise.success(function (data, status, headers, config) {
+
+            $scope.conferenceUrl = CONSTANTS.CONFERENCING_URL;
+
             console.log('Got back a response');
             console.log(data);
             console.log("clearing off the data");

@@ -87,15 +87,12 @@
                             <td>{{meeting.title}}</td>
                             <td>{{meeting.dateTimeInString}}</td>
                             <td>{{meeting.duration}}</td>
-                            <td>http://u.videocloud.com/p/{{meeting.presenterToken}}</td>
-                            <td>http://u.videocloud.com/a/{{meeting.attendeesUrl}}</td>
+                            <td> <a target="_blank" href="{{conferenceUrl}}/{{meeting.presenterToken}}">CLICK HERE</a></td>
+                            <td><a target="_blank" href="{{conferenceUrl }}/{{meeting.attendeesUrl}}"> CLICK HERE</a></td>
                         </tr>
                         </tbody>
                     </table>
-
-
                 </div>
-
             </div>
         </div>
         <!-- End Panel -->

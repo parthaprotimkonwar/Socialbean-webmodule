@@ -58,14 +58,13 @@ conferenceAppModule.controller('conferenceVideoController', ['$rootScope', '$sco
              }*/
 
             //join the conference
-            var conferenceId = "692d2c87d8087c24";
+            var conferenceId = sessionStorage.getItem("conferenceId");
             console.log("Printing name");
-            console.log(conference_guest);
+            console.log(conferenceId);
             client.guestLogin(conference_guest.name, conferenceId, function (loginStatus) {
                 if (loginStatus.status === 0) {
                     // Do the next steps here, like joining a conference
                     console.log("guest login successful");
-
 
                     client.joinVideoConference(conferenceId, function (resp) {
 

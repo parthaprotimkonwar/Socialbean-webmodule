@@ -58,10 +58,12 @@ conferenceAppModule.config(['$routeProvider', '$httpProvider', function ($routeP
     $routeProvider.when('/conference/video', {
         templateUrl: 'partials/video-conference-partial.html',
         controller: 'conferenceVideoController'
-    }).when('/conference/join/guest', {
+    }).when('/conference/join/guest/:conferenceId', {
         templateUrl: 'partials/guest-join-conference-partial.html',
         controller: 'conferenceGuestJoinController'
+    }).when('/conference/unknown', {
+        templateUrl: 'partials/partial-404.html'
     }).otherwise({
-        redirectTo: '/conference/join/guest'
+        redirectTo: '/conference/unknown'
     });
 }]);

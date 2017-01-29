@@ -18,8 +18,16 @@ app.use(express.static("./HTML"));        //root of the application. serves stat
 
 //var httpsServer = https.createServer(credentials, app);
 
+app.post('/listening', function (req, res) {
+    console.log("Recieved something")
+    console.log(res);
+    res.send({name : "partha"});
+});
+
 app.listen(3000);           //listen on 3000 port
 //httpsServer.listen(8443);
+
+
 
 var session = null;
 
@@ -54,10 +62,7 @@ var recieveData = function recieveData(error, response, body) {
 };
 
 //make a https login request
-request.post(
-    'https://ha.socialvid.in/adminapi/v1/userlogin',
-    {json: data}, recieveData
-);
+//request.post('https://ha.socialvid.in/adminapi/v1/userlogin',{json: data}, recieveData);
 
 console.log('application started in port 3000');
 module.exports = app;       // export this module to use this as a dependency in other module
