@@ -7,7 +7,7 @@
  Here myApp is the name of the namespace and [] contains the dependecy services which need to be injected in the module.
  */
 var myApp = angular.module('myApp', [
-    'ngRoute'
+    'ngRoute', 'ngImgCrop'
 ]);
 
 //main page is index.html
@@ -15,6 +15,9 @@ myApp.config(['$routeProvider', '$httpProvider', function ($routeProvider, $http
     $routeProvider.when('/admin/dashboard', {
         templateUrl: 'partials/dashboard.html',
         controller: 'dashboardController'
+    }).when('/admin/user/profile', {
+        templateUrl: 'partials/user-profile-partial.html',
+        controller: 'userProfileController'
     }).when('/admin/class/create', {
         templateUrl: 'partials/create-class-partial.html',
         controller: 'createClassController'

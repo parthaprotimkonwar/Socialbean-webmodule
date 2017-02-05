@@ -82,7 +82,12 @@
     </li>-->
 
     <li class="dropdown link" ng-controller="headerBarController">
-      <a href="javascript:void(0);" data-toggle="dropdown" class="dropdown-toggle profilebox"><img src="img/defaultimg.png" alt="img"><b>{{username}}</b><span class="caret"></span></a>
+      <a href="javascript:void(0);" data-toggle="dropdown" class="dropdown-toggle profilebox">
+        <img ng-show="userProfile.imageBlob" ng-src="{{userProfile.imageBlob}}" alt="alt">
+        <img ng-show="!userProfile.imageBlob" src="img/defaultimg.png" alt="img">
+        <b>{{username}}</b>
+        <span class="caret"></span>
+      </a>
         <ul class="dropdown-menu dropdown-menu-list dropdown-menu-right">
           <li role="presentation" class="dropdown-header">Profile</li>
           <!--<li><a href="#"><i class="fa falist fa-inbox"></i>Inbox<span class="badge label-danger">4</span></a></li>
@@ -109,7 +114,11 @@
 <ul class="sidebar-panel nav">
   <br/><br/>  <li class="sidetitle">MAIN</li>
 
-  <li><a href="javascript:void(0);"><span class="icon color7"><i class="fa fa-user"></i></span> User Profile</a></li>
+  <li><a href="javascript:void(0);"><span class="icon color7"><i class="fa fa-user"></i></span> User Profile<span class="caret"></span></a>
+    <ul>
+      <li><a href="#/admin/user/profile">Update Profile</a></li>
+    </ul>
+  </li>
   <li><a href="javascript:void(0);"><span class="icon color8"><i class="fa fa-calendar-o"></i></span>Schedule Class<span class="caret"></span></a>
     <ul>
       <li><a href="#/admin/class/create">Create Class</a></li>
@@ -194,6 +203,7 @@ Bootstrap Core JavaScript File
 <script type="text/javascript" src="js/application/controllers/past_class_controller.js"></script>
 <script type="text/javascript" src="js/application/controllers/upcoming_class_controller.js"></script>
 <script type="text/javascript" src="js/application/controllers/header_bar_controller.js"></script>
+<script type="text/javascript" src="js/application/controllers/user_profile_controller.js"></script>
 
 <!-- ================================================
 Plugin.js - Some Specific JS codes for Plugin Settings
@@ -282,6 +292,10 @@ Below codes are only for index widgets
 ================================================ -->
 <!-- Today Sales -->
 
+<!-- ================================================
+Below codes are only for index widgets
+================================================ -->
+<script type="text/javascript" src="js/application/image-crop/ng-img-crop.js"></script>
 
 </body>
 </html>

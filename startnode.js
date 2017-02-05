@@ -4,10 +4,10 @@
 
 var https = require('https');
 var fs = require('fs');
-//var privateKey  = fs.readFileSync('certs/mydomain.key', 'utf8');
-//var certificate = fs.readFileSync('certs/certificate.pem', 'utf8');
+var privateKey  = fs.readFileSync('certs/mydomain.key', 'utf8');
+var certificate = fs.readFileSync('certs/certificate.pem', 'utf8');
 
-//var credentials = {key: privateKey, cert: certificate};
+var credentials = {key: privateKey, cert: certificate};
 
 var express = require('express');       //load express dependency
 var app = express();        //new instance of express
@@ -16,7 +16,7 @@ var request = require('request');   //make http request
 
 app.use(express.static("./HTML"));        //root of the application. serves static files
 
-//var httpsServer = https.createServer(credentials, app);
+var httpsServer = https.createServer(credentials, app);
 
 app.post('/listening', function (req, res) {
     console.log("Recieved something")
@@ -66,5 +66,3 @@ var recieveData = function recieveData(error, response, body) {
 
 console.log('application started in port 3000');
 module.exports = app;       // export this module to use this as a dependency in other module
-
-

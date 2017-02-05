@@ -1,0 +1,145 @@
+<!-- Start Page Header -->
+<div class="page-header">
+    <!--<h1 class="title">Create a Class</h1>-->
+    <ol class="breadcrumb">
+        <li><a href="index.html">User Profile</a></li>
+        <li class="active">Update Profile</li>
+    </ol>
+
+    <!-- Start Page Header Right Div -->
+    <!--<div class="right">
+        <div class="btn-group" role="group" aria-label="...">
+            <a href="index.html" class="btn btn-light">Dashboard</a>
+            <a href="#" class="btn btn-light"><i class="fa fa-refresh"></i></a>
+            <a href="#" class="btn btn-light"><i class="fa fa-search"></i></a>
+            <a href="#" class="btn btn-light" id="topstats"><i class="fa fa-line-chart"></i></a>
+        </div>
+    </div>-->
+    <!--  End Page Header Right Div -->
+
+</div>
+<!-- End Page Header -->
+
+<!-- Start Presentation -->
+<div class="row presentation">
+
+    <div class="col-lg-8 col-md-6 titles">
+        <span class="icon color9-bg"><i class="fa fa-user"></i></span>
+        <h1>Update your profile!</h1>
+        <!--<h4>Check out all your previous classes</h4>-->
+    </div>
+
+    <!--<div class="col-lg-4 col-md-6">
+        <ul class="list-unstyled list">
+            <li><i class="fa fa-check"></i>Simplicity<li>
+            <li><i class="fa fa-check"></i>Based on <a href="http://getbootstrap.com/" target="_blank">Bootstrap</a><li>
+            <li><i class="fa fa-check"></i><a href="https://github.com/flatlogic/awesome-bootstrap-checkbox" target="_blank">Awesome Bootstrap Checkbox</a><li>
+            <li><i class="fa fa-check"></i><a href="http://www.bootstraptoggle.com/" target="_blank">Bootstrap Toggle</a><li>
+            <li><i class="fa fa-check"></i><a href="http://silviomoreto.github.io/bootstrap-select/" target="_blank">Bootstrap Select</a><li>
+        </ul>
+    </div>-->
+
+</div>
+
+<div class="container-padding">
+
+    <!-- Start an Alert -->
+    <div ng-show="status.request_success" class="kode-alert kode-alert-icon alert3">
+        <i class="fa fa-check"></i>
+        <a href="#" class="closed">&times;</a>
+        {{message}}
+    </div>
+    <!-- End an Alert -->
+
+    <!-- Start an Alert -->
+    <div ng-show="status.request_failure" class="kode-alert kode-alert-icon alert6">
+        <i class="fa fa-lock"></i>
+        <a href="#" class="closed">&times;</a>
+        {{message}}
+    </div>
+    <!-- End an Alert -->
+
+    <!-- Start Row -->
+    <div class="row">
+
+        <div class="col-md-12">
+            <div class="panel panel-default">
+
+                <div class="panel-title">
+                    <!--Fill in the below details-->
+                    <!--<ul class="panel-tools">
+                        <li><a class="icon minimise-tool"><i class="fa fa-minus"></i></a></li>
+                        <li><a class="icon expand-tool"><i class="fa fa-expand"></i></a></li>
+                        <li><a class="icon closed-tool"><i class="fa fa-times"></i></a></li>
+                    </ul>-->
+                </div>
+
+                <div class="panel-body">
+                    <form class="form-horizontal" name="create_meeting_form">
+
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label for="input-topic" class="col-sm-2 control-label form-label">EmailId</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="input-topic" ng-model="user.emailid" readonly>
+                                    </div>
+                                </div>
+
+                                <!--meeting.description-->
+                                <div class="form-group">
+                                    <label for="input-topic" class="col-sm-2 control-label form-label">Designation</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="input-designation" ng-model="user.designation" readonly>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="input-topic" class="col-sm-2 control-label form-label">Department</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="input-department" ng-model="user.department" readonly>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-md-1"></div>
+                            <div class="col-md-3">
+                                <div>
+                                    <div>
+                                        <div class="cropArea">
+                                            <img-crop image="userImage" result-image="userCroppedImage" result-image-format="image/jpeg" result-image-size="120"></img-crop>
+                                        </div>
+                                        <div>
+                                            <input type="file" name="Upload Image" id="fileInput" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!--<div class="cropArea">
+                                    <img-crop image="specialityImage" result-image="specialityCroppedImage" result-image-format="image/jpeg" result-image-size="120"></img-crop>
+                                </div>
+                                <div>
+                                    <input type="file" name="Upload Image" id="specialityFileInput" />
+                                </div>-->
+                                <!--<div  class="col-md-4">
+                                    <div>Cropped Image:</div>
+                                    <div><img ng-src="{{specialityCroppedImage}}" /></div>
+                                </div>-->
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-2"></div>
+                            <div class="col-sm-10">
+                                <button type="submit" ng-click="updateProfile()" class="btn btn-primary"><i class="fa fa-pencil-square-o"></i>Update Profile</button>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- End Row -->
+</div>

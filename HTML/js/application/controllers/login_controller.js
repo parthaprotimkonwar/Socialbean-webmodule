@@ -4,11 +4,24 @@
 loginAppModule.controller('loginController', ['$scope', '$http', '$interval', '$location', '$window', 'CONSTANTS', 'common',
     function ($scope, $http, $interval, $location, $window, CONSTANTS, common) {
 
+        //redirect after successful login
+        $scope.loginSuccessfulRedirect = function () {
+            var url = $location.protocol() + "://" + $location.host() + ":" + $location.port() + "/index.html?";
+            $window.location.href = url;
+        };
+
+        $scope.userProfile = angular.fromJson(localStorage.getItem(CONSTANTS.USER_PROFILE));
+
+        //login if the user is not is already logged in
+        if($scope.userProfile != null && $scope.userProfile != undefined) {
+            console.log("executing login");
+            $scope.loginSuccessfulRedirect();
+        }
+
         $scope.login = function () {
 
             //the URL
             var url = CONSTANTS.SERVICES_BASE_URL + "/user/login";
-
             $scope.status = {};
 
             var data = {
@@ -37,17 +50,15 @@ loginAppModule.controller('loginController', ['$scope', '$http', '$interval', '$
 
                     localStorage.setItem("userId",data.data.id);
                     localStorage.setItem("userName",data.data.presenterName);
-                    //$location.url('index.html?/admin/dashboard');
-                    //$window.location.href = 'http://localhost:9000/index.html?';
-                    var url = $location.protocol() + "://" + $location.host() + ":" + $location.port() + "/index.html?";
-                    $window.location.href = url;
+                    localStorage.setItem(CONSTANTS.USER_PROFILE, angular.toJson(data.data));
+
+                    $scope.loginSuccessfulRedirect();
 
                 } else {
                     //failed login
                     //print the message
                     errorMesage(data.errorResponse.errorMessage);
                 }
-                //$location.path('/admin/login');
             }).error(function (data, status, headers, config) {
                 console.log('AWS DOWN');
                 errorMesage(data.errorMessage);
