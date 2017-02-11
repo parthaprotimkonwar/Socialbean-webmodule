@@ -97,7 +97,7 @@ conferenceAppModule.controller('conferenceVideoController', ['$rootScope', '$sco
                                 break;
 
                             case "remoteStream": // This event is received multiple times. Attach it to the multiple video elements
-                                console.log("remote stream called " + resp.index);
+                                console.log("****remote stream called " + resp.index);
                                 var videoElement = document.getElementById("mainVideo" + resp.index); // The index gives the stream id, It is 1 based
                                 attachMediaStream(videoElement, resp.stream); // Attach all the remote streams, but do not display them -  hide them
                                 break;

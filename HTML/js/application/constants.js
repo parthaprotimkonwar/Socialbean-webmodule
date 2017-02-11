@@ -11,7 +11,7 @@ myApp.service('CONSTANTS', function () {
     this.STATUS_FAILURE = "FAILURE";
     //this.UI_APP_URL = $location.protocol() + "://" + $location.host() + ":" + $location.port();
 
-    this.CONFERENCING_URL = 'http://localhost:3000/conferencing.html#/conference/join/guest';
+    this.CONFERENCING_URL = 'http://ec2-35-161-127-166.us-west-2.compute.amazonaws.com:3000/conferencing.html#/conference/join/guest';
 
     //LOCAL STORAGE CONSTANTS
     this.USER_PROFILE = 'user_profile';
