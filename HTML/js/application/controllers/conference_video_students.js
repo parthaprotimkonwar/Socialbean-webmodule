@@ -1,7 +1,7 @@
 /**
  * Created by pkonwar on 1/15/2017.
  */
-conferenceAppModule.controller('conferenceVideoController', ['$rootScope', '$scope', '$http', '$interval', '$location', '$window',
+conferenceAppModule.controller('conferenceStudentsController', ['$rootScope', '$scope', '$http', '$interval', '$location', '$window',
     function ($rootScope, $scope, $http, $interval, $location, $window) {
 
         $(document).ready(function () {
@@ -44,9 +44,9 @@ conferenceAppModule.controller('conferenceVideoController', ['$rootScope', '$sco
 
 
             /*$scope.sendThisChat = function () {
-                console.log("char chat");
-                client.sendChat("Ravi welcomes to his console.");
-            };*/
+             console.log("char chat");
+             client.sendChat("Ravi welcomes to his console.");
+             };*/
 
             $scope.$on("broadcastChat", function (event, message) {
                 console.log("inside broadcast chat" + message);
@@ -55,19 +55,25 @@ conferenceAppModule.controller('conferenceVideoController', ['$rootScope', '$sco
             });
 
             $scope.stopshare = function () {
-                    //g("mainFormShareBtn").style.opacity = 0.5;
-                    client.stopShare(function(msg) {
-                        //self.hideShareVideo();
-                        //document.getElementById("mainFormShareVideo1").src = "";
-                        document.getElementById("mainFormShareVideo1").src = "";
-                        document.getElementById("mainFormShareVideo1").style.display = "none";
-                        document.getElementById("mainFormShareVideoImage").style.display = "block";
-                        document.getElementById("shareBtn").style.display = "block";
-                        //document.getElementById("mainFormShareVideo1").style.display = "none"
-                        //document.getElementById("mainFormShareVideo1").poster="img/example1.jpg";
-                            //self.presenting_ = false;
-                    });
+                //g("mainFormShareBtn").style.opacity = 0.5;
+                client.stopShare(function(msg) {
+                    //self.hideShareVideo();
+                    //document.getElementById("mainFormShareVideo1").src = "";
+                    document.getElementById("mainFormShareVideo1").src = "";
+                    document.getElementById("mainFormShareVideo1").style.display = "none";
+                    document.getElementById("mainFormShareVideoImage").style.display = "block";
+                    //document.getElementById("shareBtn").style.display = "block";
+                    //document.getElementById("mainFormShareVideo1").style.display = "none"
+                    //document.getElementById("mainFormShareVideo1").poster="img/example1.jpg";
+                    //self.presenting_ = false;
+                });
             };
+
+            //raise my hand
+            $scope.raiseMyHand = function () {
+                client.raiseHand();
+            };
+
             $scope.share = function () {
                 console.log("sharing");
 
@@ -85,7 +91,7 @@ conferenceAppModule.controller('conferenceVideoController', ['$rootScope', '$sco
                                 //g("mainFormShareBtn").style.opacity = 1.0;
                                 document.getElementById("mainFormShareVideo1").style.display = "block"
                                 document.getElementById("mainFormShareVideoImage").style.display = "none";
-                                document.getElementById("shareBtn").style.display = "none";
+                                //document.getElementById("shareBtn").style.display = "none";
                                 attachMediaStream(document.getElementById("mainFormShareVideo1"), msg.stream);
                                 //self.showShareVideo("Me");
                                 //self.presenting_ = true;
@@ -107,60 +113,33 @@ conferenceAppModule.controller('conferenceVideoController', ['$rootScope', '$sco
                     });
                 });
 
-                /*client.startShare(function(msg) {
-                    switch(msg.type) {
-                        case "localShareStream":
-                            //document.getElementById("mainFormShareBtn").style.opacity = 1.0;
-                            attachMediaStream(document.getElementById("mainFormShareVideo1"), msg.stream);
-                            //self.showShareVideo("Me");
-                            //self.presenting_ = true;
-                            break;
-
-                        case "localShareStreamEnded":
-                            //stopShare();
-                            break;
-
-                        case "shareOffer":
-                            break;
-
-                        case "shareGetUserMediaFailed":
-                            //self.showModal("Start share failed - " + msg.error.name, true, true, "OK");
-                            break;
-                    }
-                });*/
             }
-            /*function chat() {
-             console.log("char chat");
-             client.sendChat("Ravi welcomes to his console.");
-             return false;
-             }*/
 
             //join the conference
             var conferenceId = sessionStorage.getItem("conferenceId");
             console.log("Printing name");
             console.log(conferenceId);
-            //conferenceid = 98c9ca76299b7af9
-            //client.guestLogin(conference_guest.name, "98c9ca76299b7af9", function (loginStatus) {
             conferenceId = "98c9ca76299b7af9";
-            //client.guestLoginWithOptions(conference_guest.name, "98c9ca76299b7af9", "/guest.html?conferenceId=98c9ca76299b7af9&audio=1&video=1&dialout=0&moderator=1&c=05d3099aa06aa73b", function (loginStatus) {
+            //client.guestLogin(conference_guest.name, "98c9ca76299b7af9", function (loginStatus) {
 
-                //client.guestLoginWithOptions(conference_guest.name, "98c9ca76299b7af9", "/guest.html?conferenceId=98c9ca76299b7af9&audio=1&video=1&dialout=0&moderator=0&c=f0a40dd706aeb73c", function (loginStatus) {
-
-            client.guestLogin(conference_guest.name, "98c9ca76299b7af9", function (loginStatus) {
-            //client.guestLoginWithOptions(conference_guest.name, "98c9ca76299b7af9", "/guest.html?conferenceId=98c9ca76299b7af9&audio=1&video=1&dialout=0&moderator=0&c=f0a40dd706aeb73c", function (loginStatus) {
+            //client.guestLogin(conference_guest.name, "98c9ca76299b7af9", function (loginStatus) {
+            client.guestLoginWithOptions(conference_guest.name, "98c9ca76299b7af9", "/guest.html?conferenceId=98c9ca76299b7af9&audio=0&video=0&dialout=1&moderator=0&c=178d6b107a6ce9ec", function (loginStatus) {
                 if (loginStatus.status === 0) {
                     // Do the next steps here, like joining a conference
                     console.log("guest login successful");
                     /*var canvas1 = document.getElementById("mainFormCanvas");
-                    var canvas2 = document.getElementById("mainFormCanvas2");
-                    client.setCanvases(canvas1, canvas2);*/
+                     var canvas2 = document.getElementById("mainFormCanvas2");
+                     client.setCanvases(canvas1, canvas2);*/
 
-
+                    //client.muteMicrophone();    //mute the mic
                     client.joinVideoConference(conferenceId, function (resp) {
 
                         console.log(resp.type);
 
                         switch (resp.type) {
+                            case "confRaiseHand" :
+                                console.log("+++++++++++++++++ raise hand slogna %%%%%%%%%%%%%%%%%%%%%%%%%");
+                                break;
                             case "confChatMessage":
                                 console.log("CHAT CHAT CHAT chat");
                                 console.log(resp.chat);
@@ -188,8 +167,10 @@ conferenceAppModule.controller('conferenceVideoController', ['$rootScope', '$sco
 
                             case "remoteStream": // This event is received multiple times. Attach it to the multiple video elements
                                 console.log("****remote stream called " + resp.index);
-                                var videoElement = document.getElementById("mainVideo" + resp.index); // The index gives the stream id, It is 1 based
-                                attachMediaStream(videoElement, resp.stream); // Attach all the remote streams, but do not display them -  hide them
+                                if(resp.index === 1) {
+                                    var videoElement = document.getElementById("mainVideo" + resp.index); // The index gives the stream id, It is 1 based
+                                    attachMediaStream(videoElement, resp.stream); // Attach all the remote streams, but do not display them -  hide them
+                                }
                                 break;
 
                             case "activeTalkerList":
@@ -207,7 +188,7 @@ conferenceAppModule.controller('conferenceVideoController', ['$rootScope', '$sco
                                 // If index is greater than 0, display that remoteStream and set the corresponding name tag from names
                                 // For eg, if talkers is [2, 3] and names is ['a', 'b'], then remoteStream 2 and 3 need to be displayed and the name tag for those streams is a and b
                                 for (var i = 0; i < talkers.length; i++) {
-                                    if (talkers[i] > 0) {
+                                    if (talkers[i] == 1) {
                                         var videoElement = document.getElementById("mainVideo" + talkers[i]);
                                         videoElement.style.display = "block"; // Show the video element
                                         var participantName = document.getElementById("mainName" + talkers[i]);
@@ -226,14 +207,38 @@ conferenceAppModule.controller('conferenceVideoController', ['$rootScope', '$sco
                             case "remoteShareStream":
                                 document.getElementById("mainFormShareVideo1").style.display = "block";
                                 document.getElementById("mainFormShareVideoImage").style.display = "none";
-                                document.getElementById("shareBtn").style.display = "none";
+                                //document.getElementById("shareBtn").style.display = "none";
                                 attachMediaStream(document.getElementById("mainFormShareVideo1"), resp.stream);
                                 break;
                             case "confStopShare":
                                 document.getElementById("mainFormShareVideo1").style.display = "none";
                                 document.getElementById("mainFormShareVideo1").src = "";
                                 document.getElementById("mainFormShareVideoImage").style.display = "block";
-                                document.getElementById("shareBtn").style.display = "block";
+                                //document.getElementById("shareBtn").style.display = "block";
+                                break;
+
+                            case "userAudioMuted" :
+                                console.log("user audio muted");
+                                client.muteMicrophone();
+                                break;
+
+                            case "userAudioUnmuted" :
+                                console.log("user audio unmuted");
+                                client.unmuteMicrophone();
+                                break;
+
+                            case "confRaiseHandResponse":
+                                console.log("after hand is raised");
+                                /*if (resp.audioUnmuted) {
+                                    btn = g("mainFormMicrophoneBtn");
+                                    btn.className = btn.className.replace("mic-mute", "mic-unmute");
+                                    btn.disabled = false;
+                                } else {
+                                    btn = g("mainFormMicrophoneBtn");
+                                    btn.className = btn.className.replace("mic-unmute", "mic-mute");
+                                    btn.disabled = true;
+                                }
+                                g("mainFormRaiseHandBtn").style.opacity = 0.5;*/
                                 break;
 
                             case "participantsUpdated": // This gives the updated list of participants in the conference

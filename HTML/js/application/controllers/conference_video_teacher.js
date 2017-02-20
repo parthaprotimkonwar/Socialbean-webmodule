@@ -1,8 +1,10 @@
 /**
  * Created by pkonwar on 1/15/2017.
  */
-conferenceAppModule.controller('conferenceVideoController', ['$rootScope', '$scope', '$http', '$interval', '$location', '$window',
+conferenceAppModule.controller('conferenceTeacherController', ['$rootScope', '$scope', '$http', '$interval', '$location', '$window',
     function ($rootScope, $scope, $http, $interval, $location, $window) {
+
+        $scope.name = "tea";
 
         $(document).ready(function () {
 
@@ -44,9 +46,9 @@ conferenceAppModule.controller('conferenceVideoController', ['$rootScope', '$sco
 
 
             /*$scope.sendThisChat = function () {
-                console.log("char chat");
-                client.sendChat("Ravi welcomes to his console.");
-            };*/
+             console.log("char chat");
+             client.sendChat("Ravi welcomes to his console.");
+             };*/
 
             $scope.$on("broadcastChat", function (event, message) {
                 console.log("inside broadcast chat" + message);
@@ -55,18 +57,18 @@ conferenceAppModule.controller('conferenceVideoController', ['$rootScope', '$sco
             });
 
             $scope.stopshare = function () {
-                    //g("mainFormShareBtn").style.opacity = 0.5;
-                    client.stopShare(function(msg) {
-                        //self.hideShareVideo();
-                        //document.getElementById("mainFormShareVideo1").src = "";
-                        document.getElementById("mainFormShareVideo1").src = "";
-                        document.getElementById("mainFormShareVideo1").style.display = "none";
-                        document.getElementById("mainFormShareVideoImage").style.display = "block";
-                        document.getElementById("shareBtn").style.display = "block";
-                        //document.getElementById("mainFormShareVideo1").style.display = "none"
-                        //document.getElementById("mainFormShareVideo1").poster="img/example1.jpg";
-                            //self.presenting_ = false;
-                    });
+                //g("mainFormShareBtn").style.opacity = 0.5;
+                client.stopShare(function(msg) {
+                    //self.hideShareVideo();
+                    //document.getElementById("mainFormShareVideo1").src = "";
+                    document.getElementById("mainFormShareVideo1").src = "";
+                    document.getElementById("mainFormShareVideo1").style.display = "none";
+                    document.getElementById("mainFormShareVideoImage").style.display = "block";
+                    document.getElementById("shareBtn").style.display = "block";
+                    //document.getElementById("mainFormShareVideo1").style.display = "none"
+                    //document.getElementById("mainFormShareVideo1").poster="img/example1.jpg";
+                    //self.presenting_ = false;
+                });
             };
             $scope.share = function () {
                 console.log("sharing");
@@ -108,26 +110,26 @@ conferenceAppModule.controller('conferenceVideoController', ['$rootScope', '$sco
                 });
 
                 /*client.startShare(function(msg) {
-                    switch(msg.type) {
-                        case "localShareStream":
-                            //document.getElementById("mainFormShareBtn").style.opacity = 1.0;
-                            attachMediaStream(document.getElementById("mainFormShareVideo1"), msg.stream);
-                            //self.showShareVideo("Me");
-                            //self.presenting_ = true;
-                            break;
+                 switch(msg.type) {
+                 case "localShareStream":
+                 //document.getElementById("mainFormShareBtn").style.opacity = 1.0;
+                 attachMediaStream(document.getElementById("mainFormShareVideo1"), msg.stream);
+                 //self.showShareVideo("Me");
+                 //self.presenting_ = true;
+                 break;
 
-                        case "localShareStreamEnded":
-                            //stopShare();
-                            break;
+                 case "localShareStreamEnded":
+                 //stopShare();
+                 break;
 
-                        case "shareOffer":
-                            break;
+                 case "shareOffer":
+                 break;
 
-                        case "shareGetUserMediaFailed":
-                            //self.showModal("Start share failed - " + msg.error.name, true, true, "OK");
-                            break;
-                    }
-                });*/
+                 case "shareGetUserMediaFailed":
+                 //self.showModal("Start share failed - " + msg.error.name, true, true, "OK");
+                 break;
+                 }
+                 });*/
             }
             /*function chat() {
              console.log("char chat");
@@ -139,21 +141,21 @@ conferenceAppModule.controller('conferenceVideoController', ['$rootScope', '$sco
             var conferenceId = sessionStorage.getItem("conferenceId");
             console.log("Printing name");
             console.log(conferenceId);
-            //conferenceid = 98c9ca76299b7af9
-            //client.guestLogin(conference_guest.name, "98c9ca76299b7af9", function (loginStatus) {
             conferenceId = "98c9ca76299b7af9";
-            //client.guestLoginWithOptions(conference_guest.name, "98c9ca76299b7af9", "/guest.html?conferenceId=98c9ca76299b7af9&audio=1&video=1&dialout=0&moderator=1&c=05d3099aa06aa73b", function (loginStatus) {
+            //client.guestLogin(conference_guest.name, "98c9ca76299b7af9", function (loginStatus) {
+
+            client.guestLoginWithOptions(conference_guest.name, "98c9ca76299b7af9", "/guest.html?conferenceId=98c9ca76299b7af9&audio=1&video=1&dialout=0&moderator=1&c=05d3099aa06aa73b", function (loginStatus) {
 
                 //client.guestLoginWithOptions(conference_guest.name, "98c9ca76299b7af9", "/guest.html?conferenceId=98c9ca76299b7af9&audio=1&video=1&dialout=0&moderator=0&c=f0a40dd706aeb73c", function (loginStatus) {
 
-            client.guestLogin(conference_guest.name, "98c9ca76299b7af9", function (loginStatus) {
-            //client.guestLoginWithOptions(conference_guest.name, "98c9ca76299b7af9", "/guest.html?conferenceId=98c9ca76299b7af9&audio=1&video=1&dialout=0&moderator=0&c=f0a40dd706aeb73c", function (loginStatus) {
+                //client.guestLogin(conference_guest.name, "98c9ca76299b7af9", function (loginStatus) {
+                //client.guestLoginWithOptions(conference_guest.name, "98c9ca76299b7af9", "/guest.html?conferenceId=98c9ca76299b7af9&audio=1&video=1&dialout=0&moderator=0&c=f0a40dd706aeb73c", function (loginStatus) {
                 if (loginStatus.status === 0) {
                     // Do the next steps here, like joining a conference
                     console.log("guest login successful");
                     /*var canvas1 = document.getElementById("mainFormCanvas");
-                    var canvas2 = document.getElementById("mainFormCanvas2");
-                    client.setCanvases(canvas1, canvas2);*/
+                     var canvas2 = document.getElementById("mainFormCanvas2");
+                     client.setCanvases(canvas1, canvas2);*/
 
 
                     client.joinVideoConference(conferenceId, function (resp) {
@@ -161,6 +163,9 @@ conferenceAppModule.controller('conferenceVideoController', ['$rootScope', '$sco
                         console.log(resp.type);
 
                         switch (resp.type) {
+                            case "confRaiseHand" :
+                                console.log("+++++++++++++++++ raise hand slogna %%%%%%%%%%%%%%%%%%%%%%%%%");
+                                break;
                             case "confChatMessage":
                                 console.log("CHAT CHAT CHAT chat");
                                 console.log(resp.chat);

@@ -24,8 +24,8 @@ app.post('/listening', function (req, res) {
     res.send({name : "partha"});
 });
 
-app.listen(3000);           //listen on 3000 port
-//httpsServer.listen(8443);
+//app.listen(3000);           //listen on 3000 port
+httpsServer.listen(8443);
 
 
 
@@ -33,10 +33,26 @@ var session = null;
 
 var data = {email: "arunsimon@gmail.com", password: "Arun123"};
 
+var recieveConferenceUrls = function recieveConferenceUrls(error, response, body) {
+    if (!error && response.statusCode == 200) {
+        console.log("comference urls: " + JSON.stringify(body))
+        //session = body.session;
+    }
+}
+
+
 var recieveConferenceData = function revieveConferenceData(error, response, body) {
     if (!error && response.statusCode == 200) {
-        console.log(body.id)
+        console.log("comference id : " + body.id)
         //session = body.session;
+
+        var conferenceLinkData = {
+            "email": "arunsimon@gmail.com",
+            "session": session,
+            "id": body.id
+        }
+
+        request.post('https://ha.socialvid.in/adminapi/v1/user/conference/get', {json: conferenceLinkData}, recieveConferenceUrls);
     }
 }
 
@@ -45,13 +61,13 @@ var recieveData = function recieveData(error, response, body) {
     if (!error && response.statusCode == 200) {
         //console.log(body)
         session = body.session;
-        console.log("Session Id in the callback : " + body.session);
+        console.log("Session Id in the callback : " + session);
 
         var conferenceData = {
             "email": "arunsimon@gmail.com",
             "session": body.session,
-            "name": "Test1",
-            "mode": "group",
+            "name": "Test2",
+            "mode": "presenter",
             "autoRecord": true,
             "maxBitrateKbps": "512",
             "maxParticipants": "20"

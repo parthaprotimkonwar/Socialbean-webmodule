@@ -58,15 +58,27 @@ var conferenceAppModule = angular.module('conferenceAppModule', [
 
 //main page is login.html
 conferenceAppModule.config(['$routeProvider', '$httpProvider', function ($routeProvider, $httpProvider) {
-    $routeProvider.when('/conference/video', {
+    $routeProvider.when('/conference/video/teachers', {
+        //join as a teacher
+        templateUrl: 'partials/video-conference-teacher-partial.html',
+        controller: 'conferenceTeacherController'
+    }).when('/conference/video/students', {
+        //join as a students
+        templateUrl: 'partials/video-conference-students-partial.html',
+        controller: 'conferenceStudentsController'
+    }).when('/conference/video', {
+        //quick video conference
         templateUrl: 'partials/video-conference-partial.html',
         controller: 'conferenceVideoController'
     }).when('/conference/join/guest/:conferenceId', {
+        //main screen
         templateUrl: 'partials/guest-join-conference-partial.html',
         controller: 'conferenceGuestJoinController'
     }).when('/conference/unknown', {
+        //unknown
         templateUrl: 'partials/partial-404.html'
     }).otherwise({
+        //default page
         redirectTo: '/conference/unknown'
     });
 }]);

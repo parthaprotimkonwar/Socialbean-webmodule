@@ -15,7 +15,6 @@
     "morgan": "~1.7.0",
     "node-rest-client": "^2.0.1",
     "request": "^2.79.0",
-    "serve-favicon": "~2.3.0",
-    "wrtc": "0.0.61"
+    "serve-favicon": "~2.3.0"
   }
 }

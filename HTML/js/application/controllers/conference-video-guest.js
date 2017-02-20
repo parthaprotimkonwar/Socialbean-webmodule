@@ -1,4 +1,7 @@
 /**
+ * Created by pkonwar on 2/13/2017.
+ */
+/**
  * Created by pkonwar on 1/15/2017.
  */
 conferenceAppModule.controller('conferenceVideoController', ['$rootScope', '$scope', '$http', '$interval', '$location', '$window',
@@ -23,12 +26,12 @@ conferenceAppModule.controller('conferenceVideoController', ['$rootScope', '$sco
             var password = "Arun123";
 
             //get all the contacts
-            var contactsCallback = function (contacts) {
-                for (var j = 0; j < contacts.length; j++) {
-                    console.log("parthaType:" + contacts[i].type);
-                    console.log("parthaid" + contacts[i].id);
-                }
-            };
+            /*var contactsCallback = function (contacts) {
+             for (var j = 0; j < contacts.length; j++) {
+             console.log("parthaType:" + contacts[i].type);
+             console.log("parthaid" + contacts[i].id);
+             }
+             };*/
 
             var loginCallback = function (loginResponse) {
                 if (loginResponse.status === 0) {
@@ -39,96 +42,18 @@ conferenceAppModule.controller('conferenceVideoController', ['$rootScope', '$sco
                 }
             };
             //client login
-            client.login(email, password, loginCallback);
+            //client.login(email, password, loginCallback);
 
-
-
-            /*$scope.sendThisChat = function () {
+            $scope.sendThisChat = function () {
                 console.log("char chat");
                 client.sendChat("Ravi welcomes to his console.");
-            };*/
+            };
 
             $scope.$on("broadcastChat", function (event, message) {
                 console.log("inside broadcast chat" + message);
                 console.log(message);
                 client.sendChat(message);
             });
-
-            $scope.stopshare = function () {
-                    //g("mainFormShareBtn").style.opacity = 0.5;
-                    client.stopShare(function(msg) {
-                        //self.hideShareVideo();
-                        //document.getElementById("mainFormShareVideo1").src = "";
-                        document.getElementById("mainFormShareVideo1").src = "";
-                        document.getElementById("mainFormShareVideo1").style.display = "none";
-                        document.getElementById("mainFormShareVideoImage").style.display = "block";
-                        document.getElementById("shareBtn").style.display = "block";
-                        //document.getElementById("mainFormShareVideo1").style.display = "none"
-                        //document.getElementById("mainFormShareVideo1").poster="img/example1.jpg";
-                            //self.presenting_ = false;
-                    });
-            };
-            $scope.share = function () {
-                console.log("sharing");
-
-                client.isShareEnabled(function(b) {
-                    if (!b) {
-                        var x = "To start sharing - ";
-                        x += "<a href='https://chrome.google.com/webstore/detail/socialvid-webrtc-share/bjhmiolgijcdfhdjlgpdaofbbdlpefmc' target='_blank'>Install Extension</a>";
-                        //self.showModal(x, true, true, "OK");
-                        console.log(x);
-                        return;
-                    }
-                    client.startShare(function(msg) {
-                        switch(msg.type) {
-                            case "localShareStream":
-                                //g("mainFormShareBtn").style.opacity = 1.0;
-                                document.getElementById("mainFormShareVideo1").style.display = "block"
-                                document.getElementById("mainFormShareVideoImage").style.display = "none";
-                                document.getElementById("shareBtn").style.display = "none";
-                                attachMediaStream(document.getElementById("mainFormShareVideo1"), msg.stream);
-                                //self.showShareVideo("Me");
-                                //self.presenting_ = true;
-                                break;
-
-                            case "localShareStreamEnded":
-                                console.log("&&&&&&&  sharing stopped!!")
-                                $scope.stopshare();
-                                break;
-
-                            case "shareOffer":
-                                break;
-
-                            case "shareGetUserMediaFailed":
-                                //self.showModal("Start share failed - " + msg.error.name, true, true, "OK");
-                                console.log("Start share failed - " + msg.error.name);
-                                break;
-                        }
-                    });
-                });
-
-                /*client.startShare(function(msg) {
-                    switch(msg.type) {
-                        case "localShareStream":
-                            //document.getElementById("mainFormShareBtn").style.opacity = 1.0;
-                            attachMediaStream(document.getElementById("mainFormShareVideo1"), msg.stream);
-                            //self.showShareVideo("Me");
-                            //self.presenting_ = true;
-                            break;
-
-                        case "localShareStreamEnded":
-                            //stopShare();
-                            break;
-
-                        case "shareOffer":
-                            break;
-
-                        case "shareGetUserMediaFailed":
-                            //self.showModal("Start share failed - " + msg.error.name, true, true, "OK");
-                            break;
-                    }
-                });*/
-            }
             /*function chat() {
              console.log("char chat");
              client.sendChat("Ravi welcomes to his console.");
@@ -139,22 +64,10 @@ conferenceAppModule.controller('conferenceVideoController', ['$rootScope', '$sco
             var conferenceId = sessionStorage.getItem("conferenceId");
             console.log("Printing name");
             console.log(conferenceId);
-            //conferenceid = 98c9ca76299b7af9
-            //client.guestLogin(conference_guest.name, "98c9ca76299b7af9", function (loginStatus) {
-            conferenceId = "98c9ca76299b7af9";
-            //client.guestLoginWithOptions(conference_guest.name, "98c9ca76299b7af9", "/guest.html?conferenceId=98c9ca76299b7af9&audio=1&video=1&dialout=0&moderator=1&c=05d3099aa06aa73b", function (loginStatus) {
-
-                //client.guestLoginWithOptions(conference_guest.name, "98c9ca76299b7af9", "/guest.html?conferenceId=98c9ca76299b7af9&audio=1&video=1&dialout=0&moderator=0&c=f0a40dd706aeb73c", function (loginStatus) {
-
-            client.guestLogin(conference_guest.name, "98c9ca76299b7af9", function (loginStatus) {
-            //client.guestLoginWithOptions(conference_guest.name, "98c9ca76299b7af9", "/guest.html?conferenceId=98c9ca76299b7af9&audio=1&video=1&dialout=0&moderator=0&c=f0a40dd706aeb73c", function (loginStatus) {
+            client.guestLogin(conference_guest.name, conferenceId, function (loginStatus) {
                 if (loginStatus.status === 0) {
                     // Do the next steps here, like joining a conference
                     console.log("guest login successful");
-                    /*var canvas1 = document.getElementById("mainFormCanvas");
-                    var canvas2 = document.getElementById("mainFormCanvas2");
-                    client.setCanvases(canvas1, canvas2);*/
-
 
                     client.joinVideoConference(conferenceId, function (resp) {
 
@@ -211,8 +124,7 @@ conferenceAppModule.controller('conferenceVideoController', ['$rootScope', '$sco
                                         var videoElement = document.getElementById("mainVideo" + talkers[i]);
                                         videoElement.style.display = "block"; // Show the video element
                                         var participantName = document.getElementById("mainName" + talkers[i]);
-                                        participantName.style.display = "block"; // Show the video element
-                                        participantName.innerHTML = names[i];
+                                        //participantName.innerHTML = names[i];
                                     }
                                 }
                                 break;
@@ -221,19 +133,6 @@ conferenceAppModule.controller('conferenceVideoController', ['$rootScope', '$sco
                                 break;
 
                             case "recordingStopped": // Give an indication to the user that this conference is no longer recorded
-                                break;
-
-                            case "remoteShareStream":
-                                document.getElementById("mainFormShareVideo1").style.display = "block";
-                                document.getElementById("mainFormShareVideoImage").style.display = "none";
-                                document.getElementById("shareBtn").style.display = "none";
-                                attachMediaStream(document.getElementById("mainFormShareVideo1"), resp.stream);
-                                break;
-                            case "confStopShare":
-                                document.getElementById("mainFormShareVideo1").style.display = "none";
-                                document.getElementById("mainFormShareVideo1").src = "";
-                                document.getElementById("mainFormShareVideoImage").style.display = "block";
-                                document.getElementById("shareBtn").style.display = "block";
                                 break;
 
                             case "participantsUpdated": // This gives the updated list of participants in the conference
