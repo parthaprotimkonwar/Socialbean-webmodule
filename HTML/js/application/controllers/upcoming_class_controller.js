@@ -19,7 +19,9 @@ myApp.controller('upcomingClassController', ['$scope', '$http', '$interval', '$l
         //handling the promise
         $scope.upcomingClassPromise.success(function (data, status, headers, config) {
 
-            $scope.conferenceUrl = CONSTANTS.CONFERENCING_URL;
+            $scope.conferenceUrlInstantMeeting = CONSTANTS.CONFERENCING_URL_INSTANT_MEETING;
+            $scope.conferenceUrlPresenter = CONSTANTS.CONFERENCING_URL_PRESENTER;
+            $scope.conferenceUrlAttendee = CONSTANTS.CONFERENCING_URL_ATTENDEE;
 
             console.log('Got back a response');
             console.log(data);

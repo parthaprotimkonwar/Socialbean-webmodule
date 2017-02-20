@@ -12,6 +12,7 @@ var myApp = angular.module('myApp', [
 
 //main page is index.html
 myApp.config(['$routeProvider', '$httpProvider', function ($routeProvider, $httpProvider) {
+
     $routeProvider.when('/admin/dashboard', {
         templateUrl: 'partials/dashboard.html',
         controller: 'dashboardController'
@@ -21,6 +22,9 @@ myApp.config(['$routeProvider', '$httpProvider', function ($routeProvider, $http
     }).when('/admin/class/create', {
         templateUrl: 'partials/create-class-partial.html',
         controller: 'createClassController'
+    }).when('/admin/class/quick', {
+        templateUrl: 'partials/quick-meeting-partial.html',
+        controller: 'quickMeetingController'
     }).when('/admin/class/past', {
         templateUrl: 'partials/past-class-partial.html',
         controller: 'pastClassController'

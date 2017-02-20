@@ -55,43 +55,49 @@
                 </div>
                 <div class="panel-body table-responsive">
 
-                    <span ng-show="!upcomingClasses.length">
+                    <span ng-show="!((filteredClasses = (upcomingClasses | filter:{ mode: 'presenter'})).length > 0)">
                         <h4 class="color6">You have no scheduled classroom appointments.</h4>
                         <p>Start by scheduling one class!</p>
                         <a href="#/admin/class/create" class="btn btn-sm">Create Class</a>
                     </span>
 
-                    <table id="example0" class="table display" ng-show="upcomingClasses.length">
-                        <thead>
-                        <tr>
-                            <th>Topic</th>
-                            <th>Start Time</th>
-                            <th>Duration(hrs)</th>
-                            <th>Presenter URL</th>
-                            <th>Attendee URL</th>
-                        </tr>
-                        </thead>
+                    <!--<div ng-show="upcomingClasses.length">-->
+                    <div ng-show="(filteredClasses = (upcomingClasses | filter:{ mode: 'presenter'})).length > 0">
 
-                        <tfoot>
-                        <tr>
-                            <th>Topic</th>
-                            <th>Start Time</th>
-                            <th>Duration(hrs)</th>
-                            <th>Presenter URL</th>
-                            <th>Attendee URL</th>
-                        </tr>
-                        </tfoot>
+                        <table id="example1" class="table display">
+                            <thead>
+                            <tr>
+                                <th>Topic</th>
+                                <th>Start Time</th>
+                                <th>Duration(hrs)</th>
+                                <th>Presenter URL</th>
+                                <th>Attendee URL</th>
+                            </tr>
+                            </thead>
 
-                        <tbody>
-                        <tr ng-repeat="meeting in upcomingClasses">
-                            <td>{{meeting.title}}</td>
-                            <td>{{meeting.dateTimeInString}}</td>
-                            <td>{{meeting.duration}}</td>
-                            <td> <a target="_blank" href="{{conferenceUrl}}/{{meeting.presenterToken}}">CLICK HERE</a></td>
-                            <td><a target="_blank" href="{{conferenceUrl }}/{{meeting.attendeesUrl}}"> CLICK HERE</a></td>
-                        </tr>
-                        </tbody>
-                    </table>
+                            <tfoot>
+                            <tr>
+                                <th>Topic</th>
+                                <th>Start Time</th>
+                                <th>Duration(hrs)</th>
+                                <th>Presenter URL</th>
+                                <th>Attendee URL</th>
+                            </tr>
+                            </tfoot>
+
+                            <tbody>
+                            <tr ng-repeat="meeting in filteredClasses">
+                                <td>{{meeting.title}}</td>
+                                <td>{{meeting.dateTimeInString}}</td>
+                                <td>{{meeting.duration}}</td>
+                                <td><a target="_blank" href="{{conferenceUrlPresenter}}/{{meeting.presenterToken}}">CLICK
+                                    HERE</a></td>
+                                <td><a target="_blank" href="{{conferenceUrlAttendee}}/{{meeting.attendeesToken}}">
+                                    CLICK HERE</a></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
