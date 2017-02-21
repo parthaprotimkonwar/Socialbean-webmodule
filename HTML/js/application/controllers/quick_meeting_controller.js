@@ -19,10 +19,6 @@ myApp.controller('quickMeetingController', ['$scope', '$http', '$interval', '$lo
 
             //"04/07/2017 23:02:55"
             var userId = localStorage.getItem("userId");
-            //var updatedDate = $scope.meeting.datetime + " " + $scope.meeting.hour + ":" + $scope.meeting.minutes + " " + $scope.meeting.phase;
-            //console.log("updated date : " + updatedDate);
-            //var thedate = calculateDate(updatedDate);
-            //console.log("the date : " + thedate);
 
             var data = {
                 "title": $scope.meeting.topic,
@@ -48,13 +44,18 @@ myApp.controller('quickMeetingController', ['$scope', '$http', '$interval', '$lo
                 if (status === CONSTANTS.STATUS_SUCCESS) {
                     //login is successful
                     $scope.meeting = {};       //clearing off the user registration form
-                    successMesage("Meeting Scheduled successfully");
+                    //successMesage("Meeting Scheduled successfully");
+
+                    //storing the attendee token
+                    sessionStorage.setItem(CONSTANTS.INSTANT_MEETING_ID, data.data.attendeesToken);
+
+                    //redirect to a summary page
+                    $location.path('/admin/class/quick/summary');
                 } else {
                     //failed login
                     //print the message
                     errorMesage(data.errorResponse.errorMessage);
                 }
-                //$location.path('/admin/login');
             }).error(function (data, status, headers, config) {
                 console.log('AWS DOWN');
                 errorMesage(data.errorMessage);

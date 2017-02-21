@@ -31,6 +31,9 @@ myApp.config(['$routeProvider', '$httpProvider', function ($routeProvider, $http
     }).when('/admin/class/upcoming', {
         templateUrl: 'partials/upcoming-class-partial.html',
         controller: 'upcomingClassController'
+    }).when('/admin/class/quick/summary', {
+        templateUrl: 'partials/quick-meeting-summary.html',
+        controller: 'quickMeetingSummaryController'
     }).otherwise({
         redirectTo: '/admin/dashboard'
     });

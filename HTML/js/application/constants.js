@@ -18,6 +18,7 @@ myApp.service('CONSTANTS', function () {
 
     //LOCAL STORAGE CONSTANTS
     this.USER_PROFILE = 'user_profile';
+    this.INSTANT_MEETING_ID = 'instant_meeting_id';
 
     //EVENTS EMITTED
     this.USER_PROFILE_UPDATED = 'userProfileUpdated';
