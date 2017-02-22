@@ -12,7 +12,7 @@ myApp.service('CONSTANTS', function () {
     //this.UI_APP_URL = $location.protocol() + "://" + $location.host() + ":" + $location.port();
 
     //ec2-35-161-127-166.us-west-2.compute.amazonaws.com
-    this.CONFERENCING_URL_INSTANT_MEETING = 'https://localhost:3000/conferencing.html#/conference/join/guest';
+    this.CONFERENCING_URL_INSTANT_MEETING = 'http://localhost:3000/conferencing.html#/conference/join/guest';
     this.CONFERENCING_URL_PRESENTER = 'http://localhost:3000/conferencing.html#/conference/join/p';
     this.CONFERENCING_URL_ATTENDEE = 'http://localhost:3000/conferencing.html#/conference/join/a';
 
@@ -33,6 +33,25 @@ loginAppModule.service('CONSTANTS', function () {
     this.SERVICES_BASE_URL = 'http://localhost:9000';
     this.STATUS_SUCCESS = "SUCCESS";
     this.STATUS_FAILURE = "FAILURE";
-    this.USER_PROFILE = 'user_profile'
+
+    //SESSION STORAGE CONSANTS
+    this.USER_PROFILE = 'user_profile';
+    //this.UI_APP_URL = $location.protocol() + "://" + $location.host() + ":" + $location.port();
+});
+
+//constants for conference module
+conferenceAppModule.service('CONSTANTS', function () {
+
+    this.POST = 'POST';
+    this.GET = 'GET';
+    //this.SERVICES_BASE_URL= 'http://ec2-52-40-162-133.us-west-2.compute.amazonaws.com:9001';
+    this.SERVICES_BASE_URL = 'http://localhost:9000';
+    this.STATUS_SUCCESS = "SUCCESS";
+    this.STATUS_FAILURE = "FAILURE";
+
+    //SESSION STORAGE CONSANTS
+    this.USER_PROFILE = 'user_profile';
+    this.CONFERENCE_ID = 'conferenceId';
+    this.SOCIAL_VID_CONFERENCE_URL = 'socialVidConferenceUrl';
     //this.UI_APP_URL = $location.protocol() + "://" + $location.host() + ":" + $location.port();
 });

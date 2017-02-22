@@ -1,8 +1,8 @@
 /**
  * Created by pkonwar on 1/15/2017.
  */
-conferenceAppModule.controller('conferenceStudentsController', ['$rootScope', '$scope', '$http', '$interval', '$location', '$window',
-    function ($rootScope, $scope, $http, $interval, $location, $window) {
+conferenceAppModule.controller('conferenceStudentsController', ['$rootScope', '$scope', '$http', '$interval', '$location', '$window', 'CONSTANTS',
+    function ($rootScope, $scope, $http, $interval, $location, $window, CONSTANTS) {
 
         $(document).ready(function () {
 
@@ -116,14 +116,16 @@ conferenceAppModule.controller('conferenceStudentsController', ['$rootScope', '$
             }
 
             //join the conference
-            var conferenceId = sessionStorage.getItem("conferenceId");
+            //var conferenceId = sessionStorage.getItem("conferenceId");
+            var conferenceId = sessionStorage.getItem(CONSTANTS.CONFERENCE_ID);
+            var conferenceUrl = sessionStorage.getItem(CONSTANTS.SOCIAL_VID_CONFERENCE_URL);
             console.log("Printing name");
             console.log(conferenceId);
-            conferenceId = "98c9ca76299b7af9";
+            //conferenceId = "98c9ca76299b7af9";
             //client.guestLogin(conference_guest.name, "98c9ca76299b7af9", function (loginStatus) {
 
             //client.guestLogin(conference_guest.name, "98c9ca76299b7af9", function (loginStatus) {
-            client.guestLoginWithOptions(conference_guest.name, "98c9ca76299b7af9", "/guest.html?conferenceId=98c9ca76299b7af9&audio=0&video=0&dialout=1&moderator=0&c=178d6b107a6ce9ec", function (loginStatus) {
+            client.guestLoginWithOptions(conference_guest.name, conferenceId, conferenceUrl, function (loginStatus) {
                 if (loginStatus.status === 0) {
                     // Do the next steps here, like joining a conference
                     console.log("guest login successful");

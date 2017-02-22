@@ -1,8 +1,8 @@
 /**
  * Created by pkonwar on 1/15/2017.
  */
-conferenceAppModule.controller('conferenceTeacherController', ['$rootScope', '$scope', '$http', '$interval', '$location', '$window',
-    function ($rootScope, $scope, $http, $interval, $location, $window) {
+conferenceAppModule.controller('conferenceTeacherController', ['$rootScope', '$scope', '$http', '$interval', '$location', '$window', 'CONSTANTS',
+    function ($rootScope, $scope, $http, $interval, $location, $window, CONSTANTS) {
 
         $scope.name = "tea";
 
@@ -138,13 +138,14 @@ conferenceAppModule.controller('conferenceTeacherController', ['$rootScope', '$s
              }*/
 
             //join the conference
-            var conferenceId = sessionStorage.getItem("conferenceId");
+            var conferenceId = sessionStorage.getItem(CONSTANTS.CONFERENCE_ID);
+            var conferenceUrl = sessionStorage.getItem(CONSTANTS.SOCIAL_VID_CONFERENCE_URL);
             console.log("Printing name");
             console.log(conferenceId);
-            conferenceId = "98c9ca76299b7af9";
+            //conferenceId = "98c9ca76299b7af9";
             //client.guestLogin(conference_guest.name, "98c9ca76299b7af9", function (loginStatus) {
 
-            client.guestLoginWithOptions(conference_guest.name, "98c9ca76299b7af9", "/guest.html?conferenceId=98c9ca76299b7af9&audio=1&video=1&dialout=0&moderator=1&c=05d3099aa06aa73b", function (loginStatus) {
+            client.guestLoginWithOptions(conference_guest.name, conferenceId, conferenceUrl, function (loginStatus) {
 
                 //client.guestLoginWithOptions(conference_guest.name, "98c9ca76299b7af9", "/guest.html?conferenceId=98c9ca76299b7af9&audio=1&video=1&dialout=0&moderator=0&c=f0a40dd706aeb73c", function (loginStatus) {
 

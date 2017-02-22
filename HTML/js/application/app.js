@@ -67,17 +67,20 @@ var conferenceAppModule = angular.module('conferenceAppModule', [
 conferenceAppModule.config(['$routeProvider', '$httpProvider', function ($routeProvider, $httpProvider) {
     $routeProvider.when('/conference/video/teachers', {
         //join as a teacher
+        //teacher can present and see the students
         templateUrl: 'partials/video-conference-teacher-partial.html',
         controller: 'conferenceTeacherController'
     }).when('/conference/video/students', {
         //join as a students
+        //students can see the teachers screen only
         templateUrl: 'partials/video-conference-students-partial.html',
         controller: 'conferenceStudentsController'
-    }).when('/conference/video', {
+    }).when('/conference/video/group', {
         //quick video conference
+        //creates a group video call
         templateUrl: 'partials/video-conference-partial.html',
         controller: 'conferenceVideoController'
-    }).when('/conference/join/guest/:conferenceId', {
+    }).when('/conference/join/:guestType/:conferenceId', {
         //main screen
         templateUrl: 'partials/guest-join-conference-partial.html',
         controller: 'conferenceGuestJoinController'
