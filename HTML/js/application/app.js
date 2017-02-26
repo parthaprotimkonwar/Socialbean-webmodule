@@ -7,7 +7,7 @@
  Here myApp is the name of the namespace and [] contains the dependecy services which need to be injected in the module.
  */
 var myApp = angular.module('myApp', [
-    'ngRoute', 'ngImgCrop', 'ClientCustomization','ClientConstants'
+    'ngRoute', 'ngImgCrop', 'ClientCustomization','ClientConstants','http_request'
 ]);
 
 //main page is index.html
@@ -42,7 +42,7 @@ myApp.config(['$routeProvider', '$httpProvider', function ($routeProvider, $http
 
 //login module
 var loginAppModule = angular.module('loginAppModule', [
-    'ngRoute', 'ClientCustomization', 'ClientConstants'
+    'ngRoute', 'ClientCustomization', 'ClientConstants', 'http_request'
 ]);
 
 //main page is login.html
@@ -60,7 +60,7 @@ loginAppModule.config(['$routeProvider', '$httpProvider', function ($routeProvid
 
 //conference module
 var conferenceAppModule = angular.module('conferenceAppModule', [
-    'ngRoute', 'ClientCustomization', 'ClientConstants'
+    'ngRoute', 'ClientCustomization', 'ClientConstants', 'http_request'
 ]);
 
 
