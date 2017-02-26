@@ -1,8 +1,11 @@
 /**
  * Created by pkonwar on 1/15/2017.
  */
-loginAppModule.controller('loginController', ['$scope', '$http', '$interval', '$location', '$window', 'CONSTANTS', 'common',
-    function ($scope, $http, $interval, $location, $window, CONSTANTS, common) {
+loginAppModule.controller('loginController', ['$scope', '$http', '$interval', '$location',
+    '$window', 'common', 'ThemeText', 'AppConstants',
+    function ($scope, $http, $interval, $location, $window, common, ThemeText, AppConstants) {
+
+        $scope.themeText = ThemeText;
 
         //redirect after successful login
         $scope.loginSuccessfulRedirect = function () {
@@ -10,7 +13,7 @@ loginAppModule.controller('loginController', ['$scope', '$http', '$interval', '$
             $window.location.href = url;
         };
 
-        $scope.userProfile = angular.fromJson(localStorage.getItem(CONSTANTS.USER_PROFILE));
+        $scope.userProfile = angular.fromJson(localStorage.getItem(AppConstants.USER_PROFILE));
 
         //login if the user is not is already logged in
         if($scope.userProfile != null && $scope.userProfile != undefined) {
@@ -21,7 +24,7 @@ loginAppModule.controller('loginController', ['$scope', '$http', '$interval', '$
         $scope.login = function () {
 
             //the URL
-            var url = CONSTANTS.SERVICES_BASE_URL + "/user/login";
+            var url = AppConstants.SERVICES_BASE_URL + "/user/login";
             $scope.status = {};
 
             var data = {
@@ -33,7 +36,7 @@ loginAppModule.controller('loginController', ['$scope', '$http', '$interval', '$
             console.log($scope.user);
 
             //execute request
-            $scope.loginPromise = common.httpRequest(url, CONSTANTS.POST, data);
+            $scope.loginPromise = common.httpRequest(url, AppConstants.POST, data);
 
             //handling the promise
             $scope.loginPromise.success(function (data, status, headers, config) {
@@ -43,14 +46,14 @@ loginAppModule.controller('loginController', ['$scope', '$http', '$interval', '$
 
                 var status = data.status;
 
-                if (status === CONSTANTS.STATUS_SUCCESS) {
+                if (status === AppConstants.SUCCESS) {
                     //login is successful
                     $scope.user = {};       //clearing off the user registration form
                     successMesage("User Login is successful");
 
-                    localStorage.setItem("userId",data.data.id);
-                    localStorage.setItem("userName",data.data.presenterName);
-                    localStorage.setItem(CONSTANTS.USER_PROFILE, angular.toJson(data.data));
+                    localStorage.setItem(AppConstants.USER_ID, data.data.id);
+                    localStorage.setItem(AppConstants.USER_NAME, data.data.presenterName);
+                    localStorage.setItem(AppConstants.USER_PROFILE, angular.toJson(data.data));
 
                     $scope.loginSuccessfulRedirect();
 

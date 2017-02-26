@@ -1,13 +1,15 @@
 /**
  * Created by pkonwar on 1/27/2017.
  */
-conferenceAppModule.controller('conferenceChatController', ['$scope', '$rootScope', '$timeout', '$http', '$interval', '$location', '$anchorScroll', '$window',
-    function ($scope, $rootScope, $timeout, $http, $interval, $location, $anchorScroll, $window) {
+conferenceAppModule.controller('conferenceChatController', ['$scope', '$rootScope', '$timeout', '$http', '$interval', '$location', '$anchorScroll', '$window', 'ThemeText',
+    function ($scope, $rootScope, $timeout, $http, $interval, $location, $anchorScroll, $window, ThemeText) {
 
         $scope.countId = 0;
         $scope.chatsHistoryArray = [];
         $scope.participantsArray = [];
         $scope.chatDisplayStatus;
+
+        $scope.themeText = ThemeText;
 
         $scope.$on("showChatInWindow", function (event, message) {
             $timeout(function () {

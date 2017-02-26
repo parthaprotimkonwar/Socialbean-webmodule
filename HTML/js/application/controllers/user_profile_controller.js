@@ -1,8 +1,8 @@
 /**
  * Created by pkonwar on 1/15/2017.
  */
-myApp.controller('userProfileController', ['$scope', '$rootScope', '$http', '$interval', '$location', '$window', 'CONSTANTS', 'common',
-    function ($scope, $rootScope, $http, $interval, $location, $window, CONSTANTS, common) {
+myApp.controller('userProfileController', ['$scope', '$rootScope', '$http', '$interval', '$location', '$window', 'common', 'AppConstants',
+    function ($scope, $rootScope, $http, $interval, $location, $window, common, AppConstants) {
 
         /*Image Cop plugin setup*/
         $scope.userImage='';
@@ -23,12 +23,12 @@ myApp.controller('userProfileController', ['$scope', '$rootScope', '$http', '$in
         var userId = localStorage.getItem("userId");
 
         //the URL
-        var url = CONSTANTS.SERVICES_BASE_URL + "/user/profile/" + userId;
+        var url = AppConstants.SERVICES_BASE_URL + "/user/profile/" + userId;
 
         $scope.status = {};
 
         //execute request
-        $scope.userProfilePromise = common.httpRequest(url, CONSTANTS.GET, null);
+        $scope.userProfilePromise = common.httpRequest(url, AppConstants.GET, null);
 
         //handling the promise
         $scope.userProfilePromise.success(function (data, status, headers, config) {
@@ -38,7 +38,7 @@ myApp.controller('userProfileController', ['$scope', '$rootScope', '$http', '$in
             console.log("clearing off the data");
             console.log("status : " + status);
 
-            if (data.status === CONSTANTS.STATUS_SUCCESS) {
+            if (data.status === AppConstants.SUCCESS) {
                 $scope.user = {
                     id : data.data.id,
                     emailid : data.data.emailId,
@@ -65,10 +65,10 @@ myApp.controller('userProfileController', ['$scope', '$rootScope', '$http', '$in
                 imageString : $scope.userImage
             }
 
-            var url = CONSTANTS.SERVICES_BASE_URL + "/user/updateprofile";
+            var url = AppConstants.SERVICES_BASE_URL + "/user/updateprofile";
 
             //execute request
-            $scope.userProfileUpdatePromise = common.httpRequest(url, CONSTANTS.POST, updatedProfile);
+            $scope.userProfileUpdatePromise = common.httpRequest(url, AppConstants.POST, updatedProfile);
 
             //handling the promise
             $scope.userProfileUpdatePromise.success(function (data, status, headers, config) {
@@ -77,13 +77,13 @@ myApp.controller('userProfileController', ['$scope', '$rootScope', '$http', '$in
                 console.log(data);
                 console.log("clearing off the data");
                 console.log("status : " + status);
-                if (data.status === CONSTANTS.STATUS_SUCCESS) {
+                if (data.status === AppConstants.SUCCESS) {
 
                     $scope.someImage = data.data.imageBlob;
-                    localStorage.setItem(CONSTANTS.USER_PROFILE, angular.toJson(data.data));
+                    localStorage.setItem(AppConstants.USER_PROFILE, angular.toJson(data.data));
 
                     //publish updation of user profile
-                    $rootScope.$broadcast(CONSTANTS.USER_PROFILE_UPDATED, data.data);
+                    $rootScope.$broadcast(AppConstants.USER_PROFILE_UPDATED, data.data);
                     successMesage("Profile Updated Successfully");
                 } else {
                     //failed login

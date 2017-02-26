@@ -1,8 +1,8 @@
 /**
  * Created by pkonwar on 1/15/2017.
  */
-conferenceAppModule.controller('conferenceTeacherController', ['$rootScope', '$scope', '$http', '$interval', '$location', '$window', 'CONSTANTS',
-    function ($rootScope, $scope, $http, $interval, $location, $window, CONSTANTS) {
+conferenceAppModule.controller('conferenceTeacherController', ['$rootScope', '$scope', '$http', '$interval', '$location', '$window', 'AppConstants',
+    function ($rootScope, $scope, $http, $interval, $location, $window, AppConstants) {
 
         $scope.name = "tea";
 
@@ -78,7 +78,7 @@ conferenceAppModule.controller('conferenceTeacherController', ['$rootScope', '$s
                         var x = "To start sharing - ";
                         x += "<a href='https://chrome.google.com/webstore/detail/socialvid-webrtc-share/bjhmiolgijcdfhdjlgpdaofbbdlpefmc' target='_blank'>Install Extension</a>";
                         //self.showModal(x, true, true, "OK");
-                        console.log(x);
+                        //alert(x);
                         return;
                     }
                     client.startShare(function(msg) {
@@ -138,8 +138,8 @@ conferenceAppModule.controller('conferenceTeacherController', ['$rootScope', '$s
              }*/
 
             //join the conference
-            var conferenceId = sessionStorage.getItem(CONSTANTS.CONFERENCE_ID);
-            var conferenceUrl = sessionStorage.getItem(CONSTANTS.SOCIAL_VID_CONFERENCE_URL);
+            var conferenceId = sessionStorage.getItem(AppConstants.CONFERENCE_ID);
+            var conferenceUrl = sessionStorage.getItem(AppConstants.SOCIAL_VID_CONFERENCE_URL);
             console.log("Printing name");
             console.log(conferenceId);
             //conferenceId = "98c9ca76299b7af9";
@@ -164,8 +164,11 @@ conferenceAppModule.controller('conferenceTeacherController', ['$rootScope', '$s
                         console.log(resp.type);
 
                         switch (resp.type) {
-                            case "confRaiseHand" :
-                                console.log("+++++++++++++++++ raise hand slogna %%%%%%%%%%%%%%%%%%%%%%%%%");
+
+                            case "confParticipantHandRaised" :
+                                console.log("+++++++++++++++++ raise hand caught %%%%%%%%%%%%%%%%%%%%%%%%%");
+                                console.log(resp);
+
                                 break;
                             case "confChatMessage":
                                 console.log("CHAT CHAT CHAT chat");

@@ -5,16 +5,18 @@
 /**
  * Created by pkonwar on 1/15/2017.
  */
-loginAppModule.controller('registerController', ['$scope', '$http', '$interval', '$location', 'CONSTANTS', 'common',
-                        function ($scope, $http, $interval, $location, CONSTANTS, common) {
+loginAppModule.controller('registerController', ['$scope', '$http', '$interval', '$location', 'common', 'ThemeText', 'AppConstants',
+                        function ($scope, $http, $interval, $location, common, ThemeText, AppConstants) {
 
     $scope.name = "lets login";
+
+    $scope.themeText = ThemeText;
 
     //register a user
     $scope.registerUser = function () {
 
         //the URL
-        var url = CONSTANTS.SERVICES_BASE_URL + "/user/register";
+        var url = AppConstants.SERVICES_BASE_URL + "/user/register";
         $scope.status = {};     //initalizing status variable
 
         //data to send
@@ -36,7 +38,7 @@ loginAppModule.controller('registerController', ['$scope', '$http', '$interval',
         }
 
         //execute request
-        $scope.registrationPromise = common.httpRequest(url, CONSTANTS.POST, data);
+        $scope.registrationPromise = common.httpRequest(url, AppConstants.POST, data);
 
         //handling the promise
         $scope.registrationPromise.success(function (data, status, headers, config) {

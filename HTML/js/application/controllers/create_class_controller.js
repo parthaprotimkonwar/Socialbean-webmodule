@@ -1,8 +1,8 @@
 /**
  * Created by pkonwar on 1/15/2017.
  */
-myApp.controller('createClassController', ['$scope', '$http', '$interval', '$location', '$window', 'CONSTANTS', 'common',
-    function ($scope, $http, $interval, $location, $window, CONSTANTS, common) {
+myApp.controller('createClassController', ['$scope', '$http', '$interval', '$location', '$window', 'common', 'ThemeText', 'AppConstants',
+    function ($scope, $http, $interval, $location, $window, common, ThemeText, AppConstants) {
 
         $scope.name = "create class controller";
         $scope.meeting = {};
@@ -13,12 +13,12 @@ myApp.controller('createClassController', ['$scope', '$http', '$interval', '$loc
         $scope.schedule = function () {
 
             //the URL
-            var url = CONSTANTS.SERVICES_BASE_URL + "/meetings/create";
+            var url = AppConstants.SERVICES_BASE_URL + "/meetings/create";
 
             $scope.status = {};
 
             //"04/07/2017 23:02:55"
-            var userId = localStorage.getItem("userId");
+            var userId = localStorage.getItem(AppConstants.USER_ID);
             var updatedDate = $scope.meeting.datetime + " " + $scope.meeting.hour + ":" + $scope.meeting.minutes + " " + $scope.meeting.phase;
             console.log("updated date : " + updatedDate);
             var thedate = calculateDate(updatedDate);
@@ -30,14 +30,15 @@ myApp.controller('createClassController', ['$scope', '$http', '$interval', '$loc
                 "duration": $scope.meeting.timeduration,
                 "presenterId": userId,
                 "description": $scope.meeting.description,
-                "invitees" : $scope.meeting.invitees
+                "invitees" : $scope.meeting.invitees,
+                "clientName" : ThemeText.CLIENT_ID
             };
 
             console.log("data to be send :");
             console.log(data);
 
             //execute request
-            $scope.createMeetingPromise = common.httpRequest(url, CONSTANTS.POST, data);
+            $scope.createMeetingPromise = common.httpRequest(url, AppConstants.POST, data);
 
             //handling the promise
             $scope.createMeetingPromise.success(function (data, status, headers, config) {
@@ -47,7 +48,7 @@ myApp.controller('createClassController', ['$scope', '$http', '$interval', '$loc
 
                 var status = data.status;
 
-                if (status === CONSTANTS.STATUS_SUCCESS) {
+                if (status === AppConstants.SUCCESS) {
                     //login is successful
                     $scope.meeting = {};       //clearing off the user registration form
                     successMesage("Meeting Scheduled successfully");

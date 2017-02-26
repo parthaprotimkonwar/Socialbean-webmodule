@@ -4,9 +4,9 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Social bean is a analogy for seamless video conference.">
-    <meta name="keywords" content="socialbean, video, conference"/>
-    <title>SocialBean - Providing seamless video conference</title>
+    <meta name="description" content="ConSocio is a analogy for seamless video conference.">
+    <meta name="keywords" content="consocio, video, conference"/>
+    <title>ConSocio - Providing seamless video conference</title>
 
     <!-- ========== Css Files ========== -->
     <link href="css/root.css" rel="stylesheet">
@@ -22,8 +22,8 @@
 <div id="top" class="clearfix">
 
     <!-- Start App Logo -->
-    <div class="applogo">
-        <a href="index.html" class="logo"><img src="img/logo_small.jpg"/></a>
+    <div class="applogo" ng-controller="headerBarController">
+        <a href="index.html" class="logo"><img ng-src="{{themeText.INDEX_PAGE_LOGO_200x50}}"/></a>
     </div>
     <!-- End App Logo -->
 
@@ -171,7 +171,7 @@
     <!-- Start Footer -->
     <div class="row footer">
         <div class="col-md-6 text-left">
-            Copyright © 2015 SocialBean.
+            Copyright © 2016 ConSocio.
         </div>
         <div class="col-md-6 text-right">
             Crafted with <i class="fa fa-heart color10"></i> in India.
@@ -203,6 +203,8 @@ Bootstrap Core JavaScript File
 <!-- Angular JS Imports -->
 <script type="text/javascript" src="js/angular/angular.min.js"></script>
 <script type="text/javascript" src="js/angular/angular-route.min.js"></script>
+<script type="text/javascript" src="js/application/client-customizations.js"></script>
+<script type="text/javascript" src="js/application/client-constants.js"></script>
 <script type="text/javascript" src="js/application/app.js"></script>
 <script type="text/javascript" src="js/application/constants.js"></script>
 <script type="text/javascript" src="js/application/services.js"></script>

@@ -1,15 +1,15 @@
 /**
  * Created by pkonwar on 1/15/2017.
  */
-myApp.controller('quickMeetingSummaryController', ['$scope', '$http', '$interval', '$location', '$window', 'CONSTANTS', 'common',
-    function ($scope, $http, $interval, $location, $window, CONSTANTS, common) {
+myApp.controller('quickMeetingSummaryController', ['$scope', '$http', '$interval', '$location', '$window', 'common', 'AppConstants',
+    function ($scope, $http, $interval, $location, $window, common, AppConstants) {
 
         console.log("in summary page");
 
-        $scope.instantMeetingToken = sessionStorage.getItem(CONSTANTS.INSTANT_MEETING_ID);
+        $scope.instantMeetingToken = sessionStorage.getItem(AppConstants.INSTANT_MEETING_ID);
         console.log($scope.instantMeetingToken);
 
-        $scope.conferenceUrlInstantMeeting = CONSTANTS.CONFERENCING_URL_INSTANT_MEETING;
+        $scope.conferenceUrlInstantMeeting = AppConstants.CONFERENCING_URL_INSTANT_MEETING;
 
         //clearing all the status
         function clearStatus() {

@@ -1,20 +1,21 @@
 /**
  * Created by pkonwar on 1/15/2017.
  */
-myApp.controller('pastClassController', ['$scope', '$http', '$interval', '$location', '$window', 'CONSTANTS', 'common',
-    function ($scope, $http, $interval, $location, $window, CONSTANTS, common) {
+myApp.controller('pastClassController', ['$scope', '$http', '$interval', '$location',
+    '$window', 'common', 'AppConstants',
+    function ($scope, $http, $interval, $location, $window, common, AppConstants) {
 
         $scope.name = "past class controller";
 
-        var userId = localStorage.getItem("userId");
+        var userId = localStorage.getItem(AppConstants.USER_ID);
 
         //the URL
-        var url = CONSTANTS.SERVICES_BASE_URL + "/meetings/all/" + userId + "/PAST";
+        var url = AppConstants.SERVICES_BASE_URL + "/meetings/all/" + userId + "/PAST";
 
         $scope.status = {};
 
         //execute request
-        $scope.pastClassPromise = common.httpRequest(url, CONSTANTS.GET, null);
+        $scope.pastClassPromise = common.httpRequest(url, AppConstants.GET, null);
 
         //handling the promise
         $scope.pastClassPromise.success(function (data, status, headers, config) {
@@ -24,7 +25,7 @@ myApp.controller('pastClassController', ['$scope', '$http', '$interval', '$locat
 
             var status = data.status;
 
-            if (status === CONSTANTS.STATUS_SUCCESS) {
+            if (status === AppConstants.STATUS_SUCCESS) {
                 $scope.pastClasses = data.data;
             } else {
                 //failed login

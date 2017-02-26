@@ -1,8 +1,8 @@
 /**
  * Created by pkonwar on 1/15/2017.
  */
-myApp.controller('quickMeetingController', ['$scope', '$http', '$interval', '$location', '$window', 'CONSTANTS', 'common',
-    function ($scope, $http, $interval, $location, $window, CONSTANTS, common) {
+myApp.controller('quickMeetingController', ['$scope', '$http', '$interval', '$location', '$window', 'common', 'ThemeText', 'AppConstants',
+    function ($scope, $http, $interval, $location, $window, common, ThemeText, AppConstants) {
 
         $scope.name = "quick meeting controller";
         $scope.meeting = {};
@@ -13,7 +13,7 @@ myApp.controller('quickMeetingController', ['$scope', '$http', '$interval', '$lo
         $scope.schedule = function () {
 
             //the URL
-            var url = CONSTANTS.SERVICES_BASE_URL + "/meetings/instant";
+            var url = AppConstants.SERVICES_BASE_URL + "/meetings/instant";
 
             $scope.status = {};
 
@@ -24,14 +24,15 @@ myApp.controller('quickMeetingController', ['$scope', '$http', '$interval', '$lo
                 "title": $scope.meeting.topic,
                 "presenterId": userId,
                 "description": $scope.meeting.description,
-                "invitees" : $scope.meeting.invitees
+                "invitees" : $scope.meeting.invitees,
+                "clientName" : ThemeText.CLIENT_ID
             };
 
             console.log("data to be send :");
             console.log(data);
 
             //execute request
-            $scope.quickMeetingPromise = common.httpRequest(url, CONSTANTS.POST, data);
+            $scope.quickMeetingPromise = common.httpRequest(url, AppConstants.POST, data);
 
             //handling the promise
             $scope.quickMeetingPromise.success(function (data, status, headers, config) {
@@ -41,13 +42,13 @@ myApp.controller('quickMeetingController', ['$scope', '$http', '$interval', '$lo
 
                 var status = data.status;
 
-                if (status === CONSTANTS.STATUS_SUCCESS) {
+                if (status === AppConstants.SUCCESS) {
                     //login is successful
                     $scope.meeting = {};       //clearing off the user registration form
                     //successMesage("Meeting Scheduled successfully");
 
                     //storing the attendee token
-                    sessionStorage.setItem(CONSTANTS.INSTANT_MEETING_ID, data.data.attendeesToken);
+                    sessionStorage.setItem(AppConstants.INSTANT_MEETING_ID, data.data.attendeesToken);
 
                     //redirect to a summary page
                     $location.path('/admin/class/quick/summary');

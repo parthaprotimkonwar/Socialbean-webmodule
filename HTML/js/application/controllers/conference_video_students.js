@@ -1,8 +1,8 @@
 /**
  * Created by pkonwar on 1/15/2017.
  */
-conferenceAppModule.controller('conferenceStudentsController', ['$rootScope', '$scope', '$http', '$interval', '$location', '$window', 'CONSTANTS',
-    function ($rootScope, $scope, $http, $interval, $location, $window, CONSTANTS) {
+conferenceAppModule.controller('conferenceStudentsController', ['$rootScope', '$scope', '$http', '$interval', '$location', '$window', 'AppConstants',
+    function ($rootScope, $scope, $http, $interval, $location, $window, AppConstants) {
 
         $(document).ready(function () {
 
@@ -71,6 +71,7 @@ conferenceAppModule.controller('conferenceStudentsController', ['$rootScope', '$
 
             //raise my hand
             $scope.raiseMyHand = function () {
+                console.log("Raising hand by students");
                 client.raiseHand();
             };
 
@@ -117,8 +118,8 @@ conferenceAppModule.controller('conferenceStudentsController', ['$rootScope', '$
 
             //join the conference
             //var conferenceId = sessionStorage.getItem("conferenceId");
-            var conferenceId = sessionStorage.getItem(CONSTANTS.CONFERENCE_ID);
-            var conferenceUrl = sessionStorage.getItem(CONSTANTS.SOCIAL_VID_CONFERENCE_URL);
+            var conferenceId = sessionStorage.getItem(AppConstants.CONFERENCE_ID);
+            var conferenceUrl = sessionStorage.getItem(AppConstants.SOCIAL_VID_CONFERENCE_URL);
             console.log("Printing name");
             console.log(conferenceId);
             //conferenceId = "98c9ca76299b7af9";

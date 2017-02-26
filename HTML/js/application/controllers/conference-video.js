@@ -1,8 +1,8 @@
 /**
  * Created by pkonwar on 1/15/2017.
  */
-conferenceAppModule.controller('conferenceVideoController', ['$rootScope', '$scope', '$http', '$interval', '$location', '$window',
-    function ($rootScope, $scope, $http, $interval, $location, $window) {
+conferenceAppModule.controller('conferenceVideoController', ['$rootScope', '$scope', '$http', '$interval', '$location', '$window', 'AppConstants',
+    function ($rootScope, $scope, $http, $interval, $location, $window, AppConstants) {
 
         $(document).ready(function () {
 
@@ -83,7 +83,7 @@ conferenceAppModule.controller('conferenceVideoController', ['$rootScope', '$sco
                         switch(msg.type) {
                             case "localShareStream":
                                 //g("mainFormShareBtn").style.opacity = 1.0;
-                                document.getElementById("mainFormShareVideo1").style.display = "block"
+                                document.getElementById("mainFormShareVideo1").style.display = "block";
                                 document.getElementById("mainFormShareVideoImage").style.display = "none";
                                 document.getElementById("shareBtn").style.display = "none";
                                 attachMediaStream(document.getElementById("mainFormShareVideo1"), msg.stream);

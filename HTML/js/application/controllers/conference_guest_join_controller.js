@@ -1,5 +1,5 @@
-conferenceAppModule.controller('conferenceGuestJoinController', ['$scope', '$http', '$interval', '$location', '$window', '$routeParams', 'CONSTANTS', 'common',
-    function ($scope, $http, $interval, $location, $window, $routeParams, CONSTANTS, common) {
+conferenceAppModule.controller('conferenceGuestJoinController', ['$scope', '$http', '$interval', '$location', '$window', '$routeParams', 'common','AppConstants',
+    function ($scope, $http, $interval, $location, $window, $routeParams, common, AppConstants) {
 /*conferenceAppModule.controller('conferenceGuestJoinController', ['$scope', '$http', '$interval', '$location', '$window', 'CONSTANTS', 'common',
     function ($scope, $http, $interval, $location, $window, CONSTANTS, common) {*/
 
@@ -16,8 +16,9 @@ conferenceAppModule.controller('conferenceGuestJoinController', ['$scope', '$htt
             var conferenceId = $routeParams.conferenceId; //get the conference id
             var guestType = $routeParams.guestType;       //get the visitor type
 
-            sessionStorage.setItem(CONSTANTS.CONFERENCE_ID,  conferenceId);
-            sessionStorage.setItem("conference_guest",  angular.toJson(conference_guest));
+            sessionStorage.setItem(AppConstants.CONFERENCE_ID,  conferenceId);
+            //sessionStorage.setItem("conference_guest",  angular.toJson(conference_guest));
+            sessionStorage.setItem(AppConstants.CONFERENCE_GUEST,  angular.toJson(conference_guest));
 
             if(guestType === 'p') {
                 //join as a teacher or presenter
@@ -37,15 +38,18 @@ conferenceAppModule.controller('conferenceGuestJoinController', ['$scope', '$htt
 
         $scope.getConferenceDetails = function (jsonKey, redirectUrlIfSuccessful) {
 
-            var conferenceId = sessionStorage.getItem(CONSTANTS.CONFERENCE_ID);
+            var conferenceId = sessionStorage.getItem(AppConstants.CONFERENCE_ID);
             //the URL
-            var url = CONSTANTS.SERVICES_BASE_URL + "/meetings/find/" + conferenceId;
+            var url = AppConstants.SERVICES_BASE_URL + "/meetings/find/" + conferenceId;
 
             $scope.status = {};
 
 
             //execute request
-            $scope.conferenceDetailsPromise = common.httpRequest(url, CONSTANTS.GET, null);
+            $scope.conferenceDetailsPromise = common.httpRequest(url, AppConstants
+
+
+                .GET, null);
 
             //handling the promise
             $scope.conferenceDetailsPromise.success(function (data, status, headers, config) {
@@ -55,7 +59,7 @@ conferenceAppModule.controller('conferenceGuestJoinController', ['$scope', '$htt
 
                 var status = data.status;
 
-                if (status === CONSTANTS.STATUS_SUCCESS) {
+                if (status === AppConstants.SUCCESS) {
                     console.log("Server responded back.");
                     console.log(jsonKey);
                     //console.log(redirectIfSuccessful);
@@ -69,7 +73,7 @@ conferenceAppModule.controller('conferenceGuestJoinController', ['$scope', '$htt
                         //https://ha.socialvid.in/guest.html?conferenceId=3396f2bc72688b71&audio=1&video=1&dialout=0&moderator=1&c=1868821a5243c579
                         conferenceUrl = conferenceUrl.substring(23, conferenceUrl.length);
                         //store the conference url
-                        sessionStorage.setItem(CONSTANTS.SOCIAL_VID_CONFERENCE_URL, conferenceUrl);
+                        sessionStorage.setItem(AppConstants.SOCIAL_VID_CONFERENCE_URL, conferenceUrl);
 
                         //redirect now
                         $location.path(redirectUrlIfSuccessful);
