@@ -5,6 +5,11 @@
 var ClientConstants = angular.module('ClientConstants', [])
     .service('AppConstants', function () {
 
+        this.protocol = 'https';
+        this.host = 'localhost';
+        this.port = '3000';
+        this.UI_URL_BASE = this.protocol + "://" + this.host + ":" + this.port;
+
         //status
         this.SUCCESS = 'SUCCESS';
         this.FAILURE = 'FAILURE';
@@ -21,9 +26,9 @@ var ClientConstants = angular.module('ClientConstants', [])
 
         //remote urls
         this.SERVICES_BASE_URL = 'https://localhost:9001';
-        this.CONFERENCING_URL_INSTANT_MEETING = 'https://localhost:3000/conferencing.html#/conference/join/guest';
-        this.CONFERENCING_URL_PRESENTER = 'https://localhost:3000/conferencing.html#/conference/join/p';
-        this.CONFERENCING_URL_ATTENDEE = 'https://localhost:3000/conferencing.html#/conference/join/a';
+        this.CONFERENCING_URL_INSTANT_MEETING = this.UI_URL_BASE + '/conferencing.html#/conference/join/guest';
+        this.CONFERENCING_URL_PRESENTER = this.UI_URL_BASE + '/conferencing.html#/conference/join/p';
+        this.CONFERENCING_URL_ATTENDEE = this.UI_URL_BASE + '/conferencing.html#/conference/join/a';
 
         //EVENTS EMITTED
         this.USER_PROFILE_UPDATED = 'userProfileUpdated';

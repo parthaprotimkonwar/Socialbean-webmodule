@@ -7,11 +7,19 @@ var ClientCustomization = angular.module('ClientCustomization', [])
 
         //allowed values : ALLIANZ, CHRIST_UNIVERSITY, CONNSOCIO
         //based on this value the email header logo will be updated
-        this.CLIENT_ID = "ALLIANZ";
+        //this.CLIENT_ID = "ALLIANZ";
 
         //theme text for UI purpose
-        this.CLIENT_NAME = "Allianz";
-        this.LOGIN_HEADER_IMAGE_316x316 = "img/allianz-logo-small-login.png";
-        this.INDEX_PAGE_LOGO_200x50 = "img/front-page-logo-small.png";
+        //this.CLIENT_NAME = "Allianz";
+        //this.LOGIN_HEADER_IMAGE_316x316 = "img/allianz-logo-small-login.png";
+        //this.INDEX_PAGE_LOGO_200x50 = "img/front-page-logo-small.png";
+
+
+        this.CLIENT_ID = "CHRIST_UNIVERSITY";
+
+        //theme text for UI purpose
+        this.CLIENT_NAME = "Christ University";
+        this.LOGIN_HEADER_IMAGE_316x316 = "img/christ_univ_logo.png";
+        this.INDEX_PAGE_LOGO_200x50 = "img/logo_small.jpg";
     });
 
