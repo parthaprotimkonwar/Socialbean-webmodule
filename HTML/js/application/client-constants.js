@@ -5,10 +5,16 @@
 var ClientConstants = angular.module('ClientConstants', [])
     .service('AppConstants', function () {
 
+        //configuration part
         this.protocol = 'https';
         this.host = 'localhost';
         this.port = '3000';
+
+        this.SOCIAL_VID_URL_BASE = "https://nstl.socialvid.in";
+
         this.UI_URL_BASE = this.protocol + "://" + this.host + ":" + this.port;
+
+
 
         //status
         this.SUCCESS = 'SUCCESS';

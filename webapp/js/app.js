@@ -321,7 +321,7 @@ ConferenceModal.prototype.showEditConference = function(conf) {
 function App(guest) {
     this.guest_ = guest;
     //this.client_ = new WebRtcClient(window.location.hostname, this.eventHandler.bind(this));
-    this.client_ = new WebRtcClient("ha.socialvid.in", this.eventHandler.bind(this));
+    this.client_ = new WebRtcClient("nstl.socialvid.in", this.eventHandler.bind(this));
 
     this.client_.setCanvases(g("mainFormCanvas"), g("mainFormCanvas2"));
 

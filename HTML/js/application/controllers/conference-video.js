@@ -11,7 +11,7 @@ conferenceAppModule.controller('conferenceVideoController', ['$rootScope', '$sco
 
             var conference_guest =  angular.fromJson(sessionStorage.getItem("conference_guest"));
 
-            var server = "ha.socialvid.in";
+            var server = "nstl.socialvid.in";
             var callback = function (msg) {
                 //callback
                 console.log('in the server callback console.');

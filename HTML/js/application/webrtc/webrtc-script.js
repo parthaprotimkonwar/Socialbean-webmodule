@@ -2,7 +2,7 @@
  * Created by pkonwar on 1/26/2017.
  */
 
-var server = "ha.socialvid.in";
+var server = "nstl.socialvid.in";
 var callback = function (msg) {
     //callback
     console.log('in the server callback console.');

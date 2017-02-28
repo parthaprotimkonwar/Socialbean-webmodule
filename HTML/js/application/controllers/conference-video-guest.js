@@ -14,7 +14,7 @@ conferenceAppModule.controller('conferenceVideoController', ['$rootScope', '$sco
 
             var conference_guest =  angular.fromJson(sessionStorage.getItem("conference_guest"));
 
-            var server = "ha.socialvid.in";
+            var server = "nstl.socialvid.in";
             var callback = function (msg) {
                 //callback
                 console.log('in the server callback console.');
@@ -74,6 +74,12 @@ conferenceAppModule.controller('conferenceVideoController', ['$rootScope', '$sco
                         console.log(resp.type);
 
                         switch (resp.type) {
+                            case "localStream":
+                                //var l = g("mainFormSelfVideo");
+                                //l.src = "";
+                                //self.localStream_ = resp.stream;
+                                attachMediaStream(document.getElementById("mainFormSelfVideo"), resp.stream);
+                                break;
                             case "confChatMessage":
                                 console.log("CHAT CHAT CHAT chat");
                                 console.log(resp.chat);

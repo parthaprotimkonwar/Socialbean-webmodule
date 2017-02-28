@@ -1,7 +1,5 @@
 conferenceAppModule.controller('conferenceGuestJoinController', ['$scope', '$http', '$interval', '$location', '$window', '$routeParams', 'common','AppConstants',
     function ($scope, $http, $interval, $location, $window, $routeParams, common, AppConstants) {
-/*conferenceAppModule.controller('conferenceGuestJoinController', ['$scope', '$http', '$interval', '$location', '$window', 'CONSTANTS', 'common',
-    function ($scope, $http, $interval, $location, $window, CONSTANTS, common) {*/
 
         $scope.name = "conference guest join controller";
 
@@ -46,10 +44,7 @@ conferenceAppModule.controller('conferenceGuestJoinController', ['$scope', '$htt
 
 
             //execute request
-            $scope.conferenceDetailsPromise = common.httpRequest(url, AppConstants
-
-
-                .GET, null);
+            $scope.conferenceDetailsPromise = common.httpRequest(url, AppConstants.GET, null);
 
             //handling the promise
             $scope.conferenceDetailsPromise.success(function (data, status, headers, config) {
@@ -70,8 +65,12 @@ conferenceAppModule.controller('conferenceGuestJoinController', ['$scope', '$htt
 
                     if(conferenceUrl != undefined && conferenceUrl.length > 23) {
                         //strip out the https part
+                        //23
                         //https://ha.socialvid.in/guest.html?conferenceId=3396f2bc72688b71&audio=1&video=1&dialout=0&moderator=1&c=1868821a5243c579
-                        conferenceUrl = conferenceUrl.substring(23, conferenceUrl.length);
+                        var socialVidUrlPrefix = AppConstants.SOCIAL_VID_URL_BASE;
+                        //var url = "https://ha.socialvid.in";
+                        //console.log("Length is : " + url.length);
+                        conferenceUrl = conferenceUrl.substring(socialVidUrlPrefix.length, conferenceUrl.length);
                         //store the conference url
                         sessionStorage.setItem(AppConstants.SOCIAL_VID_CONFERENCE_URL, conferenceUrl);
 

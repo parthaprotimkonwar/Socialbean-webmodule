@@ -8,12 +8,13 @@ conferenceAppModule.controller('conferenceTeacherController', ['$rootScope', '$s
 
         $(document).ready(function () {
 
+
             //show a notification to show chat
             $rootScope.$broadcast("showChatInWindow", "true");
 
             var conference_guest =  angular.fromJson(sessionStorage.getItem("conference_guest"));
 
-            var server = "ha.socialvid.in";
+            var server = "nstl.socialvid.in";
             var callback = function (msg) {
                 //callback
                 console.log('in the server callback console.');
@@ -158,12 +159,19 @@ conferenceAppModule.controller('conferenceTeacherController', ['$rootScope', '$s
                      var canvas2 = document.getElementById("mainFormCanvas2");
                      client.setCanvases(canvas1, canvas2);*/
 
-
+                    //self = this;
                     client.joinVideoConference(conferenceId, function (resp) {
 
                         console.log(resp.type);
 
                         switch (resp.type) {
+
+                            case "localStream":
+                                //var l = g("mainFormSelfVideo");
+                                //l.src = "";
+                                //self.localStream_ = resp.stream;
+                                attachMediaStream(document.getElementById("mainFormSelfVideo"), resp.stream);
+                                break;
 
                             case "confParticipantHandRaised" :
                                 console.log("+++++++++++++++++ raise hand caught %%%%%%%%%%%%%%%%%%%%%%%%%");

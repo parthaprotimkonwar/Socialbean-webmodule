@@ -16,6 +16,8 @@ var request = require('request');   //make http request
 
 app.use(express.static("./HTML"));        //root of the application. serves static files
 
+//app.use(express.static("./webapp"));
+
 var httpsServer = https.createServer(credentials, app);
 
 app.post('/listening', function (req, res) {
@@ -54,7 +56,7 @@ var recieveConferenceData = function revieveConferenceData(error, response, body
             "id": body.id
         }
 
-        request.post('https://ha.socialvid.in/adminapi/v1/user/conference/get', {json: conferenceLinkData}, recieveConferenceUrls);
+        request.post('https://nstl.socialvid.in/adminapi/v1/user/conference/get', {json: conferenceLinkData}, recieveConferenceUrls);
     }
 }
 
@@ -75,12 +77,12 @@ var recieveData = function recieveData(error, response, body) {
             "maxParticipants": "20"
         }
 
-        request.post('https://ha.socialvid.in/adminapi/v1/user/conference/add', {json: conferenceData}, recieveConferenceData);
+        request.post('https://nstl.socialvid.in/adminapi/v1/user/conference/add', {json: conferenceData}, recieveConferenceData);
     }
 };
 
 //make a https login request
-//request.post('https://ha.socialvid.in/adminapi/v1/userlogin',{json: data}, recieveData);
+//request.post('https://nstl.socialvid.in/adminapi/v1/userlogin',{json: data}, recieveData);
 
 console.log('application started in port 3000');
 module.exports = app;       // export this module to use this as a dependency in other module
