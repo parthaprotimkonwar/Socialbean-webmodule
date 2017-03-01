@@ -268,6 +268,11 @@ conferenceAppModule.controller('conferenceTeacherController', ['$rootScope', '$s
                                 //show a notification to show chat
                                 $rootScope.$broadcast("showParticipantsInWindow", participantList);
                                 break;
+
+                            case "userFilesTransferRequest":
+                            case "confFilesTransferRequest":
+                                this.downloadFile(resp.files);
+                                break;
                         }
                     });
 

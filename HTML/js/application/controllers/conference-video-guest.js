@@ -130,7 +130,8 @@ conferenceAppModule.controller('conferenceVideoController', ['$rootScope', '$sco
                                         var videoElement = document.getElementById("mainVideo" + talkers[i]);
                                         videoElement.style.display = "block"; // Show the video element
                                         var participantName = document.getElementById("mainName" + talkers[i]);
-                                        //participantName.innerHTML = names[i];
+                                        participantName.innerHTML = names[i];
+                                        participantName.style.display = "block";
                                     }
                                 }
                                 break;
@@ -155,6 +156,11 @@ conferenceAppModule.controller('conferenceVideoController', ['$rootScope', '$sco
                                 }
                                 //show a notification to show chat
                                 $rootScope.$broadcast("showParticipantsInWindow", participantList);
+                                break;
+
+                            case "userFilesTransferRequest":
+                            case "confFilesTransferRequest":
+                                this.downloadFile(resp.files);
                                 break;
                         }
                     });
