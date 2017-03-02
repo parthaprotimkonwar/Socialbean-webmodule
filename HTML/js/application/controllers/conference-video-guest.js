@@ -1,7 +1,4 @@
 /**
- * Created by pkonwar on 2/13/2017.
- */
-/**
  * Created by pkonwar on 1/15/2017.
  */
 conferenceAppModule.controller('conferenceVideoController', ['$rootScope', '$scope', '$http', '$interval', '$location', '$window',
@@ -125,6 +122,10 @@ conferenceAppModule.controller('conferenceVideoController', ['$rootScope', '$sco
                                 // If index is 0, it means it is an audio only participant, ignore
                                 // If index is greater than 0, display that remoteStream and set the corresponding name tag from names
                                 // For eg, if talkers is [2, 3] and names is ['a', 'b'], then remoteStream 2 and 3 need to be displayed and the name tag for those streams is a and b
+                                for(var i=1;i<=7;i++) {
+                                    document.getElementById("mainVideo" + i).style.display = "none";
+                                    document.getElementById("mainName" + i).style.display = "none";
+                                }
                                 for (var i = 0; i < talkers.length; i++) {
                                     if (talkers[i] > 0) {
                                         var videoElement = document.getElementById("mainVideo" + talkers[i]);
@@ -145,6 +146,8 @@ conferenceAppModule.controller('conferenceVideoController', ['$rootScope', '$sco
                             case "participantsUpdated": // This gives the updated list of participants in the conference
                                 var participantList = [];
                                 for (var i = 0; i < resp.participants.length; i++) {
+                                    console.log("participants:: ");
+                                    console.log(resp.participants);
                                     var callType = resp.participants[i].callType; // Can be Voice or Video
                                     var name = resp.participants[i].name; // The name of the participant
                                     //data type to send across

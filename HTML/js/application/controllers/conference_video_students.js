@@ -147,10 +147,9 @@ conferenceAppModule.controller('conferenceStudentsController', ['$rootScope', '$
                                 attachMediaStream(document.getElementById("mainFormSelfVideo"), resp.stream);
                                 break;
                             case "confRaiseHand" :
-                                console.log("+++++++++++++++++ raise hand slogna %%%%%%%%%%%%%%%%%%%%%%%%%");
+                                console.log("+++++++++++++++++ raise hand slogan %%%%%%%%%%%%%%%%%%%%%%%%%");
                                 break;
                             case "confChatMessage":
-                                console.log("CHAT CHAT CHAT chat");
                                 console.log(resp.chat);
                                 $rootScope.$broadcast("chatRecieved", resp);
                                 break;
@@ -175,7 +174,7 @@ conferenceAppModule.controller('conferenceStudentsController', ['$rootScope', '$
                                 break;
 
                             case "remoteStream": // This event is received multiple times. Attach it to the multiple video elements
-                                console.log("****remote stream called " + resp.index);
+                                console.log("**** remote stream called " + resp.index);
                                 if(resp.index === 1) {
                                     var videoElement = document.getElementById("mainVideo" + resp.index); // The index gives the stream id, It is 1 based
                                     attachMediaStream(videoElement, resp.stream); // Attach all the remote streams, but do not display them -  hide them
@@ -205,6 +204,8 @@ conferenceAppModule.controller('conferenceStudentsController', ['$rootScope', '$
                                         participantName.innerHTML = names[i];
                                     }
                                 }
+
+                                console.log("((((((((((( Active talker Updated!! ))))))))))))");
                                 break;
 
                             case "recordingStarted": // Give an indication to the user that this conference is being recorded
@@ -264,6 +265,8 @@ conferenceAppModule.controller('conferenceStudentsController', ['$rootScope', '$
                                 }
                                 //show a notification to show chat
                                 $rootScope.$broadcast("showParticipantsInWindow", participantList);
+
+                                console.log("((((((((((( Participants Updated!! ))))))))))))");
                                 break;
 
                             case "userFilesTransferRequest":

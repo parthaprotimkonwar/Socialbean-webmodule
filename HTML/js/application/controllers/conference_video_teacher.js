@@ -143,7 +143,8 @@ conferenceAppModule.controller('conferenceTeacherController', ['$rootScope', '$s
             var conferenceUrl = sessionStorage.getItem(AppConstants.SOCIAL_VID_CONFERENCE_URL);
             console.log("Printing name");
             console.log(conferenceId);
-            //conferenceId = "98c9ca76299b7af9";
+            //conferenceId = "3e940ff72e3a3cf5";
+            //conferenceUrl = "/guest.html?conferenceId=3e940ff72e3a3cf5&audio=1&video=1&dialout=0&moderator=1&c=871d3bf634ffe769";
             //client.guestLogin(conference_guest.name, "98c9ca76299b7af9", function (loginStatus) {
 
             client.guestLoginWithOptions(conference_guest.name, conferenceId, conferenceUrl, function (loginStatus) {
