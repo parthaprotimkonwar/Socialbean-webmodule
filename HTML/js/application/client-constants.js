@@ -38,6 +38,10 @@ var ClientConstants = angular.module('ClientConstants', [])
 
         //EVENTS EMITTED
         this.USER_PROFILE_UPDATED = 'userProfileUpdated';
+        this.SHOW_PARTICIPANTS_IN_CHAT_WINDOW = 'showParticipantsInWindow';
+        this.CONFERENCE_HAND_RAISE = 'conferenceHandRaise';
+        this.MUTE_ATTENDEE = 'muteAttendee';
+        this.UNMUTE_ATTENDEE = 'unmuteAttendee';
 
         //LOCAL STORAGE CONSTANTS
         this.USER_PROFILE = 'user_profile';

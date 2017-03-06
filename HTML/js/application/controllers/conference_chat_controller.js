@@ -1,8 +1,8 @@
 /**
  * Created by pkonwar on 1/27/2017.
  */
-conferenceAppModule.controller('conferenceChatController', ['$scope', '$rootScope', '$timeout', '$http', '$interval', '$location', '$anchorScroll', '$window', 'ThemeText',
-    function ($scope, $rootScope, $timeout, $http, $interval, $location, $anchorScroll, $window, ThemeText) {
+conferenceAppModule.controller('conferenceChatController', ['$scope', '$rootScope', '$timeout', '$http', '$interval', '$location', '$anchorScroll', '$window', 'ThemeText', 'AppConstants',
+    function ($scope, $rootScope, $timeout, $http, $interval, $location, $anchorScroll, $window, ThemeText, AppConstants) {
 
         $scope.countId = 0;
         $scope.chatsHistoryArray = [];
@@ -10,7 +10,7 @@ conferenceAppModule.controller('conferenceChatController', ['$scope', '$rootScop
         $scope.chatDisplayStatus;
 
         $scope.themeText = ThemeText;
-
+        $scope.participantMap;
         $scope.$on("showChatInWindow", function (event, message) {
             $timeout(function () {
                 $(".sidepanel").show(100);    //toggle the status of the chat window
@@ -18,11 +18,75 @@ conferenceAppModule.controller('conferenceChatController', ['$scope', '$rootScop
             })
         });
 
-        $scope.$on("showParticipantsInWindow", function (event, message) {
+        //mute the attendee
+        $scope.muteTheAtteendee = function (id) {
+            $rootScope.$broadcast(AppConstants.MUTE_ATTENDEE, id);
+
             $timeout(function () {
-                $scope.participantsArray = message;
+                //set the raise hand flag for the new participant
+                $scope.participantMap[id].raiseHand = false;
+                $scope.participantMap[id].audio = "muted";
+
+                //update the participant map
+                updateTheParticipants($scope.participantMap);
             });
-        })
+        }
+
+        //unmute the attendee
+        $scope.unmuteTheAtteendee = function (id) {
+            $rootScope.$broadcast(AppConstants.UNMUTE_ATTENDEE, id);
+            $timeout(function () {
+                //set the raise hand flag for the new participant
+                $scope.participantMap[id].raiseHand = false;
+                $scope.participantMap[id].audio = "unmuted";
+
+                //update the participant map
+                var participants = [];
+
+                for(var participant in $scope.participantMap) {
+                    participants.push($scope.participantMap[participant]);
+                }
+
+                $scope.participantsArray = participants;
+            });
+        }
+
+
+        function updateTheParticipants(participantMap) {
+            //local participants
+            var participants = [];
+
+            for(var participant in participantMap) {
+                participants.push(participantMap[participant]);
+            }
+
+            $scope.participantsArray = participants;
+            console.log("Setting the participants in participantsArray : " + participants);
+        }
+
+        //display the participants in the chat window
+        $scope.$on(AppConstants.SHOW_PARTICIPANTS_IN_CHAT_WINDOW, function (event, message) {
+
+            $timeout(function () {
+               $scope.participantMap = message;
+               updateTheParticipants($scope.participantMap);
+            });
+        });
+
+        //handle the conference hand raise event
+        $scope.$on(AppConstants.CONFERENCE_HAND_RAISE, function (event, message) {
+
+            $timeout(function () {
+                //updating the specific map
+                $scope.participantMap[message.participant.id] = message.participant;
+
+                //set the raise hand flag for the new participant
+                $scope.participantMap[message.participant.id].raiseHand = true;
+
+                updateTheParticipants($scope.participantMap);
+            });
+        });
+
 
         $scope.$on("chatRecieved", function (event, message) {
             console.log("FINAL : on chatRecieved event");

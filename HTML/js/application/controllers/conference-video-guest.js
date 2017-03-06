@@ -1,8 +1,8 @@
 /**
  * Created by pkonwar on 1/15/2017.
  */
-conferenceAppModule.controller('conferenceVideoController', ['$rootScope', '$scope', '$http', '$interval', '$location', '$window',
-    function ($rootScope, $scope, $http, $interval, $location, $window) {
+conferenceAppModule.controller('conferenceVideoController', ['$rootScope', '$scope', '$http', '$interval', '$location', '$window', 'AppConstants',
+    function ($rootScope, $scope, $http, $interval, $location, $window, AppConstants) {
 
         $(document).ready(function () {
 
@@ -144,7 +144,7 @@ conferenceAppModule.controller('conferenceVideoController', ['$rootScope', '$sco
                                 break;
 
                             case "participantsUpdated": // This gives the updated list of participants in the conference
-                                var participantList = [];
+                                /*var participantList = [];
                                 for (var i = 0; i < resp.participants.length; i++) {
                                     console.log("participants:: ");
                                     console.log(resp.participants);
@@ -158,7 +158,31 @@ conferenceAppModule.controller('conferenceVideoController', ['$rootScope', '$sco
                                     participantList.push(participant);
                                 }
                                 //show a notification to show chat
-                                $rootScope.$broadcast("showParticipantsInWindow", participantList);
+                                $rootScope.$broadcast("showParticipantsInWindow", participantList);*/
+
+                                var participantMap = {};
+                                console.log("participants updated");
+                                console.log(resp.participants);
+
+                                for (var i = 0; i < resp.participants.length; i++) {
+                                    var callType = resp.participants[i].callType; // Can be Voice or Video
+                                    var name = resp.participants[i].name; // The name of the participant
+                                    //data type to send across
+                                    /*var participant  = {
+                                     callType : callType,
+                                     name : name
+                                     };*/
+                                    //participantMap.push(participant);
+                                    var videoId = resp.participants[i].id;
+                                    participantMap[videoId] = resp.participants[i];
+                                }
+
+                                console.log("updated participant MAP");
+                                console.log(participantMap);
+                                //show a notification to show chat
+                                $rootScope.$broadcast(AppConstants.SHOW_PARTICIPANTS_IN_CHAT_WINDOW, participantMap);
+
+
                                 break;
 
                             case "userFilesTransferRequest":

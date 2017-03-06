@@ -71,6 +71,16 @@ conferenceAppModule.config(['$routeProvider', '$httpProvider', function ($routeP
         //teacher can present and see the students
         templateUrl: 'partials/video-conference-teacher-partial.html',
         controller: 'conferenceTeacherController'
+    /*}).when('/conference/video/teachers/ha', {
+        //join as a teacher
+        //teacher can present and see the students
+        templateUrl: 'partials/video-conference-teacher-partial.html',
+        controller: 'conferenceTeacherControllerHa'
+    }).when('/conference/video/teachers/nstl', {
+        //join as a teacher
+        //teacher can present and see the students
+        templateUrl: 'partials/video-conference-teacher-partial.html',
+        controller: 'conferenceTeacherControllerNstl'*/
     }).when('/conference/video/students', {
         //join as a students
         //students can see the teachers screen only

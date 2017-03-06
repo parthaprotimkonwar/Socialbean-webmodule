@@ -199,6 +199,9 @@
                 <li class="member" ng-repeat="participant in participantsArray">
                     <a href="javascript:void(0)"><img src="img/default-user.png" alt="img">
                         <b>{{participant.name}}</b>
+                        <i class="fa fa-volume-off" ng-show="participant.audio === 'muted'" ng-click="unmuteTheAtteendee(participant.id)"></i>
+                        <i class="fa fa-volume-up" ng-show="participant.audio === 'unmuted'" ng-click="muteTheAtteendee(participant.id)"></i>
+                        <i class="fa fa-hand-o-up" ng-show="participant.raiseHand"></i>
                     </a>
                     <span class="status online"></span>
                 </li>
@@ -288,6 +291,9 @@ WebRTC specific
 <script type="text/javascript" src="js/application/controllers/conference_chat_controller.js"></script>
 <script type="text/javascript" src="js/application/controllers/conference_video_students.js"></script>
 <script type="text/javascript" src="js/application/controllers/conference_video_teacher.js"></script>
+
+<!--<script type="text/javascript" src="js/application/controllers/conference_video_teacher_ha.js"></script>
+<script type="text/javascript" src="js/application/controllers/conference_video_teacher_nstl.js"></script>-->
 
 
 </body>

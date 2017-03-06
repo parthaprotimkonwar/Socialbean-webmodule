@@ -1,52 +1,3 @@
-<!-- Start Page Header -->
-<!--<div class="page-header">
-    <h1 class="title">Form Elements</h1>
-    <ol class="breadcrumb">
-        <li><a href="index.html">Dashboard</a></li>
-        <li><a href="#">Forms</a></li>
-        <li class="active">Form Elements</li>
-    </ol>
-
-    &lt;!&ndash; Start Page Header Right Div &ndash;&gt;
-    <div class="right">
-        <div class="btn-group" role="group" aria-label="...">
-            <a href="index.html" class="btn btn-light">Dashboard</a>
-            <a href="#" class="btn btn-light"><i class="fa fa-refresh"></i></a>
-            <a href="#" class="btn btn-light"><i class="fa fa-search"></i></a>
-            <a href="#" class="btn btn-light" id="topstats"><i class="fa fa-line-chart"></i></a>
-        </div>
-    </div>
-    &lt;!&ndash; End Page Header Right Div &ndash;&gt;
-
-</div>-->
-<!-- End Page Header -->
-
-<!-- Start Presentation -->
-<!--<div class="row presentation">
-
-    <div class="col-lg-2 col-md-2"></div>
-    <div class="col-lg-5 col-md-4 titles">
-        <span class="icon color9-bg"><i class="fa fa-check-square-o"></i></span>
-        <h1>Join the Conference</h1>
-        &lt;!&ndash;<h4>Responsive and user-friendly form elements</h4>&ndash;&gt;
-    </div>
-
-    <div class="col-lg-3 col-md-4">
-        <ul class="list-unstyled list">
-            <li><i class="fa fa-pencil-square-o"></i>Topic : Fundamentals of Computing
-            <li>
-            <li><i class="fa fa-pencil-square-o"></i>Duration : 30 min
-            <li>
-            <li><i class="fa fa-pencil-square-o"></i>Instructor : Mr Alex
-            <li>
-        </ul>
-    </div>
-
-</div>-->
-<!-- End Presentation -->
-
-
-<!-- //////////////////////////////////////////////////////////////////////////// -->
 <!-- START CONTAINER -->
 <div class="container-padding">
 
@@ -60,10 +11,13 @@
                 &lt;!&ndash;Your browser does not support the video tag.&ndash;&gt;
             </video>-->
             <!--<div id="mainName"></div>-->
+
+            <!--The main audio-->
             <audio id="mainAudio" autoplay></audio>
 
             <!--<canvas id="canvas1" width="300" height="400" style="border:2px solid #000000;"></canvas>-->
 
+            <!--Share Screen Canvas-->
             <div id="mainFormShareVideo" style="border:5px solid #000000;">
                 <video id="mainFormShareVideo1" autoplay style="display: none"></video>
                 <!--<canvas id="mainFormCanvas"></canvas>
@@ -73,49 +27,83 @@
                 <img id="mainFormShareVideoImage" src="img/shreensharedummy.jpg" style="width: 100%;">
             </div>
 
+            <!--Share Button-->
             <div id="shareBtn" style="padding-top: 5px">
                 <button ng-click="share()" class="btn btn-option4"><i class="fa fa-share-alt"></i>Share Screen</button>
             </div>
         </div>
 
         <div class="col-md-2">
-            <video id="mainFormSelfVideo" height="150px" autoplay style="border:2px solid #000000;">
-            </video>
+
+            <!--Video for displaying self view-->
+            <video id="mainFormSelfVideo" height="150px" autoplay style="border:2px solid #000000;"></video>
             <div id="mainNameSelf">YOU</div>
 
-            <video id="mainVideo1" height="150px" autoplay style="display: none;border:2px solid #000000;">
-                <!--<source src="video/sample.mp4" type="video/mp4">-->
-            </video>
-            <div id="mainName1" style="display: none"></div>
-            <video id="mainVideo2" height="150px" autoplay style="display: none;border:2px solid #000000;">
-                <!--<source src="video/sample.mp4" type="video/mp4">-->
-            </video>
-            <div id="mainName2" style="display: none"></div>
+            <!--Videos for users in Active Talker Mode-->
+            <div ng-repeat="i in numberToArray(attendees.count) track by $index">
+                <video id="mainVideo{{$index +1}}" height="150px" autoplay style="display: none;border:2px solid #000000;"/></video>
+                <div class="row">
+                    <div class="col-sm-8" id="mainName{{$index +1}}" style="display: none"></div>
 
-            <video id="mainVideo3" height="150px" autoplay style="display: none;border:2px solid #000000;">
-                <!--<source src="video/sample.mp4" type="video/mp4">-->
-            </video>
+                    <!--<div class="col-sm-2" id="hand-up-{{$index +1}}" style="display: none;">
+                        <i class="fa fa-hand-o-up"></i>
+                    </div>
+                    <div class="col-sm-2" id="mute-{{$index +1}}" style="display: none;" ng-click="unmute($index +1)">
+                        <i class="fa fa-volume-off"></i>
+                    </div>
+                    <div class="col-sm-2" id="unmute-{{$index +1}}" style="display: none;" ng-click="mute($index +1)">
+                        <i class="fa fa-volume-up"></i>
+                    </div>-->
+                </div>
+
+            </div>
+
+
+            <!--<video id="mainVideo1" height="150px" autoplay style="display: none;border:2px solid #000000;"/></video>
+            <div class="row">
+                <div class="col-sm-8" id="mainName1" style="display: block">Partha</div>
+
+                <div class="col-sm-2" id="hand-up-1" style="display: block;">
+                    <i class="fa fa-hand-o-up"></i>
+                </div>
+                <div class="col-sm-2" id="mute-1" style="display: block;" ng-click="unmute(1)">
+                    <i class="fa fa-volume-off"></i>
+                </div>
+                <div class="col-sm-2" id="unmute-1" style="display: none;" ng-click="mute(1)">
+                    <i class="fa fa-volume-up"></i>
+                </div>
+            </div>-->
+
+            <!--
+            <video id="mainVideo2" height="150px" autoplay style="display: none;border:2px solid #000000;"></video>
+            <div style="display: block;">
+                <div id="mainName2" style="display: none"></div>
+
+                <div id="hand-up-2">
+                    <i class="fa fa-hand-o-up" style="display: none"></i>
+                </div>
+                <div id="mute-2">
+                    <i class="fa fa-volume-off" style="display: block" ng-click="unmute(2)"></i>
+                </div>
+                <div id="unmute-2">
+                    <i class="fa fa-volume-up" style="display: none" ng-click="mute(2)"></i>
+                </div>
+            </div>
+
+            <video id="mainVideo3" height="150px" autoplay style="display: none;border:2px solid #000000;"></video>
             <div id="mainName3" style="display: none"></div>
 
-            <video id="mainVideo4" autoplay height="150px" style="display: none;border:2px solid #000000;">
-                <!--<source src="video/sample.mp4" type="video/mp4">-->
-            </video>
+            <video id="mainVideo4" autoplay height="150px" style="display: none;border:2px solid #000000;"></video>
             <div id="mainName4" style="display: none"></div>
 
-            <video id="mainVideo5" autoplay height="150px" style="display: none;border:2px solid #000000;">
-                <!--<source src="video/sample.mp4" type="video/mp4">-->
-            </video>
+            <video id="mainVideo5" autoplay height="150px" style="display: none;border:2px solid #000000;"></video>
             <div id="mainName5" style="display: none"></div>
 
-            <video id="mainVideo6" autoplay height="150px" style="display: none;border:2px solid #000000;">
-                <!--<source src="video/sample.mp4" type="video/mp4">-->
-            </video>
+            <video id="mainVideo6" autoplay height="150px" style="display: none;border:2px solid #000000;"></video>
             <div id="mainName6" style="display: none"></div>
 
-            <video id="mainVideo7" autoplay height="150px" style="display: none;border:2px solid #000000;">
-                <!--<source src="video/sample.mp4" type="video/mp4">-->
-            </video>
-            <div id="mainName7" style="display: none"></div>
+            <video id="mainVideo7" autoplay height="150px" style="display: none;border:2px solid #000000;"></video>
+            <div id="mainName7" style="display: none"></div>-->
         </div>
     </div>
     <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>

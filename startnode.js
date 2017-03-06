@@ -70,11 +70,11 @@ var recieveData = function recieveData(error, response, body) {
         var conferenceData = {
             "email": "arunsimon@gmail.com",
             "session": body.session,
-            "name": "Test2",
+            "name": "Test3",
             "mode": "presenter",
             "autoRecord": true,
             "maxBitrateKbps": "512",
-            "maxParticipants": "20"
+            "maxParticipants": "10"
         }
 
         request.post('https://nstl.socialvid.in/adminapi/v1/user/conference/add', {json: conferenceData}, recieveConferenceData);
@@ -83,6 +83,7 @@ var recieveData = function recieveData(error, response, body) {
 
 //make a https login request
 //request.post('https://nstl.socialvid.in/adminapi/v1/userlogin',{json: data}, recieveData);
+//request.post('https://ha.socialvid.in/adminapi/v1/userlogin',{json: data}, recieveData);
 
 console.log('application started in port 3000');
 module.exports = app;       // export this module to use this as a dependency in other module
