@@ -23,7 +23,7 @@ var ClientConstants = angular.module('ClientConstants', [])
         this.GET = 'GET';
 
         //session storage
-        //this.USER_PROFILE = 'user_profile';
+                //this.USER_PROFILE = 'user_profile';
         this.CONFERENCE_ID = 'conferenceId';
         this.SOCIAL_VID_CONFERENCE_URL = 'socialVidConferenceUrl';
         this.CONFERENCE_GUEST = 'conference_guest';
@@ -42,6 +42,8 @@ var ClientConstants = angular.module('ClientConstants', [])
         this.CONFERENCE_HAND_RAISE = 'conferenceHandRaise';
         this.MUTE_ATTENDEE = 'muteAttendee';
         this.UNMUTE_ATTENDEE = 'unmuteAttendee';
+        this.UNMUTE_THAT_ATTENDEEID_ON_ATTENDEE_SCREEN = "unmuteThatAttendeeOnAttendeeScreen";
+        this.MUTE_THAT_ATTENDEEID_ON_ATTENDEE_SCREEN = "muteThatAttendeeOnAttendeeScreen"
 
         //LOCAL STORAGE CONSTANTS
         this.USER_PROFILE = 'user_profile';

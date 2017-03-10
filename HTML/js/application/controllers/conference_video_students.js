@@ -23,33 +23,6 @@ conferenceAppModule.controller('conferenceStudentsController', ['$rootScope', '$
 
             console.log("inside code.");
             var client = new WebRtcClient(server, callback);
-            var email = "arunsimon@gmail.com";
-            var password = "Arun123";
-
-            //get all the contacts
-            var contactsCallback = function (contacts) {
-                for (var j = 0; j < contacts.length; j++) {
-                    console.log("parthaType:" + contacts[i].type);
-                    console.log("parthaid" + contacts[i].id);
-                }
-            };
-
-            var loginCallback = function (loginResponse) {
-                if (loginResponse.status === 0) {
-                    console.log("login successful");
-                    //client.getContacts(contactsCallback);
-                } else {
-                    console.log("login unsuccessful");
-                }
-            };
-
-            //client login
-            //client.login(email, password, loginCallback);
-
-            /*$scope.sendThisChat = function () {
-             console.log("char chat");
-             client.sendChat("Ravi welcomes to his console.");
-             };*/
 
             $scope.$on("broadcastChat", function (event, message) {
                 console.log("inside broadcast chat" + message);
@@ -144,9 +117,18 @@ conferenceAppModule.controller('conferenceStudentsController', ['$rootScope', '$
                         console.log(resp.type);
 
                         switch (resp.type) {
-                            case "localStream":
-                                attachMediaStream(document.getElementById("mainFormSelfVideo"), resp.stream);
+                            case "mainIceConnectionState" :
+
+                                console.log(resp);
+                                console.log("this is for the mainICE BREAKER*********");
+                                if(resp.state === "completed") {
+                                    console.log("ICE BREAKER WORKS &&&&& ");
+                                    client.muteMicrophone();        //mute all the mic of the attendees
+                                }
                                 break;
+                            /*case "localStream":
+                                attachMediaStream(document.getElementById("mainFormSelfVideo"), resp.stream);
+                                break;*/
 
                             case "confRaiseHand" :
                                 //receive a conference hand raise
@@ -275,19 +257,34 @@ conferenceAppModule.controller('conferenceStudentsController', ['$rootScope', '$
                                 client.unmuteMicrophone();
                                 break;
 
-                            /*case "confRaiseHandResponse":
-                                console.log("after hand is raised");
-                                /!*if (resp.audioUnmuted) {
-                                    btn = g("mainFormMicrophoneBtn");
-                                    btn.className = btn.className.replace("mic-mute", "mic-unmute");
-                                    btn.disabled = false;
-                                } else {
-                                    btn = g("mainFormMicrophoneBtn");
-                                    btn.className = btn.className.replace("mic-unmute", "mic-mute");
-                                    btn.disabled = true;
+                            case "confApplicationData":
+                                //Handle user defined response
+                                console.log("&&&&&&&&& Received data on the server side!");
+                                //var response = JSON.parse(resp);
+                                //this data is to be send to the chatController for processing
+                                var applicationData = JSON.parse(resp.applicationData);
+
+                                switch (applicationData.type) {
+                                    case "confParticipantHandRaised" :
+                                        //sending the parsed application data to the chat controller
+                                        $rootScope.$broadcast(AppConstants.CONFERENCE_HAND_RAISE, applicationData);
+                                        break;
+
+                                    case "customUnmuteAttendee" :
+                                        console.log("(( Custom UNMUTE ))");
+                                        console.log(applicationData);
+                                        $rootScope.$broadcast(AppConstants.UNMUTE_THAT_ATTENDEEID_ON_ATTENDEE_SCREEN, applicationData.id);
+                                        break;
+
+                                    case "customMuteAttendee" :
+                                        console.log("(( Custom MUTE ))");
+                                        console.log(applicationData);
+                                        $rootScope.$broadcast(AppConstants.MUTE_THAT_ATTENDEEID_ON_ATTENDEE_SCREEN, applicationData.id);
+                                        break;
+
                                 }
-                                g("mainFormRaiseHandBtn").style.opacity = 0.5;*!/
-                                break;*/
+                                console.log(applicationData);
+                                break;
 
                             case "participantsUpdated": // This gives the updated list of participants in the conference
 

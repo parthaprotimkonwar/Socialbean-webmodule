@@ -2,6 +2,8 @@ conferenceAppModule.controller('conferenceGuestJoinController', ['$scope', '$htt
     function ($scope, $http, $interval, $location, $window, $routeParams, common, AppConstants) {
 
         $scope.name = "conference guest join controller";
+        $scope.guest = {};
+        $scope.userProfile = angular.fromJson(localStorage.getItem(AppConstants.USER_PROFILE));
 
         //act as reverse proxy
         $scope.joinConference = function () {
@@ -90,6 +92,13 @@ conferenceAppModule.controller('conferenceGuestJoinController', ['$scope', '$htt
                 //errorMesage(data.errorMessage);
             });
         };
+
+        //login if the user has signed in
+        if($scope.userProfile != null && $scope.userProfile != undefined) {
+            console.log("executing login");
+            $scope.guest.name = $scope.userProfile.presenterName;
+            $scope.joinConference();
+        }
 
         $scope.getValueFromJsonObject = function(path, obj) {
             return path.split('.').reduce(function(prev, curr) {

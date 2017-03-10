@@ -31,34 +31,6 @@ conferenceAppModule.controller('conferenceTeacherController', ['$rootScope', '$s
 
             console.log("inside code.");
             var client = new WebRtcClient(server, callback);
-            var email = "arunsimon@gmail.com";
-            var password = "Arun123";
-
-            //get all the contacts
-            var contactsCallback = function (contacts) {
-                for (var j = 0; j < contacts.length; j++) {
-                    console.log("parthaType:" + contacts[i].type);
-                    console.log("parthaid" + contacts[i].id);
-                }
-            };
-
-            var loginCallback = function (loginResponse) {
-                if (loginResponse.status === 0) {
-                    console.log("login successful");
-                    //client.getContacts(contactsCallback);
-                } else {
-                    console.log("login unsuccessful");
-                }
-            };
-            //client login
-            //client.login(email, password, loginCallback);
-
-
-
-            /*$scope.sendThisChat = function () {
-             console.log("char chat");
-             client.sendChat("Ravi welcomes to his console.");
-             };*/
 
             $scope.$on("broadcastChat", function (event, message) {
                 console.log("inside broadcast chat" + message);
@@ -66,43 +38,28 @@ conferenceAppModule.controller('conferenceTeacherController', ['$rootScope', '$s
                 client.sendChat(message);
             });
 
-
-            //raise the hand
-            function enableRaiseHandOnScreen(id) {
-                console.log("********** enabling hand for :" + id);
-                console.log(id);
-                //document.getElementById("hand-up-" + id).style.display = "block";
-            }
-
-            //enable unmute
-            $scope.unmute = function(id) {
-
-                console.log("********** enabling unmute for :" + id);
-                document.getElementById("hand-up-" + id).style.display = "none";
-                document.getElementById("unmute-" + id).style.display = "block";
-                document.getElementById("mute-" + id).style.display = "none";
-                client.acknowledgeRaisedHand(id, true); //notify the user to speak
-            }
-
-            //enable unmute
-            $scope.mute = function(id) {
-
-                console.log("********** enabling mute for :" + id);
-
-                document.getElementById("hand-up-" + id).style.display = "none";
-                document.getElementById("unmute-" + id).style.display = "none";
-                document.getElementById("mute-" + id).style.display = "block";
-                client.acknowledgeRaisedHand(id, false);   //notify the user to mute itself
-            }
-
             //unmute the attendee
             $scope.$on(AppConstants.UNMUTE_ATTENDEE, function (event, id) {
                 client.acknowledgeRaisedHand(id, true); //unmute him
+
+                //send a message to the other client that this user is to be unmuted
+                var resp = {
+                    id : id,
+                    type : "customUnmuteAttendee"
+                };
+                client.sendApplicationData(JSON.stringify(resp));
             });
 
             //mute the attendee
             $scope.$on(AppConstants.MUTE_ATTENDEE, function (event, id) {
                 client.acknowledgeRaisedHand(id, false); //mute him
+
+                //send a message to the other client that this user is to be unmuted
+                var resp = {
+                    id : id,
+                    type : "customMuteAttendee"
+                };
+                client.sendApplicationData(JSON.stringify(resp));
             });
 
 
@@ -166,16 +123,10 @@ conferenceAppModule.controller('conferenceTeacherController', ['$rootScope', '$s
             var conferenceUrl = sessionStorage.getItem(AppConstants.SOCIAL_VID_CONFERENCE_URL);
             console.log("Printing name");
             console.log(conferenceId);
-            //conferenceId = "98c9ca76299b7af9";
-            //conferenceUrl = "/guest.html?conferenceId=3e940ff72e3a3cf5&audio=1&video=1&dialout=0&moderator=1&c=871d3bf634ffe769";
-            //client.guestLogin(conference_guest.name, "98c9ca76299b7af9", function (loginStatus) {
 
             //new one
             client.guestLoginWithOptions(conference_guest.name, conferenceId, conferenceUrl, function (loginStatus) {
 
-                //client.guestLoginWithOptions(conference_guest.name, "98c9ca76299b7af9", "/guest.html?conferenceId=98c9ca76299b7af9&audio=1&video=1&dialout=0&moderator=0&c=f0a40dd706aeb73c", function (loginStatus) {
-
-                //client.guestLogin(conference_guest.name, "98c9ca76299b7af9", function (loginStatus) {
                 //client.guestLoginWithOptions(conference_guest.name, "98c9ca76299b7af9", "/guest.html?conferenceId=98c9ca76299b7af9&audio=1&video=1&dialout=0&moderator=0&c=f0a40dd706aeb73c", function (loginStatus) {
                 if (loginStatus.status === 0) {
                     // Do the next steps here, like joining a conference
@@ -191,26 +142,23 @@ conferenceAppModule.controller('conferenceTeacherController', ['$rootScope', '$s
 
                         switch (resp.type) {
 
-                            case "localStream":
+                            /*case "localStream":
                                 //display the self view
                                 attachMediaStream(document.getElementById("mainFormSelfVideo"), resp.stream);
-                                break;
+                                break;*/
 
                             case "confParticipantHandRaised" :
                                 console.log("+++++++++++++++++ raise hand caught %%%%%%%%%%%%%%%%%%%%%%%%%");
                                 console.log(resp);
                                 console.log("ID :" + resp.participant.id);
-                                //to be executed only when the presenter allows it
-                                //client.acknowledgeRaisedHand(resp.participant.id, true);
-
-                                //enableRaiseHandOnScreen(resp.participant.id);   //show hand raise on screen
-                                //call the below code to unmute the user
-                                //client.acknowledgeRaisedHand(resp.participant.id, false);
 
                                 //show a notification to handle raise hand
                                 $rootScope.$broadcast(AppConstants.CONFERENCE_HAND_RAISE, resp);
 
+                                //send a notification to all the client about the hand raised event.
+                                client.sendApplicationData(JSON.stringify(resp));
                                 break;
+
                             case "confChatMessage":
                                 console.log("CHAT CHAT CHAT chat");
                                 console.log(resp.chat);

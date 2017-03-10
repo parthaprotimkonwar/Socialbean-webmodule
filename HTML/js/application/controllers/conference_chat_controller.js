@@ -20,7 +20,13 @@ conferenceAppModule.controller('conferenceChatController', ['$scope', '$rootScop
 
         //mute the attendee
         $scope.muteTheAtteendee = function (id) {
+            //broadcast that attendee to mute itself
             $rootScope.$broadcast(AppConstants.MUTE_ATTENDEE, id);
+            showMutedAttendeeOnUI(id);
+        };
+
+        //show on UI
+        function showMutedAttendeeOnUI(id) {
 
             $timeout(function () {
                 //set the raise hand flag for the new participant
@@ -34,23 +40,41 @@ conferenceAppModule.controller('conferenceChatController', ['$scope', '$rootScop
 
         //unmute the attendee
         $scope.unmuteTheAtteendee = function (id) {
+            //broadcast that attendee to un-mute itself
             $rootScope.$broadcast(AppConstants.UNMUTE_ATTENDEE, id);
+            showUnmutedAttendeeOnUI(id);
+        }
+
+        //show on UI
+        function showUnmutedAttendeeOnUI(id) {
+
             $timeout(function () {
                 //set the raise hand flag for the new participant
                 $scope.participantMap[id].raiseHand = false;
                 $scope.participantMap[id].audio = "unmuted";
 
                 //update the participant map
-                var participants = [];
+                /*var participants = [];
 
-                for(var participant in $scope.participantMap) {
-                    participants.push($scope.participantMap[participant]);
-                }
+                 for(var participant in $scope.participantMap) {
+                 participants.push($scope.participantMap[participant]);
+                 }
 
-                $scope.participantsArray = participants;
+                 $scope.participantsArray = participants;*/
+                updateTheParticipants($scope.participantMap);
             });
+
         }
 
+        //Event to display the icons on Attendee Screen to unmute the user with 'id'
+        $scope.$on(AppConstants.UNMUTE_THAT_ATTENDEEID_ON_ATTENDEE_SCREEN, function (event, id) {
+            showUnmutedAttendeeOnUI(id);
+        });
+
+        //Event to display the icons on Attendee Screen to mute the user with 'id'
+        $scope.$on(AppConstants.MUTE_THAT_ATTENDEEID_ON_ATTENDEE_SCREEN, function (event, id) {
+            showMutedAttendeeOnUI(id);
+        });
 
         function updateTheParticipants(participantMap) {
             //local participants
@@ -77,6 +101,8 @@ conferenceAppModule.controller('conferenceChatController', ['$scope', '$rootScop
         $scope.$on(AppConstants.CONFERENCE_HAND_RAISE, function (event, message) {
 
             $timeout(function () {
+                console.log("***inside conference raise hand event");
+                console.log(message);
                 //updating the specific map
                 $scope.participantMap[message.participant.id] = message.participant;
 
