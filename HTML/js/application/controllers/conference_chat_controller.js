@@ -53,14 +53,6 @@ conferenceAppModule.controller('conferenceChatController', ['$scope', '$rootScop
                 $scope.participantMap[id].raiseHand = false;
                 $scope.participantMap[id].audio = "unmuted";
 
-                //update the participant map
-                /*var participants = [];
-
-                 for(var participant in $scope.participantMap) {
-                 participants.push($scope.participantMap[participant]);
-                 }
-
-                 $scope.participantsArray = participants;*/
                 updateTheParticipants($scope.participantMap);
             });
 

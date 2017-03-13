@@ -19,43 +19,77 @@ conferenceAppModule.controller('conferenceVideoController', ['$rootScope', '$sco
 
             console.log("inside code.");
             var client = new WebRtcClient(server, callback);
-            var email = "arunsimon@gmail.com";
-            var password = "Arun123";
-
-            //get all the contacts
-            /*var contactsCallback = function (contacts) {
-             for (var j = 0; j < contacts.length; j++) {
-             console.log("parthaType:" + contacts[i].type);
-             console.log("parthaid" + contacts[i].id);
-             }
-             };*/
-
-            var loginCallback = function (loginResponse) {
-                if (loginResponse.status === 0) {
-                    console.log("login successful");
-                    //client.getContacts(contactsCallback);
-                } else {
-                    console.log("login unsuccessful");
-                }
-            };
-            //client login
-            //client.login(email, password, loginCallback);
-
-            $scope.sendThisChat = function () {
-                console.log("char chat");
-                client.sendChat("Ravi welcomes to his console.");
-            };
 
             $scope.$on("broadcastChat", function (event, message) {
                 console.log("inside broadcast chat" + message);
                 console.log(message);
                 client.sendChat(message);
             });
-            /*function chat() {
-             console.log("char chat");
-             client.sendChat("Ravi welcomes to his console.");
-             return false;
-             }*/
+
+            $scope.stopshare = function () {
+                //g("mainFormShareBtn").style.opacity = 0.5;
+                client.stopShare(function(msg) {
+                    //self.hideShareVideo();
+                    //document.getElementById("mainFormShareVideo1").src = "";
+                    document.getElementById("mainFormShareVideo1").src = "";
+                    document.getElementById("mainFormShareVideo1").style.display = "none";
+                    document.getElementById("mainFormShareVideoImage").style.display = "block";
+                    document.getElementById("shareBtn").style.display = "block";
+                    document.getElementById("mainFormCanvas").style.display = "none";
+                    document.getElementById("mainFormCanvas2").style.display = "none";
+                    //document.getElementById("mainFormShareVideo1").style.display = "none"
+                    //document.getElementById("mainFormShareVideo1").poster="img/example1.jpg";
+                    //self.presenting_ = false;
+                });
+            };
+            $scope.share = function () {
+                console.log("sharing");
+
+                client.isShareEnabled(function(b) {
+                    if (!b) {
+                        var x = "To start sharing - ";
+                        x += "<a href='https://chrome.google.com/webstore/detail/socialvid-webrtc-share/bjhmiolgijcdfhdjlgpdaofbbdlpefmc' target='_blank'>Install Extension</a>";
+                        //self.showModal(x, true, true, "OK");
+                        console.log(x);
+                        return;
+                    }
+                    client.startShare(function(msg) {
+                        switch(msg.type) {
+                            case "localShareStream":
+                                //g("mainFormShareBtn").style.opacity = 1.0;
+                                document.getElementById("mainFormShareVideo1").style.display = "block";
+                                document.getElementById("mainFormShareVideoImage").style.display = "none";
+                                document.getElementById("shareBtn").style.display = "none";
+                                attachMediaStream(document.getElementById("mainFormShareVideo1"), msg.stream);
+
+                                var width = document.getElementById("mainFormShareVideo").clientWidth;
+                                var height = document.getElementById("mainFormShareVideo").clientHeight;
+
+                                var canvas1 = document.getElementById("mainFormCanvas");
+                                var canvas2 = document.getElementById("mainFormCanvas2");
+
+                                canvas1.style.display = "block";
+                                canvas2.style.display = "block";
+
+                                client.resizeCanvas(width * 1.05, (width/1.55));
+                                break;
+
+                            case "localShareStreamEnded":
+                                console.log("&&&&&&&  sharing stopped!!")
+                                $scope.stopshare();
+                                break;
+
+                            case "shareOffer":
+                                break;
+
+                            case "shareGetUserMediaFailed":
+                                //self.showModal("Start share failed - " + msg.error.name, true, true, "OK");
+                                console.log("Start share failed - " + msg.error.name);
+                                break;
+                        }
+                    });
+                });
+            };
 
             //join the conference
             var conferenceId = sessionStorage.getItem("conferenceId");
@@ -65,7 +99,7 @@ conferenceAppModule.controller('conferenceVideoController', ['$rootScope', '$sco
                 if (loginStatus.status === 0) {
                     // Do the next steps here, like joining a conference
                     console.log("guest login successful");
-
+                    client.setCanvases(document.getElementById("mainFormCanvas"),document.getElementById("mainFormCanvas2"));
                     client.joinVideoConference(conferenceId, function (resp) {
 
                         console.log(resp.type);
@@ -94,6 +128,38 @@ conferenceAppModule.controller('conferenceVideoController', ['$rootScope', '$sco
 
                             case "getUserMediaFailed": // The client could not access camera/microphone, hence call failed.
                                 console.log("Camera/Microphone access failed");
+                                break;
+
+                            case "remoteShareStream":
+                                //remote share screen
+                                document.getElementById("mainFormShareVideo1").style.display = "block";
+                                document.getElementById("mainFormShareVideoImage").style.display = "none";
+                                document.getElementById("shareBtn").style.display = "none";
+                                attachMediaStream(document.getElementById("mainFormShareVideo1"), resp.stream);
+
+                                //show the canvas on the screen
+                                var width = document.getElementById("mainFormShareVideo").clientWidth;
+                                var height = document.getElementById("mainFormShareVideo").clientHeight;
+
+                                var canvas1 = document.getElementById("mainFormCanvas");
+                                var canvas2 = document.getElementById("mainFormCanvas2");
+
+                                canvas1.style.display = "block";
+                                canvas2.style.display = "block";
+
+                                client.resizeCanvas(width * 1.05, (width/1.55));
+                                break;
+
+                            case "confStopShare":
+                                //remote unshare screen
+                                document.getElementById("mainFormShareVideo1").style.display = "none";
+                                document.getElementById("mainFormShareVideo1").src = "";
+                                document.getElementById("mainFormShareVideoImage").style.display = "block";
+                                document.getElementById("shareBtn").style.display = "block";
+
+                                //remove the canvas
+                                document.getElementById("mainFormCanvas").style.display = "none";
+                                document.getElementById("mainFormCanvas2").style.display = "none";
                                 break;
 
                             case "remoteAudioStream": // attachMediaStream is a function in the client. Call it with
@@ -144,35 +210,11 @@ conferenceAppModule.controller('conferenceVideoController', ['$rootScope', '$sco
                                 break;
 
                             case "participantsUpdated": // This gives the updated list of participants in the conference
-                                /*var participantList = [];
-                                for (var i = 0; i < resp.participants.length; i++) {
-                                    console.log("participants:: ");
-                                    console.log(resp.participants);
-                                    var callType = resp.participants[i].callType; // Can be Voice or Video
-                                    var name = resp.participants[i].name; // The name of the participant
-                                    //data type to send across
-                                    var participant  = {
-                                        callType : callType,
-                                        name : name
-                                    };
-                                    participantList.push(participant);
-                                }
-                                //show a notification to show chat
-                                $rootScope.$broadcast("showParticipantsInWindow", participantList);*/
-
                                 var participantMap = {};
                                 console.log("participants updated");
                                 console.log(resp.participants);
 
                                 for (var i = 0; i < resp.participants.length; i++) {
-                                    var callType = resp.participants[i].callType; // Can be Voice or Video
-                                    var name = resp.participants[i].name; // The name of the participant
-                                    //data type to send across
-                                    /*var participant  = {
-                                     callType : callType,
-                                     name : name
-                                     };*/
-                                    //participantMap.push(participant);
                                     var videoId = resp.participants[i].id;
                                     participantMap[videoId] = resp.participants[i];
                                 }
@@ -181,7 +223,6 @@ conferenceAppModule.controller('conferenceVideoController', ['$rootScope', '$sco
                                 console.log(participantMap);
                                 //show a notification to show chat
                                 $rootScope.$broadcast(AppConstants.SHOW_PARTICIPANTS_IN_CHAT_WINDOW, participantMap);
-
 
                                 break;
 

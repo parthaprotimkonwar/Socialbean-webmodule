@@ -73,6 +73,9 @@ conferenceAppModule.controller('conferenceTeacherController', ['$rootScope', '$s
                     document.getElementById("mainFormShareVideo1").style.display = "none";
                     document.getElementById("mainFormShareVideoImage").style.display = "block";
                     document.getElementById("shareBtn").style.display = "block";
+
+                    document.getElementById("mainFormCanvas").style.display = "none";
+                    document.getElementById("mainFormCanvas2").style.display = "none";
                     //document.getElementById("mainFormShareVideo1").style.display = "none"
                     //document.getElementById("mainFormShareVideo1").poster="img/example1.jpg";
                     //self.presenting_ = false;
@@ -99,6 +102,17 @@ conferenceAppModule.controller('conferenceTeacherController', ['$rootScope', '$s
                                 attachMediaStream(document.getElementById("mainFormShareVideo1"), msg.stream);
                                 //self.showShareVideo("Me");
                                 //self.presenting_ = true;
+
+                                var width = document.getElementById("mainFormShareVideo").clientWidth;
+                                var height = document.getElementById("mainFormShareVideo").clientHeight;
+
+                                var canvas1 = document.getElementById("mainFormCanvas");
+                                var canvas2 = document.getElementById("mainFormCanvas2");
+
+                                canvas1.style.display = "block";
+                                canvas2.style.display = "block";
+
+                                client.resizeCanvas((width * 1.05), (width/1.55));
                                 break;
 
                             case "localShareStreamEnded":
@@ -134,6 +148,7 @@ conferenceAppModule.controller('conferenceTeacherController', ['$rootScope', '$s
                     /*var canvas1 = document.getElementById("mainFormCanvas");
                      var canvas2 = document.getElementById("mainFormCanvas2");
                      client.setCanvases(canvas1, canvas2);*/
+                    client.setCanvases(document.getElementById("mainFormCanvas"),document.getElementById("mainFormCanvas2"));
 
                     //self = this;
                     client.joinVideoConference(conferenceId, function (resp) {
@@ -142,21 +157,27 @@ conferenceAppModule.controller('conferenceTeacherController', ['$rootScope', '$s
 
                         switch (resp.type) {
 
-                            /*case "localStream":
+                            case "localStream":
                                 //display the self view
                                 attachMediaStream(document.getElementById("mainFormSelfVideo"), resp.stream);
-                                break;*/
+                                break;
 
                             case "confParticipantHandRaised" :
                                 console.log("+++++++++++++++++ raise hand caught %%%%%%%%%%%%%%%%%%%%%%%%%");
                                 console.log(resp);
                                 console.log("ID :" + resp.participant.id);
 
+                                var response = resp;
+
+                                response.participant.clientName = AppConstants.PRESENTER;
                                 //show a notification to handle raise hand
-                                $rootScope.$broadcast(AppConstants.CONFERENCE_HAND_RAISE, resp);
+                                $rootScope.$broadcast(AppConstants.CONFERENCE_HAND_RAISE, response);
 
                                 //send a notification to all the client about the hand raised event.
-                                client.sendApplicationData(JSON.stringify(resp));
+                                //cloning the obejct
+                                var responseForAttendee = JSON.parse(JSON.stringify(response));
+                                responseForAttendee.participant.clientName = AppConstants.ATTENDEE;
+                                client.sendApplicationData(JSON.stringify(responseForAttendee));
                                 break;
 
                             case "confChatMessage":
@@ -263,10 +284,11 @@ conferenceAppModule.controller('conferenceTeacherController', ['$rootScope', '$s
                                 var participantMap = {};
                                 console.log("participants updated");
                                 console.log(resp.participants);
-
-                                for (var i = 0; i < resp.participants.length; i++) {
-                                    var videoId = resp.participants[i].id;
-                                    participantMap[videoId] = resp.participants[i];
+                                var participants = resp.participants;
+                                for (var i = 0; i < participants.length; i++) {
+                                    var videoId = participants[i].id;
+                                    participants[i].clientName = AppConstants.PRESENTER;
+                                    participantMap[videoId] = participants[i];
                                 }
 
                                 console.log("updated participant MAP");

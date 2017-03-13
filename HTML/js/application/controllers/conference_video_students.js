@@ -38,10 +38,14 @@ conferenceAppModule.controller('conferenceStudentsController', ['$rootScope', '$
                     document.getElementById("mainFormShareVideo1").src = "";
                     document.getElementById("mainFormShareVideo1").style.display = "none";
                     document.getElementById("mainFormShareVideoImage").style.display = "block";
+
                     //document.getElementById("shareBtn").style.display = "block";
                     //document.getElementById("mainFormShareVideo1").style.display = "none"
                     //document.getElementById("mainFormShareVideo1").poster="img/example1.jpg";
                     //self.presenting_ = false;
+
+                    document.getElementById("mainFormCanvas").style.display = "none";
+                    document.getElementById("mainFormCanvas2").style.display = "none";
                 });
             };
 
@@ -73,6 +77,20 @@ conferenceAppModule.controller('conferenceStudentsController', ['$rootScope', '$
                                 attachMediaStream(document.getElementById("mainFormShareVideo1"), msg.stream);
                                 //self.showShareVideo("Me");
                                 //self.presenting_ = true;
+
+                                var width = document.getElementById("mainFormShareVideo").clientWidth;
+                                var height = document.getElementById("mainFormShareVideo").clientHeight;
+
+                                var canvas1 = document.getElementById("mainFormCanvas");
+                                var canvas2 = document.getElementById("mainFormCanvas2");
+
+                                canvas1.style.display = "block";
+                                canvas2.style.display = "block";
+
+                                /*canvas1.setAttribute("style","border:1px solid #3CA63F;z-index: 1; position: absolute; top: 0px; left: 0px;");
+                                 canvas2.setAttribute("style","border:5px solid #6b0392;z-index: 20; position: absolute; top: 0px; left: 0px;");*/
+                                client.resizeCanvas((width * 1.05), (width/1.55));
+
                                 break;
 
                             case "localShareStreamEnded":
@@ -110,25 +128,17 @@ conferenceAppModule.controller('conferenceStudentsController', ['$rootScope', '$
                     /*var canvas1 = document.getElementById("mainFormCanvas");
                      var canvas2 = document.getElementById("mainFormCanvas2");
                      client.setCanvases(canvas1, canvas2);*/
+                    client.setCanvases(document.getElementById("mainFormCanvas"),document.getElementById("mainFormCanvas2"));
 
-                    //client.muteMicrophone();    //mute the mic
                     client.joinVideoConference(conferenceId, function (resp) {
 
                         console.log(resp.type);
 
                         switch (resp.type) {
-                            case "mainIceConnectionState" :
 
-                                console.log(resp);
-                                console.log("this is for the mainICE BREAKER*********");
-                                if(resp.state === "completed") {
-                                    console.log("ICE BREAKER WORKS &&&&& ");
-                                    client.muteMicrophone();        //mute all the mic of the attendees
-                                }
-                                break;
-                            /*case "localStream":
+                            case "localStream":
                                 attachMediaStream(document.getElementById("mainFormSelfVideo"), resp.stream);
-                                break;*/
+                                break;
 
                             case "confRaiseHand" :
                                 //receive a conference hand raise
@@ -239,12 +249,28 @@ conferenceAppModule.controller('conferenceStudentsController', ['$rootScope', '$
                                 document.getElementById("mainFormShareVideoImage").style.display = "none";
                                 //document.getElementById("shareBtn").style.display = "none";
                                 attachMediaStream(document.getElementById("mainFormShareVideo1"), resp.stream);
+
+                                //show the canvas on the screen
+                                var width = document.getElementById("mainFormShareVideo").clientWidth;
+                                var height = document.getElementById("mainFormShareVideo").clientHeight;
+
+                                var canvas1 = document.getElementById("mainFormCanvas");
+                                var canvas2 = document.getElementById("mainFormCanvas2");
+
+                                canvas1.style.display = "block";
+                                canvas2.style.display = "block";
+
+                                client.resizeCanvas(width * 1.05, (width/1.55));
                                 break;
+
                             case "confStopShare":
                                 document.getElementById("mainFormShareVideo1").style.display = "none";
                                 document.getElementById("mainFormShareVideo1").src = "";
                                 document.getElementById("mainFormShareVideoImage").style.display = "block";
                                 //document.getElementById("shareBtn").style.display = "block";
+                                //remove the canvas
+                                document.getElementById("mainFormCanvas").style.display = "none";
+                                document.getElementById("mainFormCanvas2").style.display = "none";
                                 break;
 
                             case "userAudioMuted" :

@@ -44,7 +44,6 @@ conferenceAppModule.controller('conferenceGuestJoinController', ['$scope', '$htt
 
             $scope.status = {};
 
-
             //execute request
             $scope.conferenceDetailsPromise = common.httpRequest(url, AppConstants.GET, null);
 

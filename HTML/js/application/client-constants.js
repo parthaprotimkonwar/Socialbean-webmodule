@@ -22,6 +22,11 @@ var ClientConstants = angular.module('ClientConstants', [])
         this.POST = 'POST';
         this.GET = 'GET';
 
+
+        //constants
+        this.PRESENTER = 'PRESENTER';
+        this.ATTENDEE = 'ATTENDEE';
+
         //session storage
                 //this.USER_PROFILE = 'user_profile';
         this.CONFERENCE_ID = 'conferenceId';

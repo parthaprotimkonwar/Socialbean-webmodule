@@ -44,6 +44,14 @@ var recieveConferenceUrls = function recieveConferenceUrls(error, response, body
     }
 }
 
+var getRecordingDataCb = function getRecordingDataCb(error, response, body) {
+    if (!error && response.statusCode == 200) {
+        console.log("urls : *******************");
+        console.log(body)
+        console.log("end urls : *******************");
+
+    }
+};
 
 var recieveConferenceData = function revieveConferenceData(error, response, body) {
     if (!error && response.statusCode == 200) {
@@ -77,13 +85,48 @@ var recieveData = function recieveData(error, response, body) {
             "maxParticipants": "10"
         }
 
-        request.post('https://nstl.socialvid.in/adminapi/v1/user/conference/add', {json: conferenceData}, recieveConferenceData);
+        //request.post('https://nstl.socialvid.in/adminapi/v1/user/conference/add', {json: conferenceData}, recieveConferenceData);
+
+        var getRecordingData = {"session": body.session, "email": "arunsimon@gmail.com", "confName": "create inst"}
+        request.post('https://nstl.socialvid.in/adminapi/v1/user/recording/get',{json: getRecordingData}, getRecordingDataCb);
+
+
+        //
     }
 };
 
 //make a https login request
 //request.post('https://nstl.socialvid.in/adminapi/v1/userlogin',{json: data}, recieveData);
+
+
 //request.post('https://ha.socialvid.in/adminapi/v1/userlogin',{json: data}, recieveData);
+
+
+//https://demo.socialvid.in/adminapi/v1/user/recording/get
+
+
+/*var getRecordingDataCb = function getRecordingDataCb(error, response, body) {
+    if (!error && response.statusCode == 200) {
+        //console.log(body)
+        session = body.session;
+        console.log("Session Id in the callback : " + session);
+
+        var conferenceData = {
+            "email": "arunsimon@gmail.com",
+            "session": body.session,
+            "name": "Test3",
+            "mode": "presenter",
+            "autoRecord": true,
+            "maxBitrateKbps": "512",
+            "maxParticipants": "10"
+        }
+
+        request.post('https://nstl.socialvid.in/adminapi/v1/user/conference/add', {json: conferenceData}, recieveConferenceData);
+    }
+};*/
+
+//var getRecordingData = {"session": "ce97620d550ae73d", "email": "arunsimon@gmail.com", "confName": "<confName>"}
+//request.post('https://nstl.socialvid.in/adminapi/v1/user/recording/get',{json: getRecordingData}, getRecordingDataCb);
 
 console.log('application started in port 3000');
 module.exports = app;       // export this module to use this as a dependency in other module
