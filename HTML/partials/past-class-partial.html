@@ -100,13 +100,32 @@
         </div>-->
         <!-- End Panel -->
 
-        <div class="col-md-12">
+        <div class="col-md-12" ng-show="!pastClasses.length">
+            <div class="panel panel-default">
+                <div class="panel-title">
+                    Classes in the past
+                </div>
+                <div class="panel-body table-responsive">
+
+                    <span>
+                        <h4 class="color6">You have no recorded classes available.</h4>
+                        <p>Start by creating one class</p>
+                        <a href="#/admin/class/create" class="btn btn-sm">Create Class</a>
+                    </span>
+                </div>
+
+            </div>
+        </div>
+        <!-- End Panel -->
+
+        <div class="col-md-12" ng-show="pastClasses.length">
             <div class="panel" ng-repeat="meeting in pastClasses">
                 <div class="panel-title">
                     {{meeting.title}}
                 </div>
 
                 <div class="panel-body">
+
                     <p>{{meeting.description}}</p>
                     <div ng-show="!videoLinksMap[meeting.id]" id="videoLinks{{meeting.id}}">
                         <a class="btn btn-danger" data-toggle="collapse" ng-click="getVideoLinks(meeting.id, meeting.presenterToken)">Get Video links</a>
