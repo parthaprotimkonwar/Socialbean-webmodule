@@ -71,16 +71,6 @@ conferenceAppModule.config(['$routeProvider', '$httpProvider', function ($routeP
         //teacher can present and see the students
         templateUrl: 'partials/video-conference-teacher-partial.html',
         controller: 'conferenceTeacherController'
-    /*}).when('/conference/video/teachers/ha', {
-        //join as a teacher
-        //teacher can present and see the students
-        templateUrl: 'partials/video-conference-teacher-partial.html',
-        controller: 'conferenceTeacherControllerHa'
-    }).when('/conference/video/teachers/nstl', {
-        //join as a teacher
-        //teacher can present and see the students
-        templateUrl: 'partials/video-conference-teacher-partial.html',
-        controller: 'conferenceTeacherControllerNstl'*/
     }).when('/conference/video/students', {
         //join as a students
         //students can see the teachers screen only
@@ -95,6 +85,27 @@ conferenceAppModule.config(['$routeProvider', '$httpProvider', function ($routeP
         //main screen
         templateUrl: 'partials/guest-join-conference-partial.html',
         controller: 'conferenceGuestJoinController'
+    }).when('/conference/unknown', {
+        //unknown
+        templateUrl: 'partials/partial-404.html'
+    }).otherwise({
+        //default page
+        redirectTo: '/conference/unknown'
+    });
+}]);
+
+//conference module
+var videoApp = angular.module('videoApp', [
+    'ngRoute', 'ClientCustomization', 'ClientConstants', 'http_request'
+]);
+
+
+//main page is login.html
+videoApp.config(['$routeProvider', '$httpProvider', function ($routeProvider, $httpProvider) {
+    $routeProvider.when('/video/:videoId/:conferenceId', {
+        //main screen
+        templateUrl: 'application/video-player/view/socialvid-video-player.html',
+        controller: 'socialVidVideoPlayer'
     }).when('/conference/unknown', {
         //unknown
         templateUrl: 'partials/partial-404.html'

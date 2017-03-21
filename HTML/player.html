@@ -1,0 +1,242 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Video Player</title> 
+        <style>
+          html {
+            height: 100%;
+            width: 100%;
+            font-family: Helvetica, Arial, sans-serif;
+
+          }
+          
+          body {
+            margin: 0px;
+            height: 100%;
+            width: 100%;
+            background-color: #F0F0F0;
+            color: #777;font-size: 14px;
+          }
+
+          .full-height {
+            height: 100%;
+            width: 100%;
+          }
+
+          #overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+          }
+
+          #overlay img {
+            position: absolute;
+            margin: auto;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            width: 6%;
+            padding: 1%;
+            border-radius: 15%;
+            background-color: rgb(240, 240, 240);
+          }
+
+          #videoPause, #videoRewind, #videoForward {
+            opacity: 0;
+            -webkit-transition: opacity 400ms ease-in;
+            -moz-transition: opacity 400ms ease-in;
+            transition: opacity 400ms ease-in;
+          }
+
+          #videoPause:hover, #videoRewind:hover, #videoForward:hover {
+            opacity: 0.6;
+            -webkit-transition: opacity 400ms ease-in;
+            -moz-transition: opacity 400ms ease-in;
+            transition: opacity 400ms ease-in;
+          }
+
+          #videoRewind:active, #videoForward:active {
+            background-color: rgba(255, 255, 255, 1);
+            -webkit-transition: opacity 300ms ease-in;
+            -moz-transition: opacity 300ms ease-in;
+            transition: opacity 300ms ease-in;
+          }
+
+
+          #videoReload {
+            padding: 5%;
+          }
+
+
+          #mainFormVideos {
+            overflow: hidden;
+            height: 100%;
+          }
+
+          .videos-container, #mainFormVideosContainer {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            min-height: 100%;
+            background-color: black;
+          }
+          .video-div {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 0;
+            width: 0;
+            overflow: hidden;
+            background-color: #202020;
+            display: none;
+          }
+
+          .video-label {
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            padding: 7px;
+            color: rgba(255, 255, 255, 0.87);;
+            background-color: black;
+            opacity: 0.6;
+            font-weight: bold;
+            border-radius: 9px;
+            border:1px solid #E91E63;
+          }
+
+          video {
+            width: 100%;
+            height: 100%;
+          } 
+          canvas {
+            position: absolute;
+            top: 0px;
+            left: 0px;
+          }
+
+
+          #progress {
+            position: relative;
+            bottom: 10px;
+            left: 0px;
+            right: 0px;
+            width: calc(100% - 180px);
+            margin: auto;
+          }
+
+          progress[value] {
+            /* Reset the default appearance */
+            -webkit-appearance: none;
+               -moz-appearance: none;
+                    appearance: none;
+  
+            /* Get rid of default border in Firefox. */
+            border: none;
+            
+            /* Dimensions 
+            width: 250px;
+            height: 20px; */
+          }
+
+          progress[value]::-webkit-progress-bar {
+            background-color: #f0f0f0;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
+          }
+
+          progress[value]::-webkit-progress-value {
+            border-radius: 5px; 
+            background-color: #878787;
+          }
+
+          progress[value]::-moz-progress-bar { 
+            /* border-radius: 5px;  */
+            background-color: #878787;
+          }
+
+          #progress > progress {
+            position: absolute;
+            bottom: 10px;
+            left: -20px;
+            right: 0px;
+            width: 100%;
+            /* margin: auto; */
+          }
+
+          #progress > span {
+            position: absolute;
+            bottom: 10px;
+            color: rgb(240, 240, 240);
+            font-size: 15px;
+            /* font-weight: bold; */
+          }
+
+          #currentTime {
+            left: -65px;
+          }
+
+          #seeker {
+            background-size: 100%;
+            background-repeat: no-repeat;
+            background-position-y: 3px;
+            left: -30px;
+            color: black !important;
+            z-index: 3;
+            width: 20px;
+            height: 20px;
+            background-image: url("data:image/svg+xml;base64,PHN2ZyBmaWxsPSIjMDAwMDAwIiBoZWlnaHQ9IjEyOCIgdmlld0JveD0iMCAwIDI0IDI0IiB3aWR0aD0iMTI4IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgogICAgPHBhdGggZD0iTTAgMGgyNHYyNEgweiIgZmlsbD0ibm9uZSIvPgogICAgPHBhdGggZD0iTTEyIDJDNi40OCAyIDIgNi40OCAyIDEyczQuNDggMTAgMTAgMTAgMTAtNC40OCAxMC0xMFMxNy41MiAyIDEyIDJ6Ii8+Cjwvc3ZnPgo=");
+          }
+          
+
+          #totalTime {
+            right: -70px;
+          }
+
+          #speed {
+            right: -26px;
+            font-weight: bold;
+          }
+
+          #mainFormProgress2 {
+            opacity: 0.4;
+          }
+
+        </style>
+    </head>
+    <body ng-app="videoApp">
+
+        <div class="full-height" style="height: 100%; width: 100%">
+            <ng-view></ng-view>
+        </div>
+
+        <script type="text/javascript" src="js/jquery.min.js"></script>
+
+        <!-- ================================================
+        Bootstrap Core JavaScript File
+        ================================================ -->
+        <script src="js/bootstrap/bootstrap.min.js"></script>
+
+
+        <!-- Angular JS Imports -->
+        <script type="text/javascript" src="js/angular/angular.min.js"></script>
+        <script type="text/javascript" src="js/angular/angular-route.min.js"></script>
+        <script type="text/javascript" src="js/application/client-customizations.js"></script>
+        <script type="text/javascript" src="js/application/client-constants.js"></script>
+        <script type="text/javascript" src="js/application/app.js"></script>
+        <script type="text/javascript" src="js/application/services.js"></script>
+
+        <script src="js/socialvid/playerclient.js"></script>
+        <script src="application/video-player/controller/socialVidVideoPlayer.js"></script>
+
+
+        <script type="text/javascript" src="js/application/image-crop/ng-img-crop.js"></script>
+        <!--<script src="video/player.js"></script>-->
+    </body>
+</html>

@@ -96,7 +96,7 @@ var recieveData = function recieveData(error, response, body) {
 };
 
 //make a https login request
-request.post('https://nstl.socialvid.in/adminapi/v1/userlogin',{json: data}, recieveData);
+//request.post('https://nstl.socialvid.in/adminapi/v1/userlogin',{json: data}, recieveData);
 
 
 //request.post('https://ha.socialvid.in/adminapi/v1/userlogin',{json: data}, recieveData);

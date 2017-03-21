@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="ConnSocio is a analogy for seamless video conference.">
+    <meta name="keywords" content="connsocio, video, conference"/>
+    <title>ConnSocio - Providing seamless video conference</title>
+
+    <!-- ========== Css Files ========== -->
+    <link href="css/root.css" rel="stylesheet">
+
+    <style>
+        /*html {
+            height: 50%;
+            font-family: Helvetica, Arial, sans-serif;
+            font-size: 14px;
+        }*/
+
+        body {
+            margin: 0px;
+            height: 100%;
+            width: 100%;
+            background-color: #F0F0F0;
+            color: #777;
+        }
+        .full-height {
+            height: 100%;
+            width: 100%;
+        }
+
+        #overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+        }
+
+        #overlay img {
+            position: absolute;
+            margin: auto;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            width: 6%;
+            padding: 1%;
+            border-radius: 15%;
+            background-color: rgb(240, 240, 240);
+        }
+
+        #videoPause, #videoRewind, #videoForward {
+            opacity: 0;
+            -webkit-transition: opacity 400ms ease-in;
+            -moz-transition: opacity 400ms ease-in;
+            transition: opacity 400ms ease-in;
+        }
+
+        #videoPause:hover, #videoRewind:hover, #videoForward:hover {
+            opacity: 0.6;
+            -webkit-transition: opacity 400ms ease-in;
+            -moz-transition: opacity 400ms ease-in;
+            transition: opacity 400ms ease-in;
+        }
+
+        #videoRewind:active, #videoForward:active {
+            background-color: rgba(255, 255, 255, 1);
+            -webkit-transition: opacity 300ms ease-in;
+            -moz-transition: opacity 300ms ease-in;
+            transition: opacity 300ms ease-in;
+        }
+
+
+        #videoReload {
+            padding: 5%;
+        }
+
+
+        #mainFormVideos {
+            overflow: hidden;
+            height: 100%;
+        }
+
+        .videos-container, #mainFormVideosContainer {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            min-height: 100%;
+            background-color: black;
+        }
+        .video-div {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 0;
+            width: 0;
+            overflow: hidden;
+            background-color: #202020;
+            display: none;
+        }
+
+        .video-label {
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            padding: 7px;
+            color: rgba(255, 255, 255, 0.87);;
+            background-color: black;
+            opacity: 0.6;
+            font-weight: bold;
+            border-radius: 9px;
+            border:1px solid #E91E63;
+        }
+
+        video {
+            width: 100%;
+            height: 100%;
+        }
+        canvas {
+            position: absolute;
+            top: 0px;
+            left: 0px;
+        }
+
+
+        #progress {
+            position: relative;
+            bottom: 10px;
+            left: 0px;
+            right: 0px;
+            width: calc(100% - 180px);
+            margin: auto;
+        }
+
+        progress[value] {
+            /* Reset the default appearance */
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+
+            /* Get rid of default border in Firefox. */
+            border: none;
+
+            /* Dimensions
+            width: 250px;
+            height: 20px; */
+        }
+
+        progress[value]::-webkit-progress-bar {
+            background-color: #f0f0f0;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
+        }
+
+        progress[value]::-webkit-progress-value {
+            border-radius: 5px;
+            background-color: #878787;
+        }
+
+        progress[value]::-moz-progress-bar {
+            /* border-radius: 5px;  */
+            background-color: #878787;
+        }
+
+        #progress > progress {
+            position: absolute;
+            bottom: 10px;
+            left: -20px;
+            right: 0px;
+            width: 100%;
+            /* margin: auto; */
+        }
+
+        #progress > span {
+            position: absolute;
+            bottom: 10px;
+            color: rgb(240, 240, 240);
+            font-size: 15px;
+            /* font-weight: bold; */
+        }
+
+        #currentTime {
+            left: -65px;
+        }
+
+        #seeker {
+            background-size: 100%;
+            background-repeat: no-repeat;
+            background-position-y: 3px;
+            left: -30px;
+            color: black !important;
+            z-index: 3;
+            width: 20px;
+            height: 20px;
+            background-image: url("data:image/svg+xml;base64,PHN2ZyBmaWxsPSIjMDAwMDAwIiBoZWlnaHQ9IjEyOCIgdmlld0JveD0iMCAwIDI0IDI0IiB3aWR0aD0iMTI4IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgogICAgPHBhdGggZD0iTTAgMGgyNHYyNEgweiIgZmlsbD0ibm9uZSIvPgogICAgPHBhdGggZD0iTTEyIDJDNi40OCAyIDIgNi40OCAyIDEyczQuNDggMTAgMTAgMTAgMTAtNC40OCAxMC0xMFMxNy41MiAyIDEyIDJ6Ii8+Cjwvc3ZnPgo=");
+        }
+
+
+        #totalTime {
+            right: -70px;
+        }
+
+        #speed {
+            right: -26px;
+            font-weight: bold;
+        }
+
+        #mainFormProgress2 {
+            opacity: 0.4;
+        }
+
+    </style>
+</head>
+<body ng-app="conferenceAppModule" ng-controller="conferenceVideoPlayer">
+<!-- Start Page Loading -->
+<div class="loading"><img src="img/loading.gif" alt="loading-img"></div>
+<!-- End Page Loading -->
+<!-- //////////////////////////////////////////////////////////////////////////// -->
+<!-- START TOP -->
+<div id="top" class="clearfix">
+
+    <!-- Start App Logo -->
+    <div class="applogo" ng-controller="conferenceChatController">
+        <a href="index.html" class="logo"><img ng-src="{{themeText.INDEX_PAGE_LOGO_200x50}}"/></a>
+    </div>
+
+    <!-- End Top Menu -->
+</div>
+<!-- End Top Menu -->
+
+</div>
+<!-- END TOP -->
+<!-- //////////////////////////////////////////////////////////////////////////// -->
+<!-- START CONTENT -->
+<div class="content-conference">
+
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <br><br><br><br><br><br><br><br><br><br>
+    <!--<ng-view></ng-view>-->
+
+    <div class="full-height">
+        <!-- Example for playing 2 recordings
+        <div id="webrtcPlayerContainer" style="height: 50%; ">
+        </div>
+        <div id="webrtcPlayerContainer2" style="height: 50%; ">
+        </div>
+        -->
+        <div id="webrtcPlayerContainer" class="full-height">
+        </div>
+
+        <!-- <div id="mainFormVideos">
+            <audio id="audio" preload="auto"></audio>
+            <div id="mainFormVideosContainer">
+                <div id="mainFormShareVideo" class="video-div">
+                    <div id="mainFormShareName" class="video-label"></div>
+                </div>
+                <div id="mainFormVideo1" class="video-div">
+                    <div id="mainFormRemotePart1" class="video-label"></div>
+                </div>
+                <div id="mainFormVideo2" class="video-div">
+                    <div id="mainFormRemotePart2" class="video-label"></div>
+                </div>
+                <div id="mainFormVideo3" class="video-div">
+                    <div id="mainFormRemotePart3" class="video-label"></div>
+                </div>
+                <div id="mainFormVideo4" class="video-div">
+                    <div id="mainFormRemotePart4" class="video-label"></div>
+                </div>
+            </div>
+        </div> -->
+        <div id="overlay">
+            <img id="videoLoading" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjxzdmcgaGVpZ2h0PSIzMiIgaWQ9ImxvYWRpbmciIHZpZXdCb3g9IjAgMCAzMiAzMiIgd2lkdGg9IjMyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxnPjxwYXRoIGQ9Ik0xNCAwIEgxOCBWOCBIMTQgeiIgb3BhY2l0eT0iLjEiIHRyYW5zZm9ybT0icm90YXRlKDAgMTYgMTYpIj48YW5pbWF0ZSBhdHRyaWJ1dGVOYW1lPSJvcGFjaXR5IiBiZWdpbj0iMCIgZHVyPSIxcyIgZnJvbT0iMSIgcmVwZWF0Q291bnQ9ImluZGVmaW5pdGUiIHRvPSIuMSIvPjwvcGF0aD48cGF0aCBkPSJNMTQgMCBIMTggVjggSDE0IHoiIG9wYWNpdHk9Ii4xIiB0cmFuc2Zvcm09InJvdGF0ZSg0NSAxNiAxNikiPjxhbmltYXRlIGF0dHJpYnV0ZU5hbWU9Im9wYWNpdHkiIGJlZ2luPSIwLjEyNXMiIGR1cj0iMXMiIGZyb209IjEiIHJlcGVhdENvdW50PSJpbmRlZmluaXRlIiB0bz0iLjEiLz48L3BhdGg+PHBhdGggZD0iTTE0IDAgSDE4IFY4IEgxNCB6IiBvcGFjaXR5PSIuMSIgdHJhbnNmb3JtPSJyb3RhdGUoOTAgMTYgMTYpIj48YW5pbWF0ZSBhdHRyaWJ1dGVOYW1lPSJvcGFjaXR5IiBiZWdpbj0iMC4yNXMiIGR1cj0iMXMiIGZyb209IjEiIHJlcGVhdENvdW50PSJpbmRlZmluaXRlIiB0bz0iLjEiLz48L3BhdGg+PHBhdGggZD0iTTE0IDAgSDE4IFY4IEgxNCB6IiBvcGFjaXR5PSIuMSIgdHJhbnNmb3JtPSJyb3RhdGUoMTM1IDE2IDE2KSI+PGFuaW1hdGUgYXR0cmlidXRlTmFtZT0ib3BhY2l0eSIgYmVnaW49IjAuMzc1cyIgZHVyPSIxcyIgZnJvbT0iMSIgcmVwZWF0Q291bnQ9ImluZGVmaW5pdGUiIHRvPSIuMSIvPjwvcGF0aD48cGF0aCBkPSJNMTQgMCBIMTggVjggSDE0IHoiIG9wYWNpdHk9Ii4xIiB0cmFuc2Zvcm09InJvdGF0ZSgxODAgMTYgMTYpIj48YW5pbWF0ZSBhdHRyaWJ1dGVOYW1lPSJvcGFjaXR5IiBiZWdpbj0iMC41cyIgZHVyPSIxcyIgZnJvbT0iMSIgcmVwZWF0Q291bnQ9ImluZGVmaW5pdGUiIHRvPSIuMSIvPjwvcGF0aD48cGF0aCBkPSJNMTQgMCBIMTggVjggSDE0IHoiIG9wYWNpdHk9Ii4xIiB0cmFuc2Zvcm09InJvdGF0ZSgyMjUgMTYgMTYpIj48YW5pbWF0ZSBhdHRyaWJ1dGVOYW1lPSJvcGFjaXR5IiBiZWdpbj0iMC42NzVzIiBkdXI9IjFzIiBmcm9tPSIxIiByZXBlYXRDb3VudD0iaW5kZWZpbml0ZSIgdG89Ii4xIi8+PC9wYXRoPjxwYXRoIGQ9Ik0xNCAwIEgxOCBWOCBIMTQgeiIgb3BhY2l0eT0iLjEiIHRyYW5zZm9ybT0icm90YXRlKDI3MCAxNiAxNikiPjxhbmltYXRlIGF0dHJpYnV0ZU5hbWU9Im9wYWNpdHkiIGJlZ2luPSIwLjc1cyIgZHVyPSIxcyIgZnJvbT0iMSIgcmVwZWF0Q291bnQ9ImluZGVmaW5pdGUiIHRvPSIuMSIvPjwvcGF0aD48cGF0aCBkPSJNMTQgMCBIMTggVjggSDE0IHoiIG9wYWNpdHk9Ii4xIiB0cmFuc2Zvcm09InJvdGF0ZSgzMTUgMTYgMTYpIj48YW5pbWF0ZSBhdHRyaWJ1dGVOYW1lPSJvcGFjaXR5IiBiZWdpbj0iMC44NzVzIiBkdXI9IjFzIiBmcm9tPSIxIiByZXBlYXRDb3VudD0iaW5kZWZpbml0ZSIgdG89Ii4xIi8+PC9wYXRoPjwvZz48L3N2Zz4=">
+
+            <img id="videoPlay" src="data:image/svg+xml;base64,PHN2ZyBmaWxsPSIjMDAwMDAwIiBoZWlnaHQ9IjEyOCIgdmlld0JveD0iMCAwIDI0IDI0IiB3aWR0aD0iMTI4IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgogICAgPHBhdGggZD0iTTAgMGgyNHYyNEgweiIgZmlsbD0ibm9uZSIvPgogICAgPHBhdGggZD0iTTEwIDE2LjVsNi00LjUtNi00LjV2OXpNMTIgMkM2LjQ4IDIgMiA2LjQ4IDIgMTJzNC40OCAxMCAxMCAxMCAxMC00LjQ4IDEwLTEwUzE3LjUyIDIgMTIgMnptMCAxOGMtNC40MSAwLTgtMy41OS04LThzMy41OS04IDgtOCA4IDMuNTkgOCA4LTMuNTkgOC04IDh6Ii8+Cjwvc3ZnPgo=" style="display: none; ">
+
+            <img id="videoRewind" src="data:image/svg+xml;base64,PHN2ZyBmaWxsPSIjMDAwMDAwIiBoZWlnaHQ9IjEyOCIgdmlld0JveD0iMCAwIDI0IDI0IiB3aWR0aD0iMTI4IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgogICAgPHBhdGggZD0iTTExIDE4VjZsLTguNSA2IDguNSA2em0uNS02bDguNSA2VjZsLTguNSA2eiIvPgogICAgPHBhdGggZD0iTTAgMGgyNHYyNEgweiIgZmlsbD0ibm9uZSIvPgo8L3N2Zz4K" style="display: none; left: -250px; ">
+
+            <img id="videoPause" src="data:image/svg+xml;base64,PHN2ZyBmaWxsPSIjMDAwMDAwIiBoZWlnaHQ9IjEyOCIgdmlld0JveD0iMCAwIDI0IDI0IiB3aWR0aD0iMTI4IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgogICAgPHBhdGggZD0iTTAgMGgyNHYyNEgweiIgZmlsbD0ibm9uZSIvPgogICAgPHBhdGggZD0iTTkgMTZoMlY4SDl2OHptMy0xNEM2LjQ4IDIgMiA2LjQ4IDIgMTJzNC40OCAxMCAxMCAxMCAxMC00LjQ4IDEwLTEwUzE3LjUyIDIgMTIgMnptMCAxOGMtNC40MSAwLTgtMy41OS04LThzMy41OS04IDgtOCA4IDMuNTkgOCA4LTMuNTkgOC04IDh6bTEtNGgyVjhoLTJ2OHoiLz4KPC9zdmc+Cg==" style="display: none; ">
+
+            <img id="videoForward" src="data:image/svg+xml;base64,PHN2ZyBmaWxsPSIjMDAwMDAwIiBoZWlnaHQ9IjEyOCIgdmlld0JveD0iMCAwIDI0IDI0IiB3aWR0aD0iMTI4IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgogICAgPHBhdGggZD0iTTQgMThsOC41LTZMNCA2djEyem05LTEydjEybDguNS02TDEzIDZ6Ii8+CiAgICA8cGF0aCBkPSJNMCAwaDI0djI0SDB6IiBmaWxsPSJub25lIi8+Cjwvc3ZnPgo=" style="display: none; left: 250px; ">
+
+            <img id="videoReload" src="data:image/svg+xml;base64,PHN2ZyBmaWxsPSIjMDAwMDAwIiBoZWlnaHQ9IjEyOCIgdmlld0JveD0iMCAwIDI0IDI0IiB3aWR0aD0iMTI4IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgogICAgPHBhdGggZD0iTTAgMGgyNHYyNEgweiIgZmlsbD0ibm9uZSIvPgogICAgPHBhdGggZD0iTTEyIDVWMUw3IDZsNSA1VjdjMy4zMSAwIDYgMi42OSA2IDZzLTIuNjkgNi02IDYtNi0yLjY5LTYtNkg0YzAgNC40MiAzLjU4IDggOCA4czgtMy41OCA4LTgtMy41OC04LTgtOHoiLz4KPC9zdmc+Cg==" style="display: none; ">
+
+        </div>
+        <div id="progress">
+            <span id="currentTime"> 00:00 </span>
+            <span id="seeker"> </span>
+            <progress id="mainFormProgress" max=100 value=0></progress>
+            <progress id="mainFormProgress2" max=100 value=0></progress>
+            <span id="totalTime"> 00:00 </span>
+            <span id="speed"> [1.0X] </span>
+        </div>
+    </div>
+
+    <!--<div ng-click="playVideo()">
+        Play Video
+    </div>-->
+    <!-- END CONTAINER -->
+    <!-- //////////////////////////////////////////////////////////////////////////// -->
+
+
+    <!-- Start Footer -->
+    <div class="row footer">
+        <div class="col-md-6 text-left">
+            Copyright © 2015 ConnSocio.
+        </div>
+        <div class="col-md-6 text-right">
+            Crafted with <i class="fa fa-heart color10"></i> in India.
+        </div>
+    </div>
+    <!-- End Footer -->
+
+
+</div>
+<!-- End Content -->
+<!-- //////////////////////////////////////////////////////////////////////////// -->
+
+
+<!-- ================================================
+jQuery Library
+================================================ -->
+<script type="text/javascript" src="js/jquery.min.js"></script>
+
+<!-- ================================================
+Bootstrap Core JavaScript File
+================================================ -->
+<script src="js/bootstrap/bootstrap.min.js"></script>
+
+<!-- ================================================
+Plugin.js - Some Specific JS codes for Plugin Settings
+================================================ -->
+<script type="text/javascript" src="js/plugins.js"></script>
+
+<!---------------------------------------------
+Angular Includes
+------------------------------------------- -->
+<script type="text/javascript" src="js/angular/angular.min.js"></script>
+<script type="text/javascript" src="js/angular/angular-route.min.js"></script>
+<script type="text/javascript" src="js/application/client-customizations.js"></script>
+<script type="text/javascript" src="js/application/client-constants.js"></script>
+<script type="text/javascript" src="js/application/app.js"></script>
+<script type="text/javascript" src="js/application/services.js"></script>
+
+<!-- =============================================================================
+WebRTC specific
+================================================================================-->
+<!--<script type="text/javascript" src="https://demo.socialvid.in/js/client.js"></script>-->
+<!--<script type="text/javascript" src="https://nstl.socialvid.in/js/playerclient.js"></script>-->
+<script type="text/javascript" src="js/socialvid/playerclient.js"></script>
+<script type="text/javascript" src="js/application/controllers/conferenceVideoPlayer.js"></script>
+<script type="text/javascript" src="js/application/controllers/conference-video-guest.js"></script>
+<script type="text/javascript" src="js/application/controllers/conference_guest_join_controller.js"></script>
+<script type="text/javascript" src="js/application/controllers/conference_chat_controller.js"></script>
+<script type="text/javascript" src="js/application/controllers/conference_video_students.js"></script>
+<script type="text/javascript" src="js/application/controllers/conference_video_teacher.js"></script>
+
+</body>
+</html>

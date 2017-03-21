@@ -51,7 +51,7 @@
     <div class="row">
 
         <!-- Start Panel -->
-        <div class="col-md-12">
+        <!--<div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-title">
                     Classes in the past
@@ -97,8 +97,31 @@
                 </div>
 
             </div>
-        </div>
+        </div>-->
         <!-- End Panel -->
+
+        <div class="col-md-12">
+            <div class="panel" ng-repeat="meeting in pastClasses">
+                <div class="panel-title">
+                    {{meeting.title}}
+                </div>
+
+                <div class="panel-body">
+                    <p>{{meeting.description}}</p>
+                    <div ng-show="!videoLinksMap[meeting.id]" id="videoLinks{{meeting.id}}">
+                        <a class="btn btn-danger" data-toggle="collapse" ng-click="getVideoLinks(meeting.id, meeting.presenterToken)">Get Video links</a>
+                    </div>
+
+                    <div ng-show="videoLinksMap[meeting.id]">
+                        <div class="col-sm-2" ng-repeat="videoLink in videoLinksMap[meeting.id]" style="margin-top: 4px">
+                            <a class="btn btn-default" ng-click="openVideoLink(videoLink.videoId, videoLink.uniqueId)" style="width: 120px">Class {{videoLink.id}}</a>
+                        </div>
+                    </div>
+                    <!--<a class="btn btn-default" data-toggle="collapse">Link with href</a>
+                    <button class="btn btn-success" type="button">Button with data-target</button>-->
+                </div>
+            </div>
+        </div>
 
 
     </div>
