@@ -48,14 +48,20 @@ conferenceAppModule.controller('conferenceVideoController', ['$rootScope', '$sco
                 client.isShareEnabled(function(b) {
                     if (!b) {
                         var x = "To start sharing - ";
-                        x += "<a href='https://chrome.google.com/webstore/detail/socialvid-webrtc-share/bjhmiolgijcdfhdjlgpdaofbbdlpefmc' target='_blank'>Install Extension</a>";
+                        //x += "<a href='https://chrome.google.com/webstore/detail/socialvid-webrtc-share/bjhmiolgijcdfhdjlgpdaofbbdlpefmc' target='_blank'>Install Extension</a>";
                         //self.showModal(x, true, true, "OK");
-                        console.log(x);
+                        $scope.status = {
+                            requireSharingExtension : true
+                        };
                         return;
                     }
+
+
                     client.startShare(function(msg) {
                         switch(msg.type) {
+
                             case "localShareStream":
+
                                 //g("mainFormShareBtn").style.opacity = 1.0;
                                 document.getElementById("mainFormShareVideo1").style.display = "block";
                                 document.getElementById("mainFormShareVideoImage").style.display = "none";
@@ -182,6 +188,8 @@ conferenceAppModule.controller('conferenceVideoController', ['$rootScope', '$sco
                                     return b.name;
                                 });
 
+                                console.log("***((((( Active Talker List )))))*****");
+                                console.log(resp);
                                 console.log(talkers);
                                 console.log(names);
                                 // this function shows the indices in talkers, and sets the name tag for those video participants

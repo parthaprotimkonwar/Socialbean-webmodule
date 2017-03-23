@@ -87,9 +87,12 @@ conferenceAppModule.controller('conferenceTeacherController', ['$rootScope', '$s
                 client.isShareEnabled(function(b) {
                     if (!b) {
                         var x = "To start sharing - ";
-                        x += "<a href='https://chrome.google.com/webstore/detail/socialvid-webrtc-share/bjhmiolgijcdfhdjlgpdaofbbdlpefmc' target='_blank'>Install Extension</a>";
+                        //x += "<a href='https://chrome.google.com/webstore/detail/socialvid-webrtc-share/bjhmiolgijcdfhdjlgpdaofbbdlpefmc' target='_blank'>Install Extension</a>";
                         //self.showModal(x, true, true, "OK");
                         //alert(x);
+                        $scope.status = {
+                            requireSharingExtension : true
+                        };
                         return;
                     }
                     client.startShare(function(msg) {

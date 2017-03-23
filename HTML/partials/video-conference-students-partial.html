@@ -13,6 +13,12 @@
             <!--<canvas id="canvas1" width="300" height="400" style="border:2px solid #000000;"></canvas>-->
 
             <div id="mainFormShareVideo" style="border:5px solid #000000;">
+                <div ng-show="status.requireSharingExtension" class="kode-alert kode-alert-icon alert6">
+                    <i class="fa fa-lock"></i>
+                    <a href="#" class="closed">&times;</a>
+                    <a href='https://chrome.google.com/webstore/detail/socialvid-webrtc-share/bjhmiolgijcdfhdjlgpdaofbbdlpefmc' target='_blank'>Install Screen Sharing Extension.</a>
+                </div>
+
                 <video id="mainFormShareVideo1" autoplay style="display: none"></video>
                 <canvas id="mainFormCanvas" style="display:none; z-index: 1; position: absolute; top: 0px; left: 0px;"></canvas>
                 <canvas id="mainFormCanvas2" style="display: none; z-index: 20; position: absolute; top: 0px; left: 0px;"></canvas>
